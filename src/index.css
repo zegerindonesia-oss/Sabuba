@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .bg-glass {
+    background: rgba(255, 251, 245, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .bg-glass-dark {
+    background: rgba(18, 18, 18, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .text-gradient-flame {
+    background: linear-gradient(135deg, #C8102E 0%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bg-gradient-flame {
+    background: linear-gradient(135deg, #C8102E 0%, #900C1E 50%, #65000B 100%);
+  }
+  .shadow-flame {
+    box-shadow: 0 10px 30px -5px rgba(200, 16, 46, 0.35);
+  }
+  .shadow-glow {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF4EB;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8102E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #900C1E;
+}
+
+/* Steam particles */
+.steam-particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
