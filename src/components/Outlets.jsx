@@ -17,7 +17,7 @@ export default function Outlets() {
             Lokasi & Cabang <span className="text-sabuba-red">Sabuba</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg">
-            Temukan kehangatan mangkuk bubur bakar claypot Sabuba langsung di lokasi terdekat Anda setiap pagi!
+            Temukan kehangatan mangkuk bubur bakar claypot Sabuba langsung di lokasi terdekat Anda!
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export default function Outlets() {
             >
               
               {/* Outlet Real Image */}
-              <div className="relative h-56 overflow-hidden bg-sabuba-dark">
+              <div className="relative h-60 overflow-hidden bg-sabuba-dark">
                 <img
                   src={out.image}
                   alt={out.name}
@@ -47,7 +47,7 @@ export default function Outlets() {
                   <span className="text-xs text-sabuba-gold font-bold uppercase tracking-wider">
                     {out.city}
                   </span>
-                  <h3 className="font-heading font-bold text-lg text-white">
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-white leading-snug">
                     {out.name}
                   </h3>
                 </div>
@@ -58,7 +58,7 @@ export default function Outlets() {
                 <div className="space-y-3">
                   <div className="flex items-start gap-2.5 text-gray-700 text-xs sm:text-sm">
                     <MapPin className="w-4 h-4 text-sabuba-red flex-shrink-0 mt-0.5" />
-                    <span>{out.address}</span>
+                    <span className="font-medium">{out.address}</span>
                   </div>
 
                   <div className="flex items-center gap-2.5 text-gray-700 text-xs sm:text-sm">
@@ -80,7 +80,7 @@ export default function Outlets() {
                   </a>
 
                   <a
-                    href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Admin%20Sabuba,%20mau%20tanya%20menu%20dan%20stok%20di%20${encodeURIComponent(out.name)}`}
+                    href={`https://wa.me/${out.whatsapp || SABUBA_DATA.brand.whatsapp}?text=Halo%20Admin%20Sabuba,%20mau%20tanya%20menu%20dan%20stok%20di%20${encodeURIComponent(out.name)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 px-3 rounded-xl font-heading font-bold text-xs shadow transition-colors"

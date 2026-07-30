@@ -5,9 +5,9 @@ export const SABUBA_DATA = {
     tagline: "Sarapan Bubur Bakar - Hangat, Lezat, & Beraroma Khas Claypot",
     subtagline: "Bubur Bakar • Wonton • Laksa",
     promoText: "PROMO SARAPAN HEMAT MULAI Rp 10.000",
-    operatingHours: "Setiap Hari | 06:00 - 11:00 WIB (Sampai Habis)",
+    operatingHours: "Setiap Hari | 06:00 - 11:00 WIB",
     halalCert: "100% Halal & Bahan Segar Pilihan",
-    whatsapp: "6281234567890", // Sample active contact
+    whatsapp: "6281359180156",
   },
   menuCategories: [
     { id: "all", name: "Semua Menu" },
@@ -170,56 +170,59 @@ export const SABUBA_DATA = {
   ],
   outlets: [
     {
-      id: "out-1",
-      name: "Sabuba Store Flagship Ruko Teko",
-      address: "Jl. Boulevard Utama No. 12 (Depan Ruko Teko Iga Sapi)",
-      city: "Pusat Kota",
-      hours: "06.00 - 11.00 WIB",
+      id: "out-ayani",
+      name: "SABUBA SARAPAN BUBUR BAKAR CAB A.YANI",
+      address: "Jl. Ahmad Yani (Depan Warung Leko Sidoarjo)",
+      city: "Sidoarjo",
+      hours: "06.00 - 09.00 WIB",
       status: "Buka Sarapan Pagi",
-      mapsUrl: "https://maps.google.com",
-      image: "/assets/unnamed (3).webp"
+      mapsUrl: "https://maps.google.com/?q=Warung+Leko+Sidoarjo",
+      image: "/assets/unnamed (3).webp",
+      whatsapp: "6281359180156"
     },
     {
-      id: "out-2",
-      name: "Sabuba Booth Hub Merdeka",
-      address: "Jl. Merdeka Kel. Sukamaju No. 8",
-      city: "Area Komersial",
-      hours: "06.00 - 11.30 WIB",
-      status: "Buka Sarapan Pagi",
-      mapsUrl: "https://maps.google.com",
-      image: "/assets/unnamed (2).webp"
+      id: "out-rsud",
+      name: "SABUBA SARAPAN BUBUR BAKAR CAB RSUD",
+      address: "Kantin RSUD Sidoarjo",
+      city: "Sidoarjo",
+      hours: "07.00 - 16.00 WIB",
+      status: "Buka Setiap Hari",
+      mapsUrl: "https://maps.google.com/?q=RSUD+Sidoarjo",
+      image: "/assets/unnamed (2).webp",
+      whatsapp: "6281359180156"
     },
     {
-      id: "out-3",
-      name: "Sabuba x Zeger! Corner",
-      address: "Jl. Ahmad Yani No. 45 (Halaman Zeger! Coffee)",
-      city: "Pusat Kuliner",
-      hours: "06.00 - 12.00 WIB",
-      status: "Buka Sarapan Pagi",
-      mapsUrl: "https://maps.google.com",
-      image: "/assets/unnamed (4).webp"
+      id: "out-zeger-kemiri",
+      name: "SABUBA SARAPAN BUBUR BAKAR x Zeger Coffee",
+      address: "Perumahan Kemiri Indah Blok C7 No. 8 Sidoarjo",
+      city: "Sidoarjo",
+      hours: "09.00 - 21.00 WIB",
+      status: "Buka Sarapan & Cafe",
+      mapsUrl: "https://maps.google.com/?q=Perumahan+Kemiri+Indah+Blok+C7+No+8+Sidoarjo",
+      image: "/assets/Konsep/4. Trial Zeger X Sabuba.png",
+      whatsapp: "6281359180156"
     }
   ],
   testimonials: [
     {
       id: "t1",
       name: "Budi Santoso",
-      role: "Pelanggan Setia Pagi",
+      role: "Pelanggan Setia Sidoarjo",
       comment: "Bubur bakarnya smoky banget karena dimasak pakai claypot! Telur setengah matangnya leleh pas diaduk hangat-hangat. Wajib coba!",
       rating: 5
     },
     {
       id: "t2",
       name: "Siti Rahmawati",
-      role: "Foodie & Influencer Kuliner",
+      role: "Foodie Kuliner Sidoarjo",
       comment: "Gak cuma bubur, Wonton Chili Oil-nya Sabuba itu juara pedes gurihnya! Harganya terjangkau banget cuma 10 ribuan pas promo.",
       rating: 5
     },
     {
       id: "t3",
       name: "Dedi Kurniawan",
-      role: "Mitra Kemitraan Booth",
-      comment: "Bergabung jadi mitra Sabuba keputusannya tepat banget. Sistem operasionalnya simpel, produknya disukai banyak orang sarapan.",
+      role: "Mitra Franchise",
+      comment: "Bergabung jadi mitra Sabuba keputusannya tepat banget. Sistem operasionalnya simpel, produknya disukai banyak orang.",
       rating: 5
     }
   ]

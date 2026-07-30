@@ -37,8 +37,9 @@ export default function ConceptGallery() {
             return (
               <button
                 key={concept.id}
+                type="button"
                 onClick={() => setSelectedConcept(concept)}
-                className={`p-4 rounded-2xl font-heading font-bold text-left transition-all duration-300 flex items-center gap-3 border ${
+                className={`p-4 rounded-2xl font-heading font-bold text-left transition-all duration-300 flex items-center gap-3 border cursor-pointer ${
                   isSelected
                     ? 'bg-sabuba-red text-white border-sabuba-red shadow-flame scale-[1.02]'
                     : 'bg-white text-sabuba-dark border-gray-200 hover:border-sabuba-red/40 hover:bg-sabuba-red/5'
@@ -66,12 +67,13 @@ export default function ConceptGallery() {
         {/* Selected Concept Showcase Card */}
         <div className="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-xl grid grid-cols-1 lg:grid-cols-12">
           
-          {/* Left: Big Image Preview */}
-          <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-sabuba-dark">
+          {/* Left: Big Image Preview with key for instant re-render */}
+          <div className="lg:col-span-7 relative h-80 sm:h-96 lg:h-[450px] overflow-hidden bg-sabuba-dark">
             <img
+              key={selectedConcept.id}
               src={selectedConcept.image}
               alt={selectedConcept.title}
-              className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
+              className="w-full h-full object-cover transition-all duration-500 animate-fadeIn hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-sabuba-dark/80 via-transparent to-transparent lg:hidden" />
             

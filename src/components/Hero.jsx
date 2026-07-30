@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Flame, Clock, ShieldCheck, Sparkles, ArrowRight, Utensils, ChevronDown } from 'lucide-react';
 import { SABUBA_DATA } from '../data/sabubaData';
 
@@ -45,14 +45,13 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
-              Sensasi Sarapan <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-sabuba-gold via-sabuba-amber to-sabuba-red underline decoration-sabuba-red/60 decoration-wavy underline-offset-8">
+            {/* Main Headline with Clean Spacing & No Wavy Underline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-heading font-extrabold text-white leading-tight">
+              <span>Sensasi Sarapan</span>
+              <span className="block my-3 text-transparent bg-clip-text bg-gradient-to-r from-sabuba-gold via-sabuba-amber to-sabuba-red">
                 Bubur Bakar Claypot
               </span>
-              <br />
-              Khas Nusantara
+              <span>Khas Nusantara</span>
             </h1>
 
             {/* Sub-headline */}
@@ -64,7 +63,7 @@ export default function Hero() {
             <div className="flex flex-wrap gap-4 pt-2 text-xs sm:text-sm text-gray-300 font-medium">
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-2 rounded-lg">
                 <Clock className="w-4 h-4 text-sabuba-amber" />
-                <span>Buka Setiap Hari: <strong>06.00 - 11.00 WIB</strong></span>
+                <span>Buka Setiap Hari: <strong>{SABUBA_DATA.brand.operatingHours}</strong></span>
               </div>
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-2 rounded-lg">
                 <ShieldCheck className="w-4 h-4 text-emerald-400" />
@@ -116,7 +115,7 @@ export default function Hero() {
             {/* Glowing Backdrop */}
             <div className="absolute inset-0 bg-sabuba-red/30 rounded-full blur-3xl scale-95 animate-pulse" />
 
-            {/* Hero Main Card with Dynamic Mouse Motion */}
+            {/* Hero Main Card */}
             <div 
               style={{
                 transform: `perspective(1000px) rotateY(${mousePos.x}deg) rotateX(${-mousePos.y}deg)`
