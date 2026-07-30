@@ -1,6 +1,6 @@
 import React from 'react';
-import { Flame, MapPin, Clock, Phone, Instagram, Facebook, Award } from 'lucide-react';
-import { SABUBA_DATA } from '../data/sabubaData';
+import { Clock, Phone, Instagram, Facebook, Award } from 'lucide-react';
+import SabubaLogo from './SabubaLogo';
 
 export default function Footer() {
   return (
@@ -11,20 +11,8 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-4">
-            <div className="flex items-center gap-3">
-              <img
-                src="/assets/Konsep/Logo (1).png"
-                alt="Logo Sabuba"
-                className="w-12 h-12 rounded-full border-2 border-sabuba-gold/60 object-cover"
-              />
-              <div>
-                <span className="font-heading font-black text-2xl tracking-wider text-white">
-                  SABUBA
-                </span>
-                <p className="text-xs text-sabuba-amber font-semibold">
-                  SARAPAN BUBUR BAKAR • WONTON • LAKSA
-                </p>
-              </div>
+            <div>
+              <SabubaLogo className="h-12" variant="light" />
             </div>
 
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
@@ -33,7 +21,7 @@ export default function Footer() {
 
             <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-400">
               <Award className="w-4 h-4" />
-              <span>100% Produk Halal & Higienis</span>
+              <span>100% Kemitraan Pasif Autopilot & Halal</span>
             </div>
           </div>
 
@@ -47,7 +35,7 @@ export default function Footer() {
               <li><a href="#menu" className="hover:text-sabuba-gold transition-colors">Daftar Menu Spesial</a></li>
               <li><a href="#why-us" className="hover:text-sabuba-gold transition-colors">Keunggulan Claypot</a></li>
               <li><a href="#concepts" className="hover:text-sabuba-gold transition-colors">Galeri Konsep Outlet</a></li>
-              <li><a href="#franchise" className="hover:text-sabuba-gold transition-colors">Peluang Kemitraan Usaha</a></li>
+              <li><a href="#franchise" className="hover:text-sabuba-gold transition-colors">Kemitraan Autopilot</a></li>
               <li><a href="#outlets" className="hover:text-sabuba-gold transition-colors">Lokasi Outlets</a></li>
             </ul>
           </div>
@@ -70,7 +58,7 @@ export default function Footer() {
               <Phone className="w-5 h-5 text-sabuba-amber flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-white">Layanan Admin & Kemitraan:</p>
-                <p className="text-gray-400">+62 812-3456-7890 (WhatsApp Direct)</p>
+                <p className="text-gray-400">+62 813-5918-0156 (WhatsApp Direct)</p>
               </div>
             </div>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Flame, Menu, X, MapPin, Phone, Award } from 'lucide-react';
-import { SABUBA_DATA } from '../data/sabubaData';
+import { ShoppingBag, Flame, Menu, X, Award } from 'lucide-react';
+import SabubaLogo from './SabubaLogo';
 
 export default function Navbar({ cartCount, onOpenCart }) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,28 +29,9 @@ export default function Navbar({ cartCount, onOpenCart }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Brand Logo */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-sabuba-gold/60 p-0.5 bg-sabuba-red shadow-flame transition-transform group-hover:scale-105">
-              <img 
-                src="/assets/Konsep/Logo (1).png" 
-                alt="Logo Sabuba" 
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-heading font-black text-2xl tracking-wider text-white group-hover:text-sabuba-gold transition-colors">
-                  SABUBA
-                </span>
-                <span className="bg-sabuba-red text-white text-[10px] font-extrabold px-1.5 py-0.5 rounded uppercase tracking-widest flex items-center gap-0.5">
-                  <Flame className="w-3 h-3 text-sabuba-amber animate-pulse" /> HOT
-                </span>
-              </div>
-              <p className="text-[11px] text-gray-300 font-medium tracking-wide">
-                SARAPAN BUBUR BAKAR
-              </p>
-            </div>
+          {/* Pure Sabuba Logo (No Box / No Mockup Frame) */}
+          <a href="#" className="flex items-center group transition-transform hover:scale-105">
+            <SabubaLogo className="h-10 sm:h-12" variant="light" />
           </a>
 
           {/* Desktop Navigation */}
@@ -68,7 +49,7 @@ export default function Navbar({ cartCount, onOpenCart }) {
               Konsep Usaha
             </a>
             <a href="#franchise" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Kemitraan
+              Kemitraan Autopilot
             </a>
             <a href="#outlets" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
               Outlets
@@ -147,7 +128,7 @@ export default function Navbar({ cartCount, onOpenCart }) {
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
           >
-            Kemitraan Franchise
+            Kemitraan Autopilot
           </a>
           <a
             href="#outlets"
