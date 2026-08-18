@@ -37,7 +37,7 @@ export default function CartDrawer({
             {/* Drawer Header */}
             <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-white">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center font-bold">
+                <div className="w-8 h-8 rounded-full bg-red-50 text-red-800 flex items-center justify-center font-bold">
                   <ShoppingBag className="w-4 h-4" />
                 </div>
                 <div>
@@ -75,7 +75,7 @@ export default function CartDrawer({
                       {cartItem.selectedToppings && cartItem.selectedToppings.length > 0 && (
                         <div className="mt-1 flex flex-wrap gap-1">
                           {cartItem.selectedToppings.map((top, idx) => (
-                            <span key={idx} className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-medium">
+                            <span key={idx} className="text-[10px] bg-red-100 text-red-900 px-1.5 py-0.5 rounded font-bold">
                               +{top.name}
                             </span>
                           ))}
@@ -89,7 +89,7 @@ export default function CartDrawer({
                       )}
 
                       <div className="flex items-center justify-between mt-3">
-                        <span className="font-black text-sm text-red-600">
+                        <span className="font-black text-sm text-red-800">
                           {formatRupiah(cartItem.totalPrice)}
                         </span>
 
@@ -113,7 +113,7 @@ export default function CartDrawer({
 
                     <button
                       onClick={() => onRemoveItem(cartItem.cartId)}
-                      className="p-1.5 text-slate-400 hover:text-red-600 transition-colors"
+                      className="p-1.5 text-slate-400 hover:text-red-800 transition-colors"
                       title="Hapus menu"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -139,7 +139,7 @@ export default function CartDrawer({
                 
                 <button
                   onClick={onProceedCheckout}
-                  className="w-full py-3.5 px-5 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm shadow-md flex items-center justify-between transition-all active:scale-95"
+                  className="w-full py-3.5 px-5 rounded-full bg-red-800 hover:bg-red-900 text-white font-extrabold text-sm shadow-md flex items-center justify-between transition-all active:scale-95"
                 >
                   <span>Lanjut Pembayaran</span>
                   <div className="flex items-center gap-1">

@@ -37,10 +37,10 @@ export default function Hero({ onAddToCart, onQuickView }) {
   return (
     <section id="hero" className="relative min-h-[92vh] lg:min-h-screen flex flex-col justify-center overflow-hidden bg-white text-slate-800 pt-24 pb-14 lg:py-20">
       
-      {/* Prominent Organic Crimson Red Wave Backdrop SVG inside Hero */}
+      {/* Prominent Organic Dark Crimson Red Wave Backdrop SVG inside Hero */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <svg
-          className="absolute -top-10 -right-10 w-[700px] sm:w-[950px] lg:w-[1250px] opacity-25 text-red-600"
+          className="absolute -top-10 -right-10 w-[700px] sm:w-[950px] lg:w-[1250px] opacity-25 text-red-900"
           viewBox="0 0 1000 1000"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -56,18 +56,18 @@ export default function Hero({ onAddToCart, onQuickView }) {
           />
           <defs>
             <linearGradient id="hero-red-wave-1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#7F1D1D" />
-              <stop offset="50%" stopColor="#DC2626" />
-              <stop offset="100%" stopColor="#FCA5A5" />
+              <stop offset="0%" stopColor="#450A0A" />
+              <stop offset="50%" stopColor="#7F1D1D" />
+              <stop offset="100%" stopColor="#991B1B" />
             </linearGradient>
             <linearGradient id="hero-red-wave-2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#B91C1C" />
+              <stop offset="0%" stopColor="#881337" />
               <stop offset="100%" stopColor="#FEE2E2" />
             </linearGradient>
           </defs>
         </svg>
 
-        <div className="absolute -bottom-20 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-red-100/80 via-rose-50/50 to-transparent rounded-full blur-[120px]" />
+        <div className="absolute -bottom-20 -left-20 w-[550px] h-[550px] bg-gradient-to-tr from-red-100/60 via-rose-50/40 to-transparent rounded-full blur-[120px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center">
@@ -76,11 +76,11 @@ export default function Hero({ onAddToCart, onQuickView }) {
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-700 font-extrabold text-xs sm:text-sm shadow-sm mb-4"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-900 font-extrabold text-xs sm:text-sm shadow-sm mb-4"
         >
-          <Flame className="w-4 h-4 text-red-600 animate-bounce" />
+          <Flame className="w-4 h-4 text-red-800 animate-bounce" />
           <span>{SABUBA_DATA.brand.promoText}</span>
-          <span className="bg-red-600 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Spesial</span>
+          <span className="bg-red-900 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">Spesial</span>
         </motion.div>
 
         {/* 2. Headline Copywriting */}
@@ -171,7 +171,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
                   damping: 22,
                 }}
                 style={{ zIndex: zIndexVal }}
-                className={`absolute rounded-[2.5rem] p-4 sm:p-5 bg-gradient-to-br from-[#B91C1C] via-[#DC2626] to-[#991B1B] text-white border border-red-400/40 shadow-[0_30px_70px_-15px_rgba(220,38,38,0.4)] flex flex-col justify-between cursor-pointer select-none transition-all ${
+                className={`absolute rounded-[2.5rem] p-4 sm:p-5 bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] text-white border border-red-700/50 shadow-[0_30px_70px_-15px_rgba(127,29,29,0.5)] flex flex-col justify-between cursor-pointer select-none transition-all ${
                   isCenter
                     ? 'w-[310px] sm:w-[360px] lg:w-[380px] h-[480px] sm:h-[520px]'
                     : isLeft || isRight
@@ -195,14 +195,14 @@ export default function Hero({ onAddToCart, onQuickView }) {
 
                   {/* Promo Badge Top Left */}
                   {item.promoPrice && (
-                    <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-black uppercase tracking-wider shadow-md">
+                    <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-red-900 text-white text-[11px] font-black uppercase tracking-wider shadow-md">
                       HEMAT
                     </div>
                   )}
 
                   {/* Spicy Badge */}
                   {item.spicyLevel > 0 && (
-                    <div className="absolute bottom-3 left-3.5 px-2.5 py-1 rounded-full bg-slate-900/80 text-white text-[11px] font-bold backdrop-blur-sm flex items-center gap-1">
+                    <div className="absolute bottom-3 left-3.5 px-2.5 py-1 rounded-full bg-slate-950/80 text-white text-[11px] font-bold backdrop-blur-sm flex items-center gap-1">
                       <span>{'🌶️'.repeat(item.spicyLevel)}</span>
                     </div>
                   )}
@@ -219,7 +219,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-red-400/30">
+                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-red-700/40">
                     <div className="flex flex-col text-left">
                       <span className="text-[10px] text-red-200 uppercase font-semibold">Harga Sarapan</span>
                       <div className="flex items-baseline gap-1.5">
@@ -227,7 +227,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
                           {formatRupiah(item.promoPrice || item.price)}
                         </span>
                         {item.promoPrice && (
-                          <span className="text-xs text-red-200/70 line-through">
+                          <span className="text-xs text-red-300/70 line-through">
                             {formatRupiah(item.price)}
                           </span>
                         )}
@@ -238,8 +238,8 @@ export default function Hero({ onAddToCart, onQuickView }) {
                       onClick={(e) => handleAdd(e, item)}
                       className={`px-4 py-2 rounded-full font-bold text-xs sm:text-sm flex items-center gap-1.5 transition-all shadow-md active:scale-95 ${
                         addedMap[item.id]
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-white text-red-700 hover:bg-red-50'
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-white text-red-900 hover:bg-red-50'
                       }`}
                     >
                       {addedMap[item.id] ? (
@@ -265,7 +265,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
         <div className="flex items-center justify-center gap-4 mt-1 z-20">
           <button
             onClick={handlePrev}
-            className="p-3 rounded-full bg-slate-100 hover:bg-red-600 hover:text-white text-slate-700 transition-colors shadow-sm"
+            className="p-3 rounded-full bg-slate-100 hover:bg-red-800 hover:text-white text-slate-700 transition-colors shadow-sm"
             aria-label="Previous item"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -278,7 +278,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
                 onClick={() => setCurrentIdx(idx)}
                 className={`h-2.5 rounded-full transition-all ${
                   idx === currentIdx
-                    ? 'w-8 bg-red-600'
+                    ? 'w-8 bg-red-800'
                     : 'w-2.5 bg-slate-200 hover:bg-slate-300'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
@@ -288,7 +288,7 @@ export default function Hero({ onAddToCart, onQuickView }) {
 
           <button
             onClick={handleNext}
-            className="p-3 rounded-full bg-slate-100 hover:bg-red-600 hover:text-white text-slate-700 transition-colors shadow-sm"
+            className="p-3 rounded-full bg-slate-100 hover:bg-red-800 hover:text-white text-slate-700 transition-colors shadow-sm"
             aria-label="Next item"
           >
             <ChevronRight className="w-5 h-5" />
@@ -298,11 +298,11 @@ export default function Hero({ onAddToCart, onQuickView }) {
         {/* 5. Trust Badges */}
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-8 pt-6 border-t border-slate-100 text-xs sm:text-sm font-bold text-slate-600">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-red-600" />
+            <ShieldCheck className="w-4 h-4 text-red-800" />
             <span>100% Halal & Bahan Segar</span>
           </div>
           <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 text-red-600" />
+            <Flame className="w-4 h-4 text-red-800" />
             <span>Claypot Hot Claypot Fresh Cooked</span>
           </div>
           <div className="flex items-center gap-2">

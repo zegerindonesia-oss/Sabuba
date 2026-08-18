@@ -16,12 +16,12 @@ export default function FloatingCartBar({ totalItems, totalPrice, onClick }) {
       >
         <button
           onClick={onClick}
-          className="w-full py-3.5 px-5 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm shadow-xl flex items-center justify-between transition-all active:scale-95 border border-red-500/50"
+          className="w-full py-3.5 px-5 rounded-full bg-red-800 hover:bg-red-900 text-white font-extrabold text-xs sm:text-sm shadow-xl flex items-center justify-between transition-all active:scale-95 border border-red-700/50"
         >
           <div className="flex items-center gap-2.5">
             <div className="relative p-1 bg-white/20 rounded-full">
               <ShoppingBag className="w-4 h-4 text-white" />
-              <span className="absolute -top-1 -right-1 bg-white text-red-700 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 bg-white text-red-900 text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
                 {totalItems}
               </span>
             </div>

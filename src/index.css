@@ -15,15 +15,15 @@
     -webkit-backdrop-filter: blur(12px);
   }
   .text-gradient-red {
-    background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+    background: linear-gradient(135deg, #991B1B 0%, #7F1D1D 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .bg-gradient-red {
-    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #991B1B 100%);
+    background: linear-gradient(135deg, #991B1B 0%, #7F1D1D 50%, #450A0A 100%);
   }
   .shadow-red-lg {
-    box-shadow: 0 20px 50px -10px rgba(220, 38, 38, 0.25);
+    box-shadow: 0 20px 50px -10px rgba(153, 27, 27, 0.25);
   }
 }
 
@@ -45,9 +45,9 @@ body {
   background: #ffffff;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ef4444;
+  background: #991b1b;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #dc2626;
+  background: #7f1d1d;
 }

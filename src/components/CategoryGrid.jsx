@@ -11,7 +11,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
       icon: Flame,
       count: SABUBA_DATA.menuItems.filter(i => i.category === 'bubur').length,
       image: '/assets/Foto Menu (1).png',
-      color: 'from-red-600 to-rose-700'
+      color: 'from-red-800 to-rose-950'
     },
     {
       id: 'wonton',
@@ -20,7 +20,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
       icon: Utensils,
       count: SABUBA_DATA.menuItems.filter(i => i.category === 'wonton').length,
       image: '/assets/Foto Menu (6).png',
-      color: 'from-rose-600 to-red-800'
+      color: 'from-rose-900 to-red-950'
     },
     {
       id: 'zeger',
@@ -29,7 +29,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
       icon: Coffee,
       count: SABUBA_DATA.menuItems.filter(i => i.category === 'zeger').length,
       image: '/assets/Konsep/4. Trial Zeger X Sabuba.png',
-      color: 'from-amber-600 to-red-700'
+      color: 'from-amber-700 to-red-900'
     },
     {
       id: 'topping',
@@ -38,7 +38,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
       icon: PlusCircle,
       count: SABUBA_DATA.extraToppings.length,
       image: '/assets/Foto Menu (4).png',
-      color: 'from-red-500 to-rose-600'
+      color: 'from-red-800 to-rose-900'
     }
   ];
 
@@ -54,7 +54,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
     <section className="py-12 bg-white text-slate-800 border-t border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8">
-          <span className="text-xs font-black tracking-widest text-red-600 uppercase">Kategori Spesial</span>
+          <span className="text-xs font-black tracking-widest text-red-800 uppercase">Kategori Spesial</span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
             Pilihan Sarapan Favorit Anda
           </h2>
@@ -73,7 +73,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
                 key={cat.id}
                 onClick={() => handleCategoryClick(cat.id)}
                 className={`group relative rounded-3xl overflow-hidden cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-end p-5 h-56 sm:h-64 border ${
-                  isSelected ? 'ring-4 ring-red-600 border-transparent' : 'border-slate-100'
+                  isSelected ? 'ring-4 ring-red-800 border-transparent' : 'border-slate-100'
                 }`}
               >
                 {/* Background Image */}
@@ -92,7 +92,7 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
                     <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white">
                       <Icon className="w-5 h-5" />
                     </div>
-                    <span className="px-2.5 py-1 rounded-full bg-red-600/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-sm">
+                    <span className="px-2.5 py-1 rounded-full bg-red-800/90 text-white text-[10px] font-black uppercase tracking-wider backdrop-blur-sm">
                       {cat.count} Menu
                     </span>
                   </div>

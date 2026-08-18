@@ -13,7 +13,7 @@ export default function ConceptGallery() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-black tracking-widest text-red-600 uppercase">Inovasi Outlet</span>
+          <span className="text-xs font-black tracking-widest text-red-800 uppercase">Inovasi Outlet</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
             4 Konsep Kemitraan & Outlet Sabuba
           </h2>
@@ -32,7 +32,7 @@ export default function ConceptGallery() {
                 onClick={() => setActiveConceptIdx(idx)}
                 className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
                   isActive
-                    ? 'bg-red-600 text-white shadow-md'
+                    ? 'bg-red-800 text-white shadow-md'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
@@ -56,7 +56,7 @@ export default function ConceptGallery() {
               alt={activeConcept.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-red-600 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5">
+            <div className="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-red-800 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5">
               <Flame className="w-3.5 h-3.5" />
               <span>Konsep #{activeConceptIdx + 1}</span>
             </div>
@@ -67,7 +67,7 @@ export default function ConceptGallery() {
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
               {activeConcept.title}
             </h3>
-            <p className="text-xs sm:text-sm font-bold text-red-600 mt-1">
+            <p className="text-xs sm:text-sm font-bold text-red-800 mt-1">
               "{activeConcept.tagline}"
             </p>
 
@@ -79,7 +79,7 @@ export default function ConceptGallery() {
             <div className="mt-6 space-y-2.5">
               {activeConcept.highlights.map((item, i) => (
                 <div key={i} className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800">
-                  <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-red-800 shrink-0" />
                   <span>{item}</span>
                 </div>
               ))}
@@ -91,7 +91,7 @@ export default function ConceptGallery() {
                 href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20${encodeURIComponent(activeConcept.title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-800 hover:bg-red-900 text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-95"
               >
                 <span>Konsultasi Konsep via WA</span>
                 <ArrowUpRight className="w-4 h-4" />

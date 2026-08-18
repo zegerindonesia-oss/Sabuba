@@ -107,11 +107,11 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                       onClick={() => setOrderType(type.id)}
                       className={`p-3 rounded-2xl border text-center transition-all ${
                         isSelected
-                          ? 'bg-red-50 border-red-600 text-red-700 font-extrabold ring-2 ring-red-600/20'
+                          ? 'bg-red-50 border-red-800 text-red-900 font-extrabold ring-2 ring-red-800/20'
                           : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
                       }`}
                     >
-                      <Icon className="w-4 h-4 mx-auto mb-1 text-red-600" />
+                      <Icon className="w-4 h-4 mx-auto mb-1 text-red-800" />
                       <span className="block text-xs font-bold">{type.label}</span>
                       <span className="text-[10px] text-slate-400 font-normal">{type.sub}</span>
                     </button>
@@ -128,7 +128,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
               <select
                 value={selectedOutlet}
                 onChange={(e) => setSelectedOutlet(e.target.value)}
-                className="w-full p-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-red-600 text-slate-800"
+                className="w-full p-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-red-800 text-slate-800"
               >
                 {SABUBA_DATA.outlets.map((outlet) => (
                   <option key={outlet.id} value={outlet.id}>
@@ -150,7 +150,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                     placeholder="Masukkan nama lengkap Anda..."
                     value={customerName}
                     onChange={(e) => setCustomerName(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-600 text-slate-800"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-800 text-slate-800"
                   />
                 </div>
               </div>
@@ -164,7 +164,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                     placeholder="08123456789..."
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-600 text-slate-800"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-800 text-slate-800"
                   />
                 </div>
               </div>
@@ -178,7 +178,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
                     placeholder="Catatan alamat / jam estimasi datang..."
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-600 text-slate-800"
+                    className="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-800 text-slate-800"
                   />
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             <div className="p-4 rounded-2xl bg-red-50/60 border border-red-100">
               <div className="flex justify-between items-center text-xs font-bold text-slate-700 mb-2">
                 <span>Total Pesanan ({cartItems.length} menu)</span>
-                <span className="text-red-700 text-sm font-black">{formatRupiah(subtotal)}</span>
+                <span className="text-red-900 text-sm font-black">{formatRupiah(subtotal)}</span>
               </div>
               <p className="text-[11px] text-slate-500">
                 Pesanan akan langsung diformat dan dikirim ke WhatsApp Resmi Sabuba.
@@ -198,7 +198,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
+              className="w-full py-3.5 px-6 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               <Send className="w-4 h-4" />
               <span>Kirim Pesanan via WhatsApp</span>

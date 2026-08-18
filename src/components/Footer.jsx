@@ -15,8 +15,8 @@ export default function Footer() {
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
               {SABUBA_DATA.brand.tagline}. Diolah dari bahan berkualitas segar, 100% Halal, dan disajikan hangat dalam claypot khas.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold border border-red-100">
-              <ShieldCheck className="w-4 h-4 text-red-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-900 text-xs font-bold border border-red-200">
+              <ShieldCheck className="w-4 h-4 text-red-800" />
               <span>{SABUBA_DATA.brand.halalCert}</span>
             </div>
           </div>
@@ -26,19 +26,19 @@ export default function Footer() {
             <h4 className="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-4">Navigasi Utama</h4>
             <ul className="space-y-2.5 text-xs font-semibold">
               <li>
-                <a href="#hero" className="hover:text-red-600 transition-colors">Beranda</a>
+                <a href="#hero" className="hover:text-red-800 transition-colors">Beranda</a>
               </li>
               <li>
-                <a href="#menu" className="hover:text-red-600 transition-colors">Daftar Menu</a>
+                <a href="#menu" className="hover:text-red-800 transition-colors">Daftar Menu</a>
               </li>
               <li>
-                <a href="#konsep" className="hover:text-red-600 transition-colors">Konsep Outlet</a>
+                <a href="#konsep" className="hover:text-red-800 transition-colors">Konsep Outlet</a>
               </li>
               <li>
-                <a href="#outlet" className="hover:text-red-600 transition-colors">Lokasi Cabang Sidoarjo</a>
+                <a href="#outlet" className="hover:text-red-800 transition-colors">Lokasi Cabang Sidoarjo</a>
               </li>
               <li>
-                <a href="#franchise" className="hover:text-red-600 transition-colors">Kemitraan Franchise</a>
+                <a href="#franchise" className="hover:text-red-800 transition-colors">Kemitraan Usaha</a>
               </li>
             </ul>
           </div>
@@ -47,21 +47,21 @@ export default function Footer() {
           <div className="md:col-span-5 space-y-3">
             <h4 className="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-4">Jam Operasional & Kontak</h4>
             <div className="flex items-start gap-2 text-xs text-slate-600">
-              <Clock className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <Clock className="w-4 h-4 text-red-800 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-slate-800">Jam Buka Sarapan Pagi:</span>
                 <p>{SABUBA_DATA.brand.operatingHours}</p>
               </div>
             </div>
             <div className="flex items-start gap-2 text-xs text-slate-600">
-              <Phone className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <Phone className="w-4 h-4 text-red-800 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-slate-800">WhatsApp Resmi Sabuba:</span>
                 <p>+{SABUBA_DATA.brand.whatsapp}</p>
               </div>
             </div>
             <div className="flex items-start gap-2 text-xs text-slate-600">
-              <MapPin className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-red-800 shrink-0 mt-0.5" />
               <div>
                 <span className="font-bold text-slate-800">Area Layanan Utama:</span>
                 <p>Sidoarjo & Sekitarnya (Cabang A.Yani, RSUD, & Perum Kemiri Indah)</p>
@@ -76,7 +76,7 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} {SABUBA_DATA.brand.name}. All rights reserved.</p>
           <p className="flex items-center gap-1">
             <span>Dibuat dengan</span>
-            <Heart className="w-3.5 h-3.5 text-red-600 fill-red-600 inline" />
+            <Heart className="w-3.5 h-3.5 text-red-800 fill-red-800 inline" />
             <span>untuk Komunitas Sarapan Pagi</span>
           </p>
         </div>

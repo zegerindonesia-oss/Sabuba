@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function SabubaLogo({ className = "h-10", variant = "light" }) {
   // variant: "light" (for dark background) or "dark" (for light background)
-  const primaryColor = variant === "dark" ? "#C8102E" : "#FFFFFF";
-  const accentColor = variant === "dark" ? "#F59E0B" : "#FBBF24";
+  const primaryColor = variant === "dark" ? "#991B1B" : "#FFFFFF";
+  const accentColor = variant === "dark" ? "#D97706" : "#FBBF24";
 
   return (
     <div className={`inline-flex items-center gap-3 ${className}`}>
@@ -25,10 +25,10 @@ export default function SabubaLogo({ className = "h-10", variant = "light" }) {
           fill={primaryColor} 
         />
         {/* Claypot Rim / Top Opening */}
-        <ellipse cx="50" cy="38" rx="28" ry="8" fill={variant === "dark" ? "#FAF4EB" : "#121212"} />
+        <ellipse cx="50" cy="38" rx="28" ry="8" fill={variant === "dark" ? "#FFFFFF" : "#121212"} />
         <ellipse cx="50" cy="38" rx="24" ry="6" fill={primaryColor} opacity="0.3" />
         
-        {/* Claypot Dots / Topping texture inside pot */}
+        {/* Claypot Dots */}
         <circle cx="42" cy="37" r="1.5" fill={primaryColor} />
         <circle cx="47" cy="39" r="1.5" fill={primaryColor} />
         <circle cx="53" cy="36" r="1.5" fill={primaryColor} />
@@ -37,23 +37,23 @@ export default function SabubaLogo({ className = "h-10", variant = "light" }) {
         {/* Fire Flames Underneath */}
         <path 
           d="M30 66 C32 60, 36 62, 38 56 C42 66, 48 54, 50 50 C52 54, 58 66, 62 56 C64 62, 68 60, 70 66 C65 78, 35 78, 30 66 Z" 
-          fill="#C8102E" 
+          fill="#991B1B" 
         />
         <path 
           d="M38 68 C40 63, 44 65, 46 60 C48 67, 50 58, 52 58 C54 67, 56 65, 62 68 C58 74, 42 74, 38 68 Z" 
-          fill="#F59E0B" 
+          fill="#D97706" 
         />
       </svg>
 
       {/* Pure Typography */}
       <div className="flex flex-col text-left justify-center">
-        <span className={`font-heading font-black tracking-wider text-xl sm:text-2xl leading-none ${
-          variant === "dark" ? "text-sabuba-dark" : "text-white"
+        <span className={`font-black tracking-wider text-xl sm:text-2xl leading-none ${
+          variant === "dark" ? "text-slate-900" : "text-white"
         }`}>
           SABUBA
         </span>
         <span className={`text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest mt-1 ${
-          variant === "dark" ? "text-sabuba-red" : "text-sabuba-gold"
+          variant === "dark" ? "text-red-800" : "text-amber-300"
         }`}>
           SARAPAN BUBUR BAKAR
         </span>

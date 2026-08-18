@@ -11,11 +11,11 @@ export default function FranchiseSection() {
   ];
 
   return (
-    <section id="franchise" className="py-20 bg-red-600 text-white relative overflow-hidden">
+    <section id="franchise" className="py-20 bg-gradient-to-br from-[#7F1D1D] via-[#991B1B] to-[#450A0A] text-white relative overflow-hidden">
       {/* Decorative SVG Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-950 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-black rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -23,13 +23,13 @@ export default function FranchiseSection() {
           
           {/* Left Column Text */}
           <div className="lg:col-span-6">
-            <span className="px-3.5 py-1 rounded-full bg-white/20 text-white font-extrabold text-xs uppercase tracking-wider">
-              Kemitraan Franchise
+            <span className="px-3.5 py-1 rounded-full bg-white/15 text-white font-extrabold text-xs uppercase tracking-wider">
+              Kemitraan Usaha Sabuba
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-3 leading-tight">
               Buka Usaha Sarapan Bubur Bakar di Kota Anda!
             </h2>
-            <p className="text-red-100 text-xs sm:text-sm mt-4 leading-relaxed">
+            <p className="text-red-100/90 text-xs sm:text-sm mt-4 leading-relaxed">
               Bergabunglah menjadi mitra resmi **Bubur Bakar Sabuba**. Dapatkan sistem usaha siap jalan dengan potensi profit konsisten setiap pagi.
             </p>
 
@@ -38,7 +38,7 @@ export default function FranchiseSection() {
                 const Icon = b.icon;
                 return (
                   <div key={i} className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
-                    <Icon className="w-5 h-5 text-red-200 mb-2" />
+                    <Icon className="w-5 h-5 text-amber-300 mb-2" />
                     <h4 className="font-extrabold text-sm text-white">{b.title}</h4>
                     <p className="text-xs text-red-100/90 mt-0.5 leading-snug">{b.desc}</p>
                   </div>
@@ -48,13 +48,13 @@ export default function FranchiseSection() {
 
             <div className="mt-8">
               <a
-                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20info%20Kemitraan%20Franchise%20Sabuba`}
+                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20info%20Kemitraan%20Usaha%20Sabuba`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-red-700 hover:bg-red-50 font-black text-sm shadow-xl transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-red-950 hover:bg-red-50 font-black text-sm shadow-xl transition-all active:scale-95"
               >
                 <span>Hubungi Tim Kemitraan WA</span>
-                <ArrowRight className="w-4 h-4 text-red-700" />
+                <ArrowRight className="w-4 h-4 text-red-900" />
               </a>
             </div>
           </div>
@@ -64,12 +64,12 @@ export default function FranchiseSection() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
               <img
                 src="/assets/Konsep/2. Konsep Restaurant.png"
-                alt="Franchise Sabuba"
+                alt="Kemitraan Sabuba"
                 className="w-full h-80 sm:h-96 object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
                 <div>
-                  <span className="text-xs font-bold text-red-300 uppercase">Outlet Resmi</span>
+                  <span className="text-xs font-bold text-amber-300 uppercase">Outlet Kemitraan</span>
                   <h3 className="font-extrabold text-lg text-white">Bubur Bakar Sabuba Sidoarjo</h3>
                 </div>
               </div>

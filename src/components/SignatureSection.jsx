@@ -6,21 +6,21 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
   const promoItems = SABUBA_DATA.menuItems.filter(i => i.promoPrice);
 
   return (
-    <section className="py-16 bg-red-50/50 text-slate-800 border-y border-red-100/60 relative overflow-hidden">
+    <section className="py-16 bg-red-50/40 text-slate-800 border-y border-red-100/60 relative overflow-hidden">
       {/* Decorative Blob */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-red-200/30 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-red-100/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-600 text-white font-extrabold text-xs uppercase tracking-wider mb-2">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-800 text-white font-extrabold text-xs uppercase tracking-wider mb-2">
               <Flame className="w-3.5 h-3.5" />
               <span>Promo Sarapan Hemat</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-              Sajian Spesial Sabuba Rp 10.000-an
+              Sajikan Spesial Sabuba Rp 10.000-an
             </h2>
             <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-xl">
               Nikmati kehangatan bubur bakar claypot, wonton soup, & wonton chili oil dengan harga promo sarapan hemat setiap hari!
@@ -29,7 +29,7 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
 
           <a
             href="#menu"
-            className="inline-flex items-center gap-2 font-extrabold text-sm text-red-600 hover:text-red-700 transition-colors group"
+            className="inline-flex items-center gap-2 font-extrabold text-sm text-red-800 hover:text-red-900 transition-colors group"
           >
             <span>Lihat Semua Menu</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -51,7 +51,7 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
                     alt={item.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-600 text-white text-[11px] font-black uppercase shadow-sm">
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-800 text-white text-[11px] font-black uppercase shadow-sm">
                     Hemat {formatRupiah(item.price - item.promoPrice)}
                   </div>
                   <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-white/95 text-slate-800 text-xs font-bold flex items-center gap-1 shadow-sm">
@@ -60,7 +60,7 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
                   </div>
                 </div>
 
-                <h3 className="font-extrabold text-lg text-slate-900 group-hover:text-red-600 transition-colors leading-snug">
+                <h3 className="font-extrabold text-lg text-slate-900 group-hover:text-red-800 transition-colors leading-snug">
                   {item.name}
                 </h3>
                 <p className="text-xs text-slate-500 line-clamp-2 mt-1 leading-relaxed">
@@ -72,7 +72,7 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
                 <div className="flex flex-col">
                   <span className="text-[10px] text-slate-400 font-semibold uppercase">Harga Promo</span>
                   <div className="flex items-baseline gap-2">
-                    <span className="text-xl font-black text-red-600">
+                    <span className="text-xl font-black text-red-800">
                       {formatRupiah(item.promoPrice)}
                     </span>
                     <span className="text-xs text-slate-400 line-through font-medium">
@@ -86,7 +86,7 @@ export default function SignatureSection({ onAddToCart, onQuickView }) {
                     e.stopPropagation();
                     onAddToCart(item);
                   }}
-                  className="px-4 py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all active:scale-95"
+                  className="px-4 py-2.5 rounded-full bg-red-800 hover:bg-red-900 text-white text-xs font-bold shadow-sm flex items-center gap-1.5 transition-all active:scale-95"
                 >
                   <ShoppingBag className="w-4 h-4" />
                   <span>Tambah</span>

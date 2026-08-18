@@ -24,7 +24,7 @@ export default function MenuCard({ item, onAddToCart, onQuickView }) {
           </div>
 
           {item.isBestSeller && (
-            <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+            <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-800 text-white text-[10px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
               <Flame className="w-3 h-3" />
               <span>Best Seller</span>
             </div>
@@ -38,7 +38,7 @@ export default function MenuCard({ item, onAddToCart, onQuickView }) {
         </div>
 
         {/* Title & Description */}
-        <h3 className="font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-red-600 transition-colors leading-snug line-clamp-1">
+        <h3 className="font-extrabold text-base sm:text-lg text-slate-900 group-hover:text-red-800 transition-colors leading-snug line-clamp-1">
           {item.name}
         </h3>
         <p className="text-xs text-slate-500 line-clamp-2 mt-1 leading-relaxed font-normal">
@@ -49,7 +49,7 @@ export default function MenuCard({ item, onAddToCart, onQuickView }) {
         {item.toppingsIncluded && item.toppingsIncluded.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1">
             {item.toppingsIncluded.slice(0, 3).map((top, idx) => (
-              <span key={idx} className="px-2 py-0.5 rounded-full bg-red-50 text-red-700 text-[10px] font-medium border border-red-100">
+              <span key={idx} className="px-2 py-0.5 rounded-full bg-red-50 text-red-900 text-[10px] font-bold border border-red-100">
                 {top}
               </span>
             ))}
@@ -67,7 +67,7 @@ export default function MenuCard({ item, onAddToCart, onQuickView }) {
         <div className="flex flex-col">
           <span className="text-[10px] text-slate-400 font-semibold uppercase">Harga</span>
           <div className="flex items-baseline gap-1.5">
-            <span className="text-base sm:text-lg font-black text-red-600">
+            <span className="text-base sm:text-lg font-black text-red-800">
               {formatRupiah(item.promoPrice || item.price)}
             </span>
             {item.promoPrice && (
@@ -83,7 +83,7 @@ export default function MenuCard({ item, onAddToCart, onQuickView }) {
             e.stopPropagation();
             onAddToCart(item);
           }}
-          className="px-3.5 py-2 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs font-bold shadow-sm flex items-center gap-1 transition-all active:scale-95"
+          className="px-3.5 py-2 rounded-full bg-red-800 hover:bg-red-900 text-white text-xs font-bold shadow-sm flex items-center gap-1 transition-all active:scale-95"
         >
           <Plus className="w-4 h-4" />
           <span>Pesan</span>

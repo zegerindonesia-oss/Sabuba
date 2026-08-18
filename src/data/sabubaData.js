@@ -221,7 +221,7 @@ export const SABUBA_DATA = {
     {
       id: "t3",
       name: "Dedi Kurniawan",
-      role: "Mitra Franchise",
+      role: "Mitra Kemitraan Usaha",
       comment: "Bergabung jadi mitra Sabuba keputusannya tepat banget. Sistem operasionalnya simpel, produknya disukai banyak orang.",
       rating: 5
     }
