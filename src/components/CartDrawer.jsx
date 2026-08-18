@@ -1,167 +1,157 @@
 import React from 'react';
-import { X, Trash2, Plus, Minus, Send, ShoppingBag, Flame, Sparkles } from 'lucide-react';
-import { SABUBA_DATA } from '../data/sabubaData';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { formatRupiah } from '../data/sabubaData';
 
-export default function CartDrawer({ isOpen, onClose, cartItems, onUpdateQuantity, onRemoveItem, onClearCart }) {
-  if (!isOpen) return null;
-
-  const grandTotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
-
-  const handleCheckoutWhatsApp = () => {
-    if (cartItems.length === 0) return;
-
-    let text = `*PESANAN BUBUR BAKAR SABUBA ONLINE*%0A`;
-    text += `=================================%0A%0A`;
-
-    cartItems.forEach((item, idx) => {
-      text += `*${idx + 1}. ${item.name}* (x${item.quantity})%0A`;
-      text += `   • Level Pedas: Level ${item.spicyLevel}%0A`;
-      if (item.selectedToppings && item.selectedToppings.length > 0) {
-        text += `   • Extra Topping: ${item.selectedToppings.map(t => t.name).join(', ')}%0A`;
-      }
-      if (item.notes) {
-        text += `   • Catatan: ${item.notes}%0A`;
-      }
-      text += `   • Subtotal: Rp ${item.totalPrice.toLocaleString('id-ID')}%0A%0A`;
-    });
-
-    text += `=================================%0A`;
-    text += `*TOTAL PEMBAYARAN: Rp ${grandTotal.toLocaleString('id-ID')}*%0A%0A`;
-    text += `Mohon info estimasi jam penyiapan / pengiriman. Terima kasih Sabuba!`;
-
-    window.open(`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=${text}`, '_blank');
-  };
+export default function CartDrawer({
+  isOpen,
+  onClose,
+  cartItems,
+  onUpdateQuantity,
+  onRemoveItem,
+  onProceedCheckout
+}) {
+  const subtotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-sabuba-dark/80 backdrop-blur-sm animate-fadeIn">
-      <div className="absolute inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white border-l border-sabuba-red/20 shadow-2xl flex flex-col justify-between">
-          
-          {/* Drawer Header */}
-          <div className="p-6 bg-sabuba-dark text-white flex items-center justify-between border-b border-sabuba-red/30">
-            <div className="flex items-center gap-2">
-              <ShoppingBag className="w-6 h-6 text-sabuba-amber" />
-              <h3 className="font-heading font-extrabold text-xl">Keranjang Pesanan</h3>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50"
+          />
 
-          {/* Cart Items List */}
-          <div className="p-6 overflow-y-auto flex-1 space-y-4">
-            {cartItems.length === 0 ? (
-              <div className="text-center py-16 space-y-4">
-                <div className="w-16 h-16 bg-sabuba-creambg text-sabuba-red rounded-full flex items-center justify-center mx-auto border border-sabuba-red/20">
-                  <ShoppingBag className="w-8 h-8" />
+          {/* Slide-over Drawer */}
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white text-slate-800 z-50 shadow-2xl flex flex-col justify-between border-l border-red-100"
+          >
+            {/* Drawer Header */}
+            <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-white">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-red-50 text-red-600 flex items-center justify-center font-bold">
+                  <ShoppingBag className="w-4 h-4" />
                 </div>
-                <h4 className="font-heading font-bold text-lg text-sabuba-dark">Keranjang Masih Kosong</h4>
-                <p className="text-xs text-gray-500 max-w-xs mx-auto">
-                  Pilih menu Bubur Bakar, Wonton, atau Laksa favorit Anda untuk menambahkan ke keranjang.
-                </p>
+                <div>
+                  <h3 className="font-extrabold text-base text-slate-900 leading-none">Keranjang Pesanan</h3>
+                  <span className="text-xs text-slate-500">{cartItems.length} Jenis Menu</span>
+                </div>
               </div>
-            ) : (
-              cartItems.map((item) => (
-                <div
-                  key={item.cartId}
-                  className="bg-sabuba-creambg p-4 rounded-2xl border border-sabuba-red/10 flex gap-3 text-left relative group"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-16 h-16 rounded-xl object-cover border border-sabuba-red/20 flex-shrink-0"
-                  />
+              <button
+                onClick={onClose}
+                className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-                  <div className="flex-1 space-y-1">
-                    <div className="flex items-start justify-between">
-                      <h4 className="font-heading font-bold text-sm text-sabuba-dark pr-6">
-                        {item.name}
+            {/* Cart Items List */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-4">
+              {cartItems.length > 0 ? (
+                cartItems.map((cartItem) => (
+                  <div
+                    key={cartItem.cartId}
+                    className="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-3 relative group"
+                  >
+                    <img
+                      src={cartItem.image || '/assets/Foto Menu (1).png'}
+                      alt={cartItem.name}
+                      className="w-16 h-16 rounded-xl object-cover shrink-0 bg-white"
+                    />
+
+                    <div className="flex-1">
+                      <h4 className="font-extrabold text-sm text-slate-900 leading-tight">
+                        {cartItem.name}
                       </h4>
-                      <button
-                        onClick={() => onRemoveItem(item.cartId)}
-                        className="text-gray-400 hover:text-sabuba-red p-1"
-                        title="Hapus"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-[11px] text-sabuba-red font-semibold">
-                      <span>🌶️ Level {item.spicyLevel}</span>
-                      {item.selectedToppings?.length > 0 && (
-                        <span>• +{item.selectedToppings.length} Topping</span>
+                      
+                      {cartItem.selectedToppings && cartItem.selectedToppings.length > 0 && (
+                        <div className="mt-1 flex flex-wrap gap-1">
+                          {cartItem.selectedToppings.map((top, idx) => (
+                            <span key={idx} className="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded font-medium">
+                              +{top.name}
+                            </span>
+                          ))}
+                        </div>
                       )}
-                    </div>
 
-                    {item.notes && (
-                      <p className="text-[11px] text-gray-500 italic">
-                        "{item.notes}"
-                      </p>
-                    )}
+                      {cartItem.notes && (
+                        <p className="text-[10px] text-slate-500 italic mt-0.5">
+                          "{cartItem.notes}"
+                        </p>
+                      )}
 
-                    <div className="flex items-center justify-between pt-2">
-                      <span className="font-heading font-black text-sabuba-dark text-sm">
-                        Rp {item.totalPrice.toLocaleString('id-ID')}
-                      </span>
-
-                      {/* Quantity Modifier */}
-                      <div className="flex items-center gap-2 bg-white px-2 py-1 rounded-lg border border-gray-200">
-                        <button
-                          onClick={() => onUpdateQuantity(item.cartId, item.quantity - 1)}
-                          className="text-gray-500 hover:text-sabuba-red"
-                        >
-                          <Minus className="w-3.5 h-3.5" />
-                        </button>
-                        <span className="text-xs font-bold text-sabuba-dark w-4 text-center">
-                          {item.quantity}
+                      <div className="flex items-center justify-between mt-3">
+                        <span className="font-black text-sm text-red-600">
+                          {formatRupiah(cartItem.totalPrice)}
                         </span>
-                        <button
-                          onClick={() => onUpdateQuantity(item.cartId, item.quantity + 1)}
-                          className="text-gray-500 hover:text-sabuba-red"
-                        >
-                          <Plus className="w-3.5 h-3.5" />
-                        </button>
+
+                        <div className="flex items-center gap-2 bg-white rounded-full p-1 border border-slate-200 shadow-sm">
+                          <button
+                            onClick={() => onUpdateQuantity(cartItem.cartId, cartItem.quantity - 1)}
+                            className="p-1 rounded-full text-slate-600 hover:bg-slate-100"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <span className="text-xs font-bold min-w-[16px] text-center">{cartItem.quantity}</span>
+                          <button
+                            onClick={() => onUpdateQuantity(cartItem.cartId, cartItem.quantity + 1)}
+                            className="p-1 rounded-full text-slate-600 hover:bg-slate-100"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
                       </div>
                     </div>
 
+                    <button
+                      onClick={() => onRemoveItem(cartItem.cartId)}
+                      className="p-1.5 text-slate-400 hover:text-red-600 transition-colors"
+                      title="Hapus menu"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
                   </div>
+                ))
+              ) : (
+                <div className="py-20 text-center text-slate-400">
+                  <ShoppingBag className="w-12 h-12 mx-auto stroke-1 mb-2 opacity-50" />
+                  <p className="font-bold text-slate-600">Keranjang Masih Kosong</p>
+                  <p className="text-xs text-slate-400 mt-1">Silakan pilih menu favorit Anda terlebih dahulu.</p>
                 </div>
-              ))
-            )}
-          </div>
-
-          {/* Drawer Footer */}
-          {cartItems.length > 0 && (
-            <div className="p-6 bg-white border-t border-gray-100 space-y-4">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500 font-medium">Subtotal ({cartItems.length} Item)</span>
-                <span className="font-heading font-black text-xl text-sabuba-red">
-                  Rp {grandTotal.toLocaleString('id-ID')}
-                </span>
-              </div>
-
-              <button
-                onClick={handleCheckoutWhatsApp}
-                className="w-full flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white py-4 rounded-xl font-heading font-extrabold text-base shadow-lg transition-all active:scale-95"
-              >
-                <Send className="w-5 h-5" />
-                <span>Pesan Langsung via WhatsApp</span>
-              </button>
-
-              <button
-                onClick={onClearCart}
-                className="w-full text-center text-xs text-gray-400 hover:text-sabuba-red font-medium py-1"
-              >
-                Kosongkan Keranjang
-              </button>
+              )}
             </div>
-          )}
 
-        </div>
-      </div>
-    </div>
+            {/* Footer Summary & Checkout Button */}
+            {cartItems.length > 0 && (
+              <div className="p-5 border-t border-slate-100 bg-white space-y-3">
+                <div className="flex justify-between items-center text-xs text-slate-500">
+                  <span>Subtotal Pesanan</span>
+                  <span className="font-bold text-slate-800 text-sm">{formatRupiah(subtotal)}</span>
+                </div>
+                
+                <button
+                  onClick={onProceedCheckout}
+                  className="w-full py-3.5 px-5 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-sm shadow-md flex items-center justify-between transition-all active:scale-95"
+                >
+                  <span>Lanjut Pembayaran</span>
+                  <div className="flex items-center gap-1">
+                    <span>{formatRupiah(subtotal)}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                </button>
+              </div>
+            )}
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
   );
 }

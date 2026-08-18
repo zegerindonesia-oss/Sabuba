@@ -1,136 +1,102 @@
 import React, { useState } from 'react';
-import { Store, Tent, Building2, Coffee, Check, ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { SABUBA_DATA } from '../data/sabubaData';
+import { CheckCircle2, ArrowUpRight, Flame } from 'lucide-react';
 
 export default function ConceptGallery() {
-  const [selectedConcept, setSelectedConcept] = useState(SABUBA_DATA.concepts[0]);
-
-  const conceptIcons = {
-    tenda: <Tent className="w-5 h-5" />,
-    restaurant: <Building2 className="w-5 h-5" />,
-    booth: <Store className="w-5 h-5" />,
-    'zeger-collab': <Coffee className="w-5 h-5" />
-  };
+  const [activeConceptIdx, setActiveConceptIdx] = useState(0);
+  const activeConcept = SABUBA_DATA.concepts[activeConceptIdx];
 
   return (
-    <section id="concepts" className="py-20 bg-sabuba-creambg relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="konsep" className="py-20 bg-white text-slate-800 border-t border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 bg-sabuba-red/10 border border-sabuba-red/30 px-4 py-1.5 rounded-full text-xs font-extrabold text-sabuba-red uppercase tracking-wider">
-            <Store className="w-4 h-4" />
-            <span>Fleksibilitas Model Usaha</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-heading font-extrabold text-sabuba-dark">
-            Konsep Outlet <span className="text-sabuba-red">Sabuba</span>
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <span className="text-xs font-black tracking-widest text-red-600 uppercase">Inovasi Outlet</span>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
+            4 Konsep Kemitraan & Outlet Sabuba
           </h2>
-          <p className="text-gray-600 text-base sm:text-lg">
-            Didesain adaptif untuk berbagai tipe lokasi strategis, mulai dari street food pagi hari, booth indoor, hingga resto modern.
+          <p className="text-slate-600 text-xs sm:text-sm mt-1">
+            Fleksibel untuk berbagai lokasi usaha sarapan & tempat nongkrong kekinian.
           </p>
         </div>
 
-        {/* Concept Switcher Buttons */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
-          {SABUBA_DATA.concepts.map((concept) => {
-            const isSelected = selectedConcept.id === concept.id;
+        {/* Concept Selector Pills */}
+        <div className="flex justify-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
+          {SABUBA_DATA.concepts.map((concept, idx) => {
+            const isActive = activeConceptIdx === idx;
             return (
               <button
                 key={concept.id}
-                type="button"
-                onClick={() => setSelectedConcept(concept)}
-                className={`p-4 rounded-2xl font-heading font-bold text-left transition-all duration-300 flex items-center gap-3 border cursor-pointer ${
-                  isSelected
-                    ? 'bg-sabuba-red text-white border-sabuba-red shadow-flame scale-[1.02]'
-                    : 'bg-white text-sabuba-dark border-gray-200 hover:border-sabuba-red/40 hover:bg-sabuba-red/5'
+                onClick={() => setActiveConceptIdx(idx)}
+                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all ${
+                  isActive
+                    ? 'bg-red-600 text-white shadow-md'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                <div className={`p-2.5 rounded-xl ${
-                  isSelected ? 'bg-white/20 text-white' : 'bg-sabuba-creambg text-sabuba-red'
-                }`}>
-                  {conceptIcons[concept.id]}
-                </div>
-                <div>
-                  <p className="text-sm sm:text-base leading-tight">{concept.title}</p>
-                  <p className={`text-[11px] font-normal mt-0.5 ${isSelected ? 'text-gray-200' : 'text-gray-500'}`}>
-                    {concept.id === 'tenda' && 'Outdoor Street Food'}
-                    {concept.id === 'restaurant' && 'Dine-In Modern'}
-                    {concept.id === 'booth' && 'Compact Hub'}
-                    {concept.id === 'zeger-collab' && 'Coffee Pairing'}
-                  </p>
-                </div>
+                {concept.title}
               </button>
             );
           })}
         </div>
 
-        {/* Selected Concept Showcase Card */}
-        <div className="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-xl grid grid-cols-1 lg:grid-cols-12">
+        {/* Active Concept Showcase Card */}
+        <div className="bg-slate-50 rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Left: Big Image Preview with key for instant re-render */}
-          <div className="lg:col-span-7 relative h-80 sm:h-96 lg:h-[450px] overflow-hidden bg-sabuba-dark">
-            <img
-              key={selectedConcept.id}
-              src={selectedConcept.image}
-              alt={selectedConcept.title}
-              className="w-full h-full object-cover transition-all duration-500 animate-fadeIn hover:scale-105"
+          {/* Image Side */}
+          <div className="lg:col-span-7 relative h-64 sm:h-96 rounded-2xl overflow-hidden shadow-md bg-white">
+            <motion.img
+              key={activeConcept.id}
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              src={activeConcept.image}
+              alt={activeConcept.title}
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-sabuba-dark/80 via-transparent to-transparent lg:hidden" />
-            
-            <div className="absolute bottom-4 left-4 right-4 lg:hidden">
-              <span className="bg-sabuba-red text-white text-xs font-bold px-3 py-1 rounded-full uppercase">
-                {selectedConcept.title}
-              </span>
+            <div className="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-red-600 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5">
+              <Flame className="w-3.5 h-3.5" />
+              <span>Konsep #{activeConceptIdx + 1}</span>
             </div>
           </div>
 
-          {/* Right: Concept Details & Value Proposition */}
-          <div className="lg:col-span-5 p-8 lg:p-10 flex flex-col justify-between space-y-6 text-left">
-            <div>
-              <div className="inline-flex items-center gap-2 bg-sabuba-gold/20 text-sabuba-dark text-xs font-bold px-3 py-1 rounded-full border border-sabuba-gold/40">
-                <Sparkles className="w-3.5 h-3.5 text-sabuba-red" />
-                <span>Visualisasi Konsep Nyata</span>
-              </div>
+          {/* Details Side */}
+          <div className="lg:col-span-5 flex flex-col justify-center">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
+              {activeConcept.title}
+            </h3>
+            <p className="text-xs sm:text-sm font-bold text-red-600 mt-1">
+              "{activeConcept.tagline}"
+            </p>
 
-              <h3 className="text-2xl sm:text-3xl font-heading font-extrabold text-sabuba-dark mt-3">
-                {selectedConcept.title}
-              </h3>
-              
-              <p className="text-sabuba-red font-bold text-sm sm:text-base mt-2">
-                "{selectedConcept.tagline}"
-              </p>
+            <p className="text-xs sm:text-sm text-slate-600 mt-4 leading-relaxed">
+              {activeConcept.description}
+            </p>
 
-              <p className="text-gray-600 text-sm sm:text-base mt-4 leading-relaxed">
-                {selectedConcept.description}
-              </p>
-
-              {/* Highlights Checklist */}
-              <div className="mt-6 space-y-3 border-t border-gray-100 pt-6">
-                <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
-                  Keunggulan Konsep Ini:
-                </p>
-                {selectedConcept.highlights.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                    </div>
-                    <span className="text-sm font-semibold text-sabuba-dark">{item}</span>
-                  </div>
-                ))}
-              </div>
+            {/* Highlights List */}
+            <div className="mt-6 space-y-2.5">
+              {activeConcept.highlights.map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800">
+                  <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0" />
+                  <span>{item}</span>
+                </div>
+              ))}
             </div>
 
-            {/* CTA */}
-            <div className="pt-4 border-t border-gray-100">
+            {/* Consultation CTA */}
+            <div className="mt-8 pt-6 border-t border-slate-200">
               <a
-                href="#franchise"
-                className="inline-flex items-center gap-2 bg-sabuba-dark hover:bg-sabuba-red text-white px-6 py-3.5 rounded-xl font-heading font-bold text-sm shadow transition-all duration-300 active:scale-95"
+                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20${encodeURIComponent(activeConcept.title)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 text-white text-xs sm:text-sm font-bold shadow-md transition-all active:scale-95"
               >
-                <span>Tanya Kemitraan Konsep Ini</span>
-                <ArrowRight className="w-4 h-4" />
+                <span>Konsultasi Konsep via WA</span>
+                <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
-
           </div>
 
         </div>

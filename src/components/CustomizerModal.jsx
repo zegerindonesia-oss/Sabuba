@@ -1,214 +1,188 @@
 import React, { useState } from 'react';
-import { X, Flame, Plus, Minus, ShoppingBag, Check } from 'lucide-react';
-import confetti from 'canvas-confetti';
-import { SABUBA_DATA } from '../data/sabubaData';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Plus, Minus, Star, ShoppingBag, Check } from 'lucide-react';
+import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
 
-export default function CustomizerModal({ item, onClose, onAddToCart }) {
-  if (!item) return null;
+export default function CustomizerModal({ item, isOpen, onClose, onAddToCart }) {
+  if (!item || !isOpen) return null;
 
-  const [spicyLevel, setSpicyLevel] = useState(item.spicyLevel || 0);
-  const [selectedToppings, setSelectedToppings] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [selectedToppings, setSelectedToppings] = useState([]);
   const [notes, setNotes] = useState('');
 
-  const toggleTopping = (topping) => {
-    if (selectedToppings.some(t => t.id === topping.id)) {
-      setSelectedToppings(selectedToppings.filter(t => t.id !== topping.id));
-    } else {
-      setSelectedToppings([...selectedToppings, topping]);
-    }
+  const basePrice = item.promoPrice || item.price || 0;
+  
+  const toppingsTotal = selectedToppings.reduce((sum, topId) => {
+    const topObj = SABUBA_DATA.extraToppings.find(t => t.id === topId);
+    return sum + (topObj ? topObj.price : 0);
+  }, 0);
+
+  const totalPrice = (basePrice + toppingsTotal) * quantity;
+
+  const toggleTopping = (topId) => {
+    setSelectedToppings(prev =>
+      prev.includes(topId) ? prev.filter(id => id !== topId) : [...prev, topId]
+    );
   };
 
-  const toppingsPrice = selectedToppings.reduce((sum, t) => sum + t.price, 0);
-  const unitPrice = item.promoPrice + toppingsPrice;
-  const totalPrice = unitPrice * quantity;
+  const handleAdd = () => {
+    const selectedToppingObjects = selectedToppings.map(id =>
+      SABUBA_DATA.extraToppings.find(t => t.id === id)
+    ).filter(Boolean);
 
-  const handleConfirm = () => {
-    confetti({
-      particleCount: 60,
-      spread: 70,
-      origin: { y: 0.7 }
-    });
-
-    onAddToCart({
-      cartId: `${item.id}-${Date.now()}`,
-      id: item.id,
-      name: item.name,
-      image: item.image,
-      unitPrice,
-      quantity,
-      totalPrice,
-      spicyLevel,
-      selectedToppings,
-      notes
-    });
-
+    onAddToCart(item, quantity, selectedToppingObjects, notes);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-sabuba-dark/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-white rounded-3xl max-w-xl w-full max-h-[90vh] overflow-y-auto border border-sabuba-red/20 shadow-2xl relative">
-        
-        {/* Header Bar */}
-        <div className="sticky top-0 bg-white/95 backdrop-blur-md px-6 py-4 border-b border-gray-100 flex items-center justify-between z-10">
-          <div className="flex items-center gap-2">
-            <Flame className="w-5 h-5 text-sabuba-red fill-sabuba-red" />
-            <h3 className="font-heading font-extrabold text-xl text-sabuba-dark">
-              Kustomisasi Pesanan
-            </h3>
-          </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-sabuba-dark p-1.5 rounded-full hover:bg-gray-100 transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
+    <AnimatePresence>
+      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4">
+        {/* Backdrop */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+        />
 
-        {/* Modal Body */}
-        <div className="p-6 space-y-6">
-          
-          {/* Selected Item Preview */}
-          <div className="flex gap-4 items-center bg-sabuba-creambg p-4 rounded-2xl border border-sabuba-red/10">
+        {/* Modal Window */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: 20 }}
+          className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-100 z-10 my-8"
+        >
+          {/* Header Image */}
+          <div className="relative h-56 w-full bg-slate-100">
             <img
               src={item.image}
               alt={item.name}
-              className="w-20 h-20 rounded-xl object-cover border border-sabuba-red/20"
+              className="w-full h-full object-cover"
             />
-            <div>
-              <h4 className="font-heading font-bold text-lg text-sabuba-dark">{item.name}</h4>
-              <div className="flex items-center gap-2 mt-1">
-                <span className="text-gray-400 line-through text-xs">
-                  Rp {item.price.toLocaleString('id-ID')}
-                </span>
-                <span className="text-sabuba-red font-black text-base">
-                  Rp {item.promoPrice.toLocaleString('id-ID')}
-                </span>
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 rounded-full bg-slate-900/70 text-white hover:bg-slate-900 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            {item.promoPrice && (
+              <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-red-600 text-white text-xs font-black uppercase shadow-md">
+                Promo Hemat
+              </div>
+            )}
+          </div>
+
+          {/* Modal Content */}
+          <div className="p-6">
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="text-xl font-extrabold text-slate-900 leading-snug">
+                  {item.name}
+                </h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-lg font-black text-red-600">
+                    {formatRupiah(basePrice)}
+                  </span>
+                  {item.promoPrice && (
+                    <span className="text-xs text-slate-400 line-through">
+                      {formatRupiah(item.price)}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="px-2.5 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold flex items-center gap-1 border border-amber-200">
+                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                <span>4.9</span>
               </div>
             </div>
-          </div>
 
-          {/* Spicy Level Picker */}
-          <div>
-            <label className="block text-sm font-heading font-bold text-sabuba-dark mb-2">
-              Pilih Level Pedas (Chili Oil Sabuba):
-            </label>
-            <div className="grid grid-cols-5 gap-2">
-              {[
-                { lvl: 0, label: 'Ori (0)' },
-                { lvl: 1, label: 'Sedang (1)' },
-                { lvl: 2, label: 'Pedas (2)' },
-                { lvl: 3, label: 'Mantap (3)' },
-                { lvl: 5, label: 'Extreem (5)' },
-              ].map((sp) => (
-                <button
-                  key={sp.lvl}
-                  onClick={() => setSpicyLevel(sp.lvl)}
-                  className={`py-2 px-1 rounded-xl text-xs font-bold transition-all ${
-                    spicyLevel === sp.lvl
-                      ? 'bg-sabuba-red text-white shadow-md scale-105'
-                      : 'bg-gray-100 text-gray-700 hover:bg-sabuba-red/10'
-                  }`}
-                >
-                  {sp.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Extra Toppings Checklist */}
-          <div>
-            <label className="block text-sm font-heading font-bold text-sabuba-dark mb-2">
-              Tambah Ekstra Topping:
-            </label>
-            <div className="space-y-2">
-              {SABUBA_DATA.extraToppings.map((top) => {
-                const isChecked = selectedToppings.some(t => t.id === top.id);
-                return (
-                  <div
-                    key={top.id}
-                    onClick={() => toggleTopping(top)}
-                    className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-all ${
-                      isChecked
-                        ? 'border-sabuba-red bg-sabuba-red/5 font-semibold'
-                        : 'border-gray-200 hover:border-sabuba-red/30'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-md flex items-center justify-center border ${
-                        isChecked ? 'bg-sabuba-red border-sabuba-red text-white' : 'border-gray-300'
-                      }`}>
-                        {isChecked && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                      </div>
-                      <span className="text-sm text-sabuba-dark">{top.name}</span>
-                    </div>
-                    <span className="text-xs text-sabuba-red font-bold">
-                      +Rp {top.price.toLocaleString('id-ID')}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Special Requests / Notes */}
-          <div>
-            <label className="block text-sm font-heading font-bold text-sabuba-dark mb-1">
-              Catatan Khusus (Opsional):
-            </label>
-            <input
-              type="text"
-              placeholder="Contoh: Pisah pangsit, daun bawang dibanyakin..."
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-sabuba-red"
-            />
-          </div>
-
-          {/* Quantity Selector */}
-          <div className="flex items-center justify-between pt-2">
-            <span className="text-sm font-heading font-bold text-sabuba-dark">Jumlah Porsi:</span>
-            <div className="flex items-center gap-3 bg-gray-100 p-1.5 rounded-xl">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-8 h-8 rounded-lg bg-white shadow flex items-center justify-center text-sabuba-dark font-bold hover:bg-sabuba-red hover:text-white transition-colors"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <span className="w-8 text-center font-heading font-bold text-base">
-                {quantity}
-              </span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-8 h-8 rounded-lg bg-white shadow flex items-center justify-center text-sabuba-dark font-bold hover:bg-sabuba-red hover:text-white transition-colors"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Modal Footer */}
-        <div className="sticky bottom-0 bg-white/95 backdrop-blur-md p-6 border-t border-gray-100 flex items-center justify-between gap-4">
-          <div>
-            <span className="text-xs text-gray-500 font-medium">Total Harga</span>
-            <p className="text-2xl font-heading font-black text-sabuba-red">
-              Rp {totalPrice.toLocaleString('id-ID')}
+            <p className="text-xs text-slate-600 mt-2 leading-relaxed">
+              {item.description}
             </p>
+
+            {/* Extra Toppings Selector */}
+            {SABUBA_DATA.extraToppings && (
+              <div className="mt-6 pt-4 border-t border-slate-100">
+                <h4 className="font-extrabold text-xs text-slate-900 uppercase tracking-wider mb-3">
+                  Pilih Ekstra Topping (Opsional)
+                </h4>
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {SABUBA_DATA.extraToppings.map((topping) => {
+                    const isChecked = selectedToppings.includes(topping.id);
+                    return (
+                      <label
+                        key={topping.id}
+                        onClick={() => toggleTopping(topping.id)}
+                        className={`flex items-center justify-between p-3 rounded-2xl border text-xs cursor-pointer transition-all ${
+                          isChecked
+                            ? 'bg-red-50 border-red-300 text-red-900 font-bold'
+                            : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <div className={`w-4 h-4 rounded-md flex items-center justify-center border ${
+                            isChecked ? 'bg-red-600 border-red-600 text-white' : 'border-slate-300 bg-white'
+                          }`}>
+                            {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
+                          </div>
+                          <span>{topping.name}</span>
+                        </div>
+                        <span className="font-bold text-red-600">+{formatRupiah(topping.price)}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Catatan Khusus */}
+            <div className="mt-4">
+              <label className="block text-xs font-bold text-slate-700 mb-1">Catatan Khusus</label>
+              <input
+                type="text"
+                placeholder="misal: Kurangi kecap, pedas sedang, pisah pangsit..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-red-600 text-slate-800"
+              />
+            </div>
+
+            {/* Bottom Actions */}
+            <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+              {/* Quantity Counter */}
+              <div className="flex items-center gap-3 bg-slate-100 rounded-full p-1.5 border border-slate-200">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="p-1.5 rounded-full bg-white text-slate-700 hover:bg-slate-200 transition-colors"
+                >
+                  <Minus className="w-4 h-4" />
+                </button>
+                <span className="font-extrabold text-sm min-w-[20px] text-center">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="p-1.5 rounded-full bg-white text-slate-700 hover:bg-slate-200 transition-colors"
+                >
+                  <Plus className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Add Button */}
+              <button
+                onClick={handleAdd}
+                className="flex-1 py-3 px-5 rounded-full bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm shadow-md flex items-center justify-between transition-all active:scale-95"
+              >
+                <span className="flex items-center gap-1.5">
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Tambah Pesanan</span>
+                </span>
+                <span>{formatRupiah(totalPrice)}</span>
+              </button>
+            </div>
+
           </div>
-
-          <button
-            onClick={handleConfirm}
-            className="flex-1 flex items-center justify-center gap-2 bg-sabuba-red hover:bg-sabuba-darkred text-white py-3.5 px-6 rounded-xl font-heading font-bold text-base shadow-flame hover:shadow-glow transition-all active:scale-95"
-          >
-            <ShoppingBag className="w-5 h-5" />
-            <span>Masukkan Keranjang</span>
-          </button>
-        </div>
-
+        </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 }

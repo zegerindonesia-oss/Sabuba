@@ -227,3 +227,13 @@ export const SABUBA_DATA = {
     }
   ]
 };
+
+export const formatRupiah = (amount) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    maximumFractionDigits: 0,
+  }).format(amount);
+};
+
+export const SIGNATURE_ITEMS = SABUBA_DATA.menuItems.filter(item => item.isBestSeller || item.promoPrice);

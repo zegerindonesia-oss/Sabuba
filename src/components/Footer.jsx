@@ -1,93 +1,85 @@
 import React from 'react';
-import { Clock, Phone, Instagram, Facebook, Award } from 'lucide-react';
 import SabubaLogo from './SabubaLogo';
+import { SABUBA_DATA } from '../data/sabubaData';
+import { Clock, MapPin, Phone, ShieldCheck, Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="bg-sabuba-dark text-white border-t border-sabuba-red/30 pt-16 pb-12 relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10 text-left">
+    <footer className="bg-white text-slate-700 border-t border-red-100 pt-16 pb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-100">
           
           {/* Brand Info */}
-          <div className="md:col-span-5 space-y-4">
-            <div>
-              <SabubaLogo className="h-12" variant="light" />
-            </div>
-
-            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed max-w-sm">
-              Sensasi kuliner sarapan pagi khas claypot tanah liat beraroma wangi smoky dengan topping melimpah ganda & siraman chili oil harum khas Sabuba.
+          <div className="md:col-span-4 space-y-4">
+            <SabubaLogo className="h-10" variant="dark" />
+            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+              {SABUBA_DATA.brand.tagline}. Diolah dari bahan berkualitas segar, 100% Halal, dan disajikan hangat dalam claypot khas.
             </p>
-
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-400">
-              <Award className="w-4 h-4" />
-              <span>100% Kemitraan Pasif Autopilot & Halal</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold border border-red-100">
+              <ShieldCheck className="w-4 h-4 text-red-600" />
+              <span>{SABUBA_DATA.brand.halalCert}</span>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="md:col-span-3 space-y-3 text-xs sm:text-sm">
-            <h4 className="font-heading font-bold text-white text-base mb-4 border-b border-sabuba-red/40 pb-2 inline-block">
-              Navigasi Cepat
-            </h4>
-            <ul className="space-y-2 text-gray-300">
-              <li><a href="#hero" className="hover:text-sabuba-gold transition-colors">Beranda Utama</a></li>
-              <li><a href="#menu" className="hover:text-sabuba-gold transition-colors">Daftar Menu Spesial</a></li>
-              <li><a href="#why-us" className="hover:text-sabuba-gold transition-colors">Keunggulan Claypot</a></li>
-              <li><a href="#concepts" className="hover:text-sabuba-gold transition-colors">Galeri Konsep Outlet</a></li>
-              <li><a href="#franchise" className="hover:text-sabuba-gold transition-colors">Kemitraan Autopilot</a></li>
-              <li><a href="#outlets" className="hover:text-sabuba-gold transition-colors">Lokasi Outlets</a></li>
+          <div className="md:col-span-3">
+            <h4 className="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-4">Navigasi Utama</h4>
+            <ul className="space-y-2.5 text-xs font-semibold">
+              <li>
+                <a href="#hero" className="hover:text-red-600 transition-colors">Beranda</a>
+              </li>
+              <li>
+                <a href="#menu" className="hover:text-red-600 transition-colors">Daftar Menu</a>
+              </li>
+              <li>
+                <a href="#konsep" className="hover:text-red-600 transition-colors">Konsep Outlet</a>
+              </li>
+              <li>
+                <a href="#outlet" className="hover:text-red-600 transition-colors">Lokasi Cabang Sidoarjo</a>
+              </li>
+              <li>
+                <a href="#franchise" className="hover:text-red-600 transition-colors">Kemitraan Franchise</a>
+              </li>
             </ul>
           </div>
 
-          {/* Contact & Hours */}
-          <div className="md:col-span-4 space-y-4 text-xs sm:text-sm">
-            <h4 className="font-heading font-bold text-white text-base mb-4 border-b border-sabuba-red/40 pb-2 inline-block">
-              Operasional & Layanan
-            </h4>
-
-            <div className="flex items-start gap-3 text-gray-300">
-              <Clock className="w-5 h-5 text-sabuba-amber flex-shrink-0 mt-0.5" />
+          {/* Jam Operasional */}
+          <div className="md:col-span-5 space-y-3">
+            <h4 className="font-extrabold text-slate-900 text-sm uppercase tracking-wider mb-4">Jam Operasional & Kontak</h4>
+            <div className="flex items-start gap-2 text-xs text-slate-600">
+              <Clock className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-white">Jam Operasional Sarapan:</p>
-                <p className="text-gray-400">Setiap Hari: 06.00 - 11.00 WIB (Sampai Habis)</p>
+                <span className="font-bold text-slate-800">Jam Buka Sarapan Pagi:</span>
+                <p>{SABUBA_DATA.brand.operatingHours}</p>
               </div>
             </div>
-
-            <div className="flex items-start gap-3 text-gray-300">
-              <Phone className="w-5 h-5 text-sabuba-amber flex-shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2 text-xs text-slate-600">
+              <Phone className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold text-white">Layanan Admin & Kemitraan:</p>
-                <p className="text-gray-400">+62 813-5918-0156 (WhatsApp Direct)</p>
+                <span className="font-bold text-slate-800">WhatsApp Resmi Sabuba:</span>
+                <p>+{SABUBA_DATA.brand.whatsapp}</p>
               </div>
             </div>
-
-            <div className="flex items-center gap-3 pt-2">
-              <a
-                href="#"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-sabuba-red flex items-center justify-center text-white transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="w-9 h-9 rounded-xl bg-white/10 hover:bg-sabuba-red flex items-center justify-center text-white transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
+            <div className="flex items-start gap-2 text-xs text-slate-600">
+              <MapPin className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold text-slate-800">Area Layanan Utama:</span>
+                <p>Sidoarjo & Sekitarnya (Cabang A.Yani, RSUD, & Perum Kemiri Indah)</p>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* Copyright Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-          <p>© 2026 Bubur Bakar Sabuba. Hak Cipta Dilindungi Undang-Undang.</p>
-          <p>Dibuat dengan UI Motion & Desain Profesional untuk Bubur Bakar Sabuba.</p>
+        {/* Copyright */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+          <p>© {new Date().getFullYear()} {SABUBA_DATA.brand.name}. All rights reserved.</p>
+          <p className="flex items-center gap-1">
+            <span>Dibuat dengan</span>
+            <Heart className="w-3.5 h-3.5 text-red-600 fill-red-600 inline" />
+            <span>untuk Komunitas Sarapan Pagi</span>
+          </p>
         </div>
-
       </div>
     </footer>
   );

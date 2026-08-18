@@ -1,144 +1,193 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Flame, Menu, X, Award } from 'lucide-react';
+import { ShoppingBag, Menu as MenuIcon, X, Clock, MapPin, Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import SabubaLogo from './SabubaLogo';
+import { SABUBA_DATA } from '../data/sabubaData';
 
-export default function Navbar({ cartCount, onOpenCart }) {
+export default function Navbar({ totalItems, setIsCartOpen, onSearchClick }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 20);
+
+      // Section highlight
+      const sections = ['hero', 'menu', 'konsep', 'outlet', 'franchise'];
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            setActiveSection(section);
+            break;
+          }
+        }
       }
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'Beranda', href: '#hero', id: 'hero' },
+    { name: 'Menu', href: '#menu', id: 'menu' },
+    { name: 'Konsep', href: '#konsep', id: 'konsep' },
+    { name: 'Outlet', href: '#outlet', id: 'outlet' },
+    { name: 'Franchise', href: '#franchise', id: 'franchise' },
+  ];
+
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-sabuba-dark/95 backdrop-blur-md shadow-2xl py-3 border-b border-sabuba-red/20' 
-          : 'bg-gradient-to-b from-sabuba-dark/90 via-sabuba-dark/60 to-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          
-          {/* Pure Sabuba Logo (No Box / No Mockup Frame) */}
-          <a href="#" className="flex items-center group transition-transform hover:scale-105">
-            <SabubaLogo className="h-10 sm:h-12" variant="light" />
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/95 backdrop-blur-md shadow-md py-3 border-b border-red-100/80 text-slate-800'
+            : 'bg-white/90 backdrop-blur-sm py-4 border-b border-slate-100 text-slate-800'
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+          {/* Brand Logo */}
+          <a href="#hero" className="flex items-center gap-2.5 group focus:outline-none">
+            <SabubaLogo className="h-9 sm:h-10" variant="dark" />
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-gray-200">
-            <a href="#hero" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Beranda
-            </a>
-            <a href="#menu" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Menu Spesial
-            </a>
-            <a href="#why-us" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Keunggulan Claypot
-            </a>
-            <a href="#concepts" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Konsep Usaha
-            </a>
-            <a href="#franchise" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Kemitraan Autopilot
-            </a>
-            <a href="#outlets" className="hover:text-sabuba-gold transition-colors py-1 border-b-2 border-transparent hover:border-sabuba-gold">
-              Outlets
-            </a>
-          </nav>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            
-            {/* Promo Badge Desktop */}
-            <div className="hidden lg:flex items-center gap-2 bg-sabuba-red/20 border border-sabuba-red/40 px-3 py-1.5 rounded-full text-xs font-semibold text-sabuba-amber">
-              <Award className="w-4 h-4 text-sabuba-amber" />
-              <span>Mulai Rp 10.000 (Halal)</span>
-            </div>
-
-            {/* Cart Button */}
-            <button
-              onClick={onOpenCart}
-              className="relative flex items-center gap-2 bg-gradient-to-r from-sabuba-red to-sabuba-darkred hover:from-sabuba-darkred hover:to-sabuba-red text-white px-4 py-2.5 rounded-full font-semibold text-sm shadow-flame hover:shadow-glow transition-all duration-300 transform active:scale-95"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span className="hidden sm:inline">Pesanan Saya</span>
-              {cartCount > 0 && (
-                <span className="bg-sabuba-amber text-sabuba-dark text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center animate-bounce">
-                  {cartCount}
-                </span>
-              )}
-            </button>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden text-white p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-              aria-label="Toggle Navigation"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+          {/* Operating Status Badge */}
+          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-100 text-xs font-semibold text-red-700">
+            <Clock className="w-3.5 h-3.5 text-red-600 animate-pulse" />
+            <span>{SABUBA_DATA.brand.operatingHours}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-1"></span>
           </div>
 
-        </div>
-      </div>
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className={`px-4 py-2 rounded-full text-sm font-bold transition-all relative ${
+                    isActive
+                      ? 'text-red-600 bg-red-50'
+                      : 'text-slate-700 hover:text-red-600 hover:bg-slate-50'
+                  }`}
+                >
+                  {link.name}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNavTab"
+                      className="absolute bottom-1 left-4 right-4 h-0.5 bg-red-600 rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              );
+            })}
+          </nav>
 
-      {/* Mobile Nav Overlay */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-sabuba-dark/98 border-b border-sabuba-red/30 backdrop-blur-xl px-4 pt-4 pb-6 mt-3 space-y-4 text-center font-medium text-gray-200 animate-fadeIn">
-          <a
-            href="#hero"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Beranda
-          </a>
-          <a
-            href="#menu"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Menu Spesial
-          </a>
-          <a
-            href="#why-us"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Keunggulan Claypot
-          </a>
-          <a
-            href="#concepts"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Konsep Usaha
-          </a>
-          <a
-            href="#franchise"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Kemitraan Autopilot
-          </a>
-          <a
-            href="#outlets"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block py-2 hover:text-sabuba-gold hover:bg-white/5 rounded-lg"
-          >
-            Cabang Outlets
-          </a>
+          {/* Right Actions: Search & Cart Button */}
+          <div className="flex items-center gap-2.5 sm:gap-3.5">
+            {/* Search Trigger */}
+            <button
+              onClick={onSearchClick}
+              className="p-2.5 rounded-full bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-600 border border-slate-200 transition-colors flex items-center justify-center"
+              aria-label="Cari menu"
+              title="Cari Menu"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
+            {/* Cart Trigger */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center gap-2 active:scale-95"
+              aria-label={`Keranjang pesanan (${totalItems})`}
+            >
+              <ShoppingBag className="w-4 h-4 text-white" />
+              <span className="hidden sm:inline">Keranjang</span>
+              <motion.span
+                key={totalItems}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="bg-white text-red-700 text-[11px] font-extrabold min-w-[20px] h-[20px] px-1.5 rounded-full flex items-center justify-center shadow-sm"
+              >
+                {totalItems}
+              </motion.span>
+            </button>
+
+            {/* Mobile Hamburger Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2.5 rounded-full bg-slate-100 text-slate-800 hover:bg-slate-200 transition-colors"
+              aria-label={isMobileMenuOpen ? 'Tutup menu' : 'Buka menu'}
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
-      )}
-    </header>
+      </header>
+
+      {/* Mobile Drawer Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-900/50 z-40 backdrop-blur-sm md:hidden"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+              className="fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-white text-slate-800 z-50 p-6 flex flex-col justify-between shadow-2xl border-l border-red-100 md:hidden"
+            >
+              <div>
+                <div className="flex items-center justify-between pb-5 border-b border-slate-100">
+                  <SabubaLogo className="h-8" variant="dark" />
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                {/* Operating hours info badge mobile */}
+                <div className="mt-4 p-3 rounded-2xl bg-red-50 border border-red-100 text-xs text-red-700 font-medium flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-red-600 shrink-0" />
+                  <span>{SABUBA_DATA.brand.operatingHours}</span>
+                </div>
+
+                <div className="py-6 flex flex-col gap-2">
+                  {navLinks.map((link) => (
+                    <a
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="px-4 py-3 rounded-2xl text-base font-bold text-slate-700 hover:bg-red-50 hover:text-red-600 transition-colors flex items-center justify-between"
+                    >
+                      <span>{link.name}</span>
+                      <span className="text-xs text-red-600 font-bold">→</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+                <p className="font-semibold text-slate-700">{SABUBA_DATA.brand.name}</p>
+                <p className="mt-0.5">{SABUBA_DATA.brand.halalCert}</p>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
