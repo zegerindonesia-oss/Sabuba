@@ -35,11 +35,12 @@ function doPost(e) {
         "DETAIL PESANAN",
         "CATATAN CUSTOMER",
         "TOTAL PEMBAYARAN (RP)",
-        "STATUS"
+        "STATUS",
+        "BUKTI BAYAR"
       ]);
       
       // Styling header row (Merah Sabuba & Teks Putih Tebal)
-      const headerRange = sheet.getRange(1, 1, 1, 10);
+      const headerRange = sheet.getRange(1, 1, 1, 11);
       headerRange.setBackground("#991B1B");
       headerRange.setFontColor("#FFFFFF");
       headerRange.setFontWeight("bold");
@@ -62,6 +63,7 @@ function doPost(e) {
     const notes = data.notes || "-";
     const totalAmount = data.totalAmount || 0;
     const status = data.status || "Pending WA";
+    const buktiBayarName = data.buktiBayarName || "-";
 
     sheet.appendRow([
       timestamp,
@@ -73,7 +75,8 @@ function doPost(e) {
       itemsDetail,
       notes,
       totalAmount,
-      status
+      status,
+      buktiBayarName
     ]);
 
     return ContentService.createTextOutput(

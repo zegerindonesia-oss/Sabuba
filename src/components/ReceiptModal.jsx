@@ -163,10 +163,15 @@ export default function ReceiptModal({ isOpen, onClose, orderData, onOpenWhatsAp
 
             {/* Footer Struk */}
             <div className="mt-6 text-center pt-4 border-t border-dashed border-slate-300 text-[10px] font-sans text-slate-500 space-y-1">
-              <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-bold uppercase tracking-wider text-[9px] mb-1">
-                STATUS: PESANAN TERJADWAL
+              <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-950 font-black uppercase tracking-wider text-[9px] mb-1 border border-emerald-300">
+                STATUS: LUNAS (QRIS TERJADWAL)
               </div>
-              <p className="font-bold text-slate-700">Terima kasih telah memesan di Sabuba!</p>
+              {orderData.proofFileName && (
+                <p className="text-[9px] text-emerald-800 font-bold">
+                  ✓ Bukti Bayar Terlampir: {orderData.proofFileName}
+                </p>
+              )}
+              <p className="font-bold text-slate-700 mt-1">Terima kasih telah memesan di Sabuba!</p>
               <p>Harap tunjukkan struk ini saat pengambilan/kedatangan di outlet.</p>
               <p className="text-[8px] text-slate-400 pt-2">Powered by Sabuba Digital Order System</p>
             </div>
