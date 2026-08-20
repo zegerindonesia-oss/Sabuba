@@ -6,38 +6,38 @@ export default function CategoryGrid({ activeCategory, onSelectCategory }) {
   const categories = [
     {
       id: 'bubur',
-      name: 'Bubur Bakar Claypot',
-      desc: 'Gurih smoky tanah liat',
+      name: 'Bubur Bakar',
+      desc: 'Sajian hangat khas claypot',
       icon: Flame,
       count: SABUBA_DATA.menuItems.filter(i => i.category === 'bubur').length,
-      image: '/assets/Foto Menu (1).png',
+      image: 'https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800',
       color: 'from-red-800 to-rose-950'
     },
     {
       id: 'wonton',
-      name: 'Wonton & Laksa',
-      desc: 'Pedes gurih & santan rempah',
+      name: 'Dim Sum & Wonton',
+      desc: 'Siomay ayam & dumpling kuah',
       icon: Utensils,
       count: SABUBA_DATA.menuItems.filter(i => i.category === 'wonton').length,
-      image: '/assets/Foto Menu (6).png',
+      image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800',
       color: 'from-rose-900 to-red-950'
-    },
-    {
-      id: 'zeger',
-      name: 'Paket Combo Zeger!',
-      desc: 'Bubur Bakar + Kopi Susu Aren',
-      icon: Coffee,
-      count: SABUBA_DATA.menuItems.filter(i => i.category === 'zeger').length,
-      image: '/assets/Konsep/4. Trial Zeger X Sabuba.png',
-      color: 'from-amber-700 to-red-900'
     },
     {
       id: 'topping',
       name: 'Ekstra Topping',
-      desc: 'Telur, Daging, Pangsit, Chili Oil',
+      desc: 'Telur, Daging, Sate & Krupuk',
       icon: PlusCircle,
       count: SABUBA_DATA.extraToppings.length,
-      image: '/assets/Foto Menu (4).png',
+      image: 'https://drive.google.com/thumbnail?id=1MPhEVlQiNI4RolMIyaAj3INxtzvrIkZ1&sz=w800',
+      color: 'from-amber-700 to-red-900'
+    },
+    {
+      id: 'minuman',
+      name: 'Minuman & Kopi',
+      desc: 'Teh, Kopi Nusantara & Mineral',
+      icon: Coffee,
+      count: SABUBA_DATA.menuItems.filter(i => i.category === 'minuman').length,
+      image: 'https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800',
       color: 'from-red-800 to-rose-900'
     }
   ];

@@ -12,18 +12,67 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
   const [customerPhone, setCustomerPhone] = useState('');
   const [notes, setNotes] = useState('');
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const subtotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
-  const handleSendWhatsApp = (e) => {
+  const handleSendWhatsApp = async (e) => {
     e.preventDefault();
     if (!customerName) {
       alert('Mohon isi nama Anda terlebih dahulu.');
       return;
     }
 
+    setIsSubmitting(true);
+
     const outletObj = SABUBA_DATA.outlets.find(o => o.id === selectedOutlet);
+    const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+    const randId = Math.floor(1000 + Math.random() * 9000);
+    const orderId = `SB-${dateStr}-${randId}`;
+    const timestamp = new Date().toLocaleString('id-ID');
+
+    // Detail string for Google Sheet
+    const itemsDetailText = cartItems.map((item, idx) => {
+      let text = `${idx + 1}. ${item.name} (x${item.quantity}) - ${formatRupiah(item.totalPrice)}`;
+      if (item.selectedToppings && item.selectedToppings.length > 0) {
+        text += ` [Topping: ${item.selectedToppings.map(t => t.name).join(', ')}]`;
+      }
+      if (item.notes) {
+        text += ` [Note: ${item.notes}]`;
+      }
+      return text;
+    }).join('\n');
+
+    // Send payload to Google Apps Script (Auto-save customer & transaction data to Google Sheet)
+    if (SABUBA_DATA.appScriptUrl) {
+      try {
+        const payload = {
+          orderId,
+          timestamp,
+          customerName,
+          customerPhone: customerPhone || '-',
+          orderType: orderType === 'dine-in' ? 'Dine-In' : orderType === 'takeaway' ? 'Takeaway' : 'Delivery',
+          outlet: outletObj ? outletObj.name : 'Utama',
+          itemsDetail: itemsDetailText,
+          notes: notes || '-',
+          totalAmount: subtotal,
+          status: 'Pending WA'
+        };
+
+        await fetch(SABUBA_DATA.appScriptUrl, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        });
+      } catch (err) {
+        console.warn('Google Sheet auto-save status:', err);
+      }
+    }
 
     let message = `*HALO SABUBA! SAYA INGIN PESAN SARAPAN BUBUR BAKAR*\n\n`;
+    message += `📋 *ID Transaksi:* #${orderId}\n`;
     message += `👤 *Nama:* ${customerName}\n`;
     if (customerPhone) message += `📞 *No. WA:* ${customerPhone}\n`;
     message += `📍 *Cabang Outlet:* ${outletObj ? outletObj.name : 'Utama'}\n`;
@@ -47,6 +96,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
     const encodedMessage = encodeURIComponent(message);
     const waUrl = `https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=${encodedMessage}`;
     
+    setIsSubmitting(false);
     window.open(waUrl, '_blank');
     onClose();
   };
@@ -198,10 +248,11 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3.5 px-6 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
+              disabled={isSubmitting}
+              className="w-full py-3.5 px-6 rounded-full bg-emerald-700 hover:bg-emerald-800 disabled:bg-slate-400 text-white font-extrabold text-sm shadow-lg flex items-center justify-center gap-2 transition-all active:scale-95"
             >
               <Send className="w-4 h-4" />
-              <span>Kirim Pesanan via WhatsApp</span>
+              <span>{isSubmitting ? 'Menyimpan & Membuka WA...' : 'Kirim Pesanan via WhatsApp'}</span>
             </button>
           </form>
         </motion.div>

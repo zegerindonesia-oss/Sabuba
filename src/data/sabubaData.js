@@ -9,130 +9,302 @@ export const SABUBA_DATA = {
     halalCert: "100% Halal & Bahan Segar Pilihan",
     whatsapp: "6281359180156",
   },
+  // Target Google Sheet for customer and transaction data auto-sync:
+  // https://docs.google.com/spreadsheets/d/1PSbBSYxsLbXBgzwoBS3Xm1i_C-nLYCffXXGeIJ5tbHA/edit#gid=0
+  appScriptUrl: "https://script.google.com/macros/s/AKfycbxiOagkGeuiCq6xwTeeV5xGb8dyUJIoVeclgBjPJs86ruMcc2W46ZI8CvyZlBGUrz4Uiw/exec",
   menuCategories: [
     { id: "all", name: "Semua Menu" },
-    { id: "bubur", name: "Bubur Bakar Claypot" },
-    { id: "wonton", name: "Wonton & Laksa" },
-    { id: "zeger", name: "Paket Combo Zeger!" },
+    { id: "bubur", name: "Bubur Bakar" },
+    { id: "wonton", name: "Dim Sum & Wonton" },
     { id: "topping", name: "Ekstra Topping" },
+    { id: "minuman", name: "Minuman & Kopi" },
   ],
   menuItems: [
     {
-      id: "bb-special",
+      id: "bb-polos",
       category: "bubur",
-      name: "Bubur Bakar Special Sabuba",
-      price: 12000,
-      promoPrice: 10000,
-      image: "/assets/Foto Menu (1).png",
-      description: "Bubur gurih pilihan dimasak langsung dalam mangkuk tanah liat (claypot) di atas tungku api. Dilengkapi telur rebus mulus, ayam suwir gurih, kerupuk pangsit renyah, jagung manis, dan irisan daun bawang.",
-      isBestSeller: true,
+      subcategory: "BUBUR",
+      name: "Bubur Polos (Bubur Saja)",
+      price: 10000,
+      image: "https://drive.google.com/thumbnail?id=1VAE79KUd7U5bNCf7Y2MaohXE2yz_sZ5K&sz=w800",
+      description: "Sajian nikmat bubur bakar polos",
+      ingredients: "Bubur polos",
+      isBestSeller: false,
       spicyLevel: 0,
-      toppingsIncluded: ["Telur Rebus Utuh", "Ayam Suwir Gurih", "Pangsit Renyah", "Jagung Manis", "Daun Bawang"]
+      toppingsIncluded: ["Bubur Polos"]
     },
     {
-      id: "bb-daging",
+      id: "bb-ori-ayam",
       category: "bubur",
-      name: "Bubur Bakar Daging Sapi Chili Oil",
+      subcategory: "BUBUR",
+      name: "Bubur (Ori) Ayam",
+      price: 15000,
+      image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
+      description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama ayam.",
+      ingredients: "Bubur, daging ayam, jagung, sayur, keripik.",
+      isBestSeller: false,
+      spicyLevel: 0,
+      toppingsIncluded: ["Daging Ayam", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "bb-ori-sapi",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Ori) Sapi",
+      price: 18000,
+      image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
+      description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama sapi.",
+      ingredients: "Bubur, daging sapi, jagung, sayur, keripik.",
+      isBestSeller: false,
+      spicyLevel: 0,
+      toppingsIncluded: ["Daging Sapi", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "bb-ori-mix",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Ori) Mix (Ayam+Sapi)",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
+      description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama ayam dan sapi.",
+      ingredients: "Bubur, daging ayam, daging sapi, jagung, sayur, keripik.",
+      isBestSeller: false,
+      spicyLevel: 0,
+      toppingsIncluded: ["Daging Ayam & Sapi", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "bb-laksa-ayam",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Laksa) Ayam",
       price: 16000,
-      promoPrice: 14000,
-      image: "/assets/Foto Menu (2).png",
-      description: "Variasi bubur bakar istimewa dengan irisan daging sapi empuk berbumbu khas, telur setengah matang lelehan kuning gurih, dicipratan minyak cabai (chili oil) beraroma harum membakar.",
-      isBestSeller: true,
-      spicyLevel: 2,
-      toppingsIncluded: ["Telur Half-Boiled", "Slice Daging Sapi", "Chili Oil Spesial", "Pangsit Goreng", "Jagung Bakar"]
-    },
-    {
-      id: "bb-telur-setengah-matang",
-      category: "bubur",
-      name: "Bubur Bakar Telur Leleh & Rempah",
-      price: 14000,
-      promoPrice: 12000,
-      image: "/assets/Foto Menu (3).png",
-      description: "Aroma smoky tanah liat yang berpadu dengan rempah bumbu rahasia Sabuba. Telur leleh dimasukkan saat claypot mendidih panas memberikan sensasi creamy sempurna.",
+      image: "https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama ayam.",
+      ingredients: "Bubur, kuah laksa, daging ayam, jagung, sayur, keripik.",
       isBestSeller: false,
       spicyLevel: 1,
-      toppingsIncluded: ["Telur Leleh Hot Claypot", "Ayam Suwir Rempah", "Cakwe Renyah", "Daun Bawang & Bawang Goreng"]
+      toppingsIncluded: ["Kuah Laksa", "Daging Ayam", "Jagung", "Sayur", "Keripik"]
     },
     {
-      id: "bb-komplit",
+      id: "bb-laksa-sapi",
       category: "bubur",
-      name: "Bubur Bakar Komplit Sarapan Pagi",
-      price: 15000,
-      promoPrice: 13000,
-      image: "/assets/Foto Menu (4).png",
-      description: "Pilihan paling pas untuk sarapan energi penuh! Porsi mantap dengan topping melimpah ganda: telur rebus, suwiran daging, pangsit kriuk, dan kuah kaldu rempah hangat.",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Laksa) Sapi",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama sapi.",
+      ingredients: "Bubur, kuah laksa, daging sapi, jagung, sayur, keripik.",
+      isBestSeller: false,
+      spicyLevel: 1,
+      toppingsIncluded: ["Kuah Laksa", "Daging Sapi", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "bb-laksa-mix",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Laksa) Mix (Ayam+Sapi)",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama ayam dan sapi.",
+      ingredients: "Bubur, kuah laksa, daging ayam, daging sapi, jagung, sayur, keripik.",
+      isBestSeller: false,
+      spicyLevel: 1,
+      toppingsIncluded: ["Kuah Laksa", "Daging Ayam & Sapi", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "bb-kuning-ayam",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Kuning) Ayam",
+      price: 16000,
+      image: "https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama ayam.",
+      ingredients: "Bubur, kuah kuning, daging ayam, jagung, sayur, keripik.",
       isBestSeller: false,
       spicyLevel: 0,
-      toppingsIncluded: ["Telur Rebus Utuh", "Ayam & Daging Mix", "Pangsit Double", "Emping/Kerupuk"]
+      toppingsIncluded: ["Kuah Kuning", "Daging Ayam", "Jagung", "Sayur", "Keripik"]
     },
     {
-      id: "wonton-soup",
-      category: "wonton",
-      name: "Wonton Soup Kaldu Ayam Juara",
-      price: 14000,
-      promoPrice: 12000,
-      image: "/assets/Foto Menu (5).png",
-      description: "Pangsit daging lembut isi tebal disajikan dalam kuah kaldu ayam bening yang kaya akan nutrisi dan aroma minyak wijen segar.",
+      id: "bb-kuning-sapi",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Kuning) Sapi",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama sapi.",
+      ingredients: "Bubur, kuah kuning, daging sapi, jagung, sayur, keripik.",
       isBestSeller: true,
       spicyLevel: 0,
-      toppingsIncluded: ["5 Pcs Wonton Daging Tebal", "Kuah Kaldu Ayam Bening", "Sayur Pokcoy Segar", "Minyak Wijen"]
+      toppingsIncluded: ["Kuah Kuning", "Daging Sapi", "Jagung", "Sayur", "Keripik"]
     },
     {
-      id: "wonton-chili-oil",
-      category: "wonton",
-      name: "Wonton Chili Oil Pedas Gurih",
-      price: 15000,
-      promoPrice: 13000,
-      image: "/assets/Foto Menu (6).png",
-      description: "Wonton rebus lembut yang dibaluri racikan Chili Oil merah merona khas Sabuba. Rasa pedas, gurih, dan asam segar yang membangkitkan semangat pagi.",
+      id: "bb-kuning-mix",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Kuning) Mix (Ayam+Sapi)",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama ayam dan sapi.",
+      ingredients: "Bubur, kuah kuning, daging ayam, daging sapi, jagung, sayur, keripik.",
       isBestSeller: true,
-      spicyLevel: 3,
-      toppingsIncluded: ["5 Pcs Wonton Daging", "Chili Oil House-Blend", "Taburan Daun Bawang & Biji Wijen"]
+      spicyLevel: 0,
+      toppingsIncluded: ["Kuah Kuning", "Daging Ayam & Sapi", "Jagung", "Sayur", "Keripik"]
     },
     {
-      id: "laksa-sabuba",
-      category: "wonton",
-      name: "Laksa Rempah Spesial Sabuba",
+      id: "bb-semur-ayam-telur",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Semur) Ayam + Telur (Utuh)",
       price: 18000,
-      promoPrice: 15000,
-      image: "/assets/Foto Menu (7).png",
-      description: "Mie laksa lembut dengan kuah santan kaya bumbu rempah khas nusantara. Dilengkapi potongan tahu pong, telur rebus, dan suwiran ayam gurih.",
-      isBestSeller: false,
-      spicyLevel: 2,
-      toppingsIncluded: ["Mie Laksa Soft", "Kuah Santan Rempah", "Tahu Pong & Telur Rebus", "Ayam Suwir & Emping"]
-    },
-    {
-      id: "combo-zeger-1",
-      category: "zeger",
-      name: "Combo Mantap: Bubur Bakar Special + Zeger! Coffee",
-      price: 22000,
-      promoPrice: 18000,
-      image: "/assets/Konsep/4. Trial Zeger X Sabuba.png",
-      description: "Perpaduan kehangatan Bubur Bakar Special Claypot dan kesegaran Kopi Susu Aren Zeger! Kolaborasi resmi tempat nongkrong sarapan kekinian.",
+      image: "https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah semur dengan topping jagung, sayur, keripik dan lauk utama ayam dan telur utuh.",
+      ingredients: "Bubur, kuah semur, daging ayam, telur utuh, jagung, sayur, keripik.",
       isBestSeller: true,
       spicyLevel: 0,
-      toppingsIncluded: ["1x Bubur Bakar Special", "1x Zeger! Es Kopi Susu Aren"]
+      toppingsIncluded: ["Kuah Semur", "Telur Utuh", "Daging Ayam", "Jagung", "Sayur", "Keripik"]
     },
     {
-      id: "combo-zeger-2",
-      category: "zeger",
-      name: "Combo Pedas: Wonton Chili Oil + Zeger! Tea Segar",
-      price: 21000,
-      promoPrice: 17000,
-      image: "/assets/Foto Menu (6).png",
-      description: "Sensasi pedas nagih Wonton Chili Oil dipadukan dengan Es Teh Lemon Zeger! dingin penyeimbang dahaga.",
+      id: "bb-semur-sapi-telur",
+      category: "bubur",
+      subcategory: "BUBUR",
+      name: "Bubur (Kuah Semur) Sapi + Telur (Utuh)",
+      price: 19000,
+      image: "https://drive.google.com/thumbnail?id=155Q5GPAxlR7gTE1JDGMR4SGSykxZZ-I3&sz=w800",
+      description: "Sajian nikmat bubur bakar kuah semur dengan topping jagung, sayur, keripik dan lauk utama sapi dan telur utuh.",
+      ingredients: "Bubur, kuah semur, daging sapi, telur utuh, jagung, sayur, keripik.",
+      isBestSeller: true,
+      spicyLevel: 0,
+      toppingsIncluded: ["Kuah Semur", "Telur Utuh", "Daging Sapi", "Jagung", "Sayur", "Keripik"]
+    },
+    {
+      id: "dimsum-siomay",
+      category: "wonton",
+      subcategory: "DIM SUM",
+      name: "Dim Sum (Isi 4 Siomay Ayam)",
+      price: 13000,
+      image: "https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800",
+      description: "Dim sum siomay ayam hangat.",
+      ingredients: "Daging ayam, tepung, bumbu.",
       isBestSeller: false,
-      spicyLevel: 3,
-      toppingsIncluded: ["1x Wonton Chili Oil", "1x Zeger! Lemon Tea Ice"]
+      spicyLevel: 0,
+      toppingsIncluded: ["4 Pcs Siomay Ayam"]
+    },
+    {
+      id: "wonton-kuah",
+      category: "wonton",
+      subcategory: "WONTON",
+      name: "Wonton Kuah (Isi 5 Dumpling Ayam)",
+      price: 13000,
+      image: "https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800",
+      description: "Wonton kuah dengan dumpling ayam hangat.",
+      ingredients: "Daging ayam, kulit pangsit, kuah kaldu.",
+      isBestSeller: true,
+      spicyLevel: 0,
+      toppingsIncluded: ["5 Pcs Dumpling Ayam", "Kuah Kaldu"]
+    },
+    {
+      id: "top-telur-kampung",
+      category: "topping",
+      subcategory: "TELUR",
+      name: "Telur Kampung (Rebus)",
+      price: 5000,
+      image: "https://drive.google.com/thumbnail?id=1MPhEVlQiNI4RolMIyaAj3INxtzvrIkZ1&sz=w800",
+      description: "Telur ayam kampung rebus kaya protein.",
+      ingredients: "Telur ayam kampung.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "top-daging-ayam",
+      category: "topping",
+      subcategory: "DAGING",
+      name: "Daging Ayam",
+      price: 5000,
+      image: "https://drive.google.com/thumbnail?id=1AB9c-cg62YxMliJSGA1s70YzJkbHS_VO&sz=w800",
+      description: "Tambahan topping daging ayam.",
+      ingredients: "Daging ayam, bumbu.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "top-daging-sapi",
+      category: "topping",
+      subcategory: "DAGING",
+      name: "Daging Sapi",
+      price: 5000,
+      image: "https://drive.google.com/thumbnail?id=18lfSnvTfCdYI7D-cDJ5WQ9xTixIjyf-X&sz=w800",
+      description: "Tambahan topping daging sapi.",
+      ingredients: "Daging sapi, bumbu.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "top-sate-satean",
+      category: "topping",
+      subcategory: "SATE",
+      name: "Sate Satean",
+      price: 3000,
+      image: "https://drive.google.com/thumbnail?id=1MsylaAok7LyEIiQ1VaqUvWl0n-_BZUmg&sz=w800",
+      description: "Pelengkap hidangan sate dan krupuk.",
+      ingredients: "Sate pilihan, krupuk.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "top-krupuk",
+      category: "topping",
+      subcategory: "KRUPUK",
+      name: "Krupuk",
+      price: 3000,
+      image: "https://drive.google.com/thumbnail?id=1ueUkzBE8M1N7nBK0t3b_JhDM9CkH47HG&sz=w800",
+      description: "Krupuk renyah gurih.",
+      ingredients: "krupuk.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "min-teh",
+      category: "minuman",
+      subcategory: "TEH",
+      name: "Teh",
+      price: 5000,
+      image: "https://drive.google.com/thumbnail?id=1AUNiHe7vaGUh31WmyK-pSGSpI1TLuaDn&sz=w800",
+      description: "Minuman teh hangat menyegarkan.",
+      ingredients: "Daun teh, air hangat, gula (opsional).",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "min-kopi-nusantara",
+      category: "minuman",
+      subcategory: "KOPI",
+      name: "Kopi Hitam Nusantara",
+      price: 8000,
+      image: "https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800",
+      description: "Kopi tubruk hitam khas nusantara.",
+      ingredients: "Biji kopi pilihan, air panas.",
+      isBestSeller: false,
+      spicyLevel: 0
+    },
+    {
+      id: "min-air-mineral",
+      category: "minuman",
+      subcategory: "AIR MINERAL",
+      name: "Mineral",
+      price: 3000,
+      image: "/assets/Foto Menu (5).png",
+      description: "Air mineral murni menyegarkan.",
+      ingredients: "Air mineral.",
+      isBestSeller: false,
+      spicyLevel: 0
     }
   ],
   extraToppings: [
-    { id: "t-telur-rebus", name: "Telur Rebus Utuh", price: 3000 },
-    { id: "t-telur-half", name: "Telur Half-Boiled (Leleh)", price: 3500 },
-    { id: "t-daging-sapi", name: "Extra Daging Sapi Slice", price: 5000 },
-    { id: "t-ayam-suwir", name: "Extra Ayam Suwir Gurih", price: 4000 },
-    { id: "t-pangsit", name: "Pangsit Goreng Renyah (1 Porsi)", price: 3000 },
-    { id: "t-chili-oil", name: "Chili Oil Extra Shot", price: 2000 },
+    { id: "top-telur-kampung", name: "Telur Kampung (Rebus)", price: 5000 },
+    { id: "top-daging-ayam", name: "Daging Ayam", price: 5000 },
+    { id: "top-daging-sapi", name: "Daging Sapi", price: 5000 },
+    { id: "top-sate-satean", name: "Sate Satean", price: 3000 },
+    { id: "top-krupuk", name: "Krupuk", price: 3000 }
   ],
   concepts: [
     {
@@ -215,7 +387,7 @@ export const SABUBA_DATA = {
       id: "t2",
       name: "Siti Rahmawati",
       role: "Foodie Kuliner Sidoarjo",
-      comment: "Gak cuma bubur, Wonton Chili Oil-nya Sabuba itu juara pedes gurihnya! Harganya terjangkau banget cuma 10 ribuan pas promo.",
+      comment: "Gak cuma bubur, Wonton dan Dim Sum-nya Sabuba itu juara pedes gurihnya! Harganya terjangkau banget mulai 10 ribuan.",
       rating: 5
     },
     {
@@ -236,4 +408,14 @@ export const formatRupiah = (amount) => {
   }).format(amount);
 };
 
-export const SIGNATURE_ITEMS = SABUBA_DATA.menuItems.filter(item => item.isBestSeller || item.promoPrice);
+export const formatImageUrl = (url) => {
+  if (!url) return '/assets/Foto Menu (1).png';
+  const driveIdMatch = url.match(/id=([a-zA-Z0-9_-]+)/) || url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (driveIdMatch && driveIdMatch[1]) {
+    return `https://drive.google.com/thumbnail?id=${driveIdMatch[1]}&sz=w800`;
+  }
+  return url;
+};
+
+export const SIGNATURE_ITEMS = SABUBA_DATA.menuItems.filter(item => item.isBestSeller || item.price <= 15000);
+
