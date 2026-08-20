@@ -8,6 +8,7 @@ import CustomizerModal from './components/CustomizerModal';
 import CartDrawer from './components/CartDrawer';
 import FloatingCartBar from './components/FloatingCartBar';
 import CheckoutModal from './components/CheckoutModal';
+import ReceiptModal from './components/ReceiptModal';
 import ConceptGallery from './components/ConceptGallery';
 import FranchiseSection from './components/FranchiseSection';
 import Outlets from './components/Outlets';
@@ -17,6 +18,7 @@ export default function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [completedOrderData, setCompletedOrderData] = useState(null);
   const [quickViewItem, setQuickViewItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -180,6 +182,21 @@ export default function App() {
         isOpen={isCheckoutOpen}
         onClose={() => setIsCheckoutOpen(false)}
         cartItems={cartItems}
+        onSuccessOrder={(data) => {
+          setCompletedOrderData(data);
+          setCartItems([]);
+        }}
+      />
+
+      <ReceiptModal
+        isOpen={!!completedOrderData}
+        onClose={() => setCompletedOrderData(null)}
+        orderData={completedOrderData}
+        onOpenWhatsApp={() => {
+          if (completedOrderData?.waUrl) {
+            window.open(completedOrderData.waUrl, '_blank');
+          }
+        }}
       />
     </div>
   );

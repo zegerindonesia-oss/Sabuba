@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, MapPin, Store, Utensils, ShoppingBag, User, Phone, FileText, Calendar, Clock, AlertCircle, Lock, CheckCircle2 } from 'lucide-react';
 import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
 
-export default function CheckoutModal({ isOpen, onClose, cartItems }) {
+export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrder }) {
   if (!isOpen) return null;
 
   // Active mode is 'scheduled' (Pesanan Terjadwal). Other modes are frozen / SOON.
@@ -144,35 +144,67 @@ export default function CheckoutModal({ isOpen, onClose, cartItems }) {
       }
     }
 
-    // Build WhatsApp Message
-    let message = `*HALO SABUBA! SAYA INGIN PESAN TERJADWAL BUBUR BAKAR*\n\n`;
-    message += `📋 *ID Transaksi:* #${orderId}\n`;
-    message += `👤 *Nama Pemesan:* ${customerName}\n`;
-    if (customerPhone) message += `📞 *No. WA:* ${customerPhone}\n`;
-    message += `📍 *Cabang Outlet:* ${outletObj ? outletObj.name : 'Utama'}\n`;
-    message += `🗓️ *Jadwal Tanggal & Jam:* ${scheduledFullText}\n`;
-    message += `🍽️ *Tipe Konsumsi:* ${scheduledTag === 'dine-in' ? 'Dine In (Makan di Tempat)' : 'Take Away (Bungkus)'}\n`;
-    if (notes) message += `📝 *Catatan Khusus:* ${notes}\n`;
-    message += `\n--- *RINCIAN PESANAN* ---\n`;
+    // Build Thermal Receipt WA Message (Opsi 1)
+    let message = `==================================\n`;
+    message += `       *BUBUR BAKAR SABUBA*\n`;
+    message += `  _Sarapan Claypot • Wonton • Laksa_\n`;
+    message += `==================================\n`;
+    message += `📋 *ID TRANSAKSI:* #${orderId}\n`;
+    message += `🗓️ *WAKTU ORDER:* ${timestamp}\n`;
+    message += `⏰ *JADWAL AMBIL:* ${scheduledFullText}\n`;
+    message += `🍽️ *TIPE KONSUMSI:* ${scheduledTag === 'dine-in' ? 'DINE IN (Makan Tempat)' : 'TAKE AWAY (Bungkus)'}\n`;
+    message += `📍 *OUTLET:* ${outletObj ? outletObj.name : 'Cabang Utama'}\n`;
+    message += `----------------------------------\n`;
+    message += `👤 *PEMESAN:* ${customerName}\n`;
+    if (customerPhone) message += `📞 *NO. WA:* ${customerPhone}\n`;
+    message += `----------------------------------\n`;
+    message += `*RINCIAN PESANAN:*\n`;
 
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. *${item.name}* (x${item.quantity}) - ${formatRupiah(item.totalPrice)}\n`;
+      message += `${index + 1}. *${item.name}* (x${item.quantity})\n`;
       if (item.selectedToppings && item.selectedToppings.length > 0) {
         message += `   + Topping: ${item.selectedToppings.map(t => t.name).join(', ')}\n`;
       }
       if (item.notes) {
         message += `   + Note: ${item.notes}\n`;
       }
+      message += `   = ${formatRupiah(item.totalPrice)}\n\n`;
     });
 
-    message += `\n💰 *TOTAL PEMBAYARAN: ${formatRupiah(subtotal)}*\n\n`;
-    message += `Terima kasih Sabuba! Mohon konfirmasi pesanan terjadwal ini. 🙏`;
+    if (notes) {
+      message += `📝 *Catatan Khusus:* ${notes}\n`;
+      message += `----------------------------------\n`;
+    }
+
+    message += `💰 *TOTAL PEMBAYARAN:* *${formatRupiah(subtotal)}*\n`;
+    message += `==================================\n`;
+    message += `STATUS: *PESANAN TERJADWAL*\n`;
+    message += `==================================\n`;
+    message += `_Mohon konfirmasi pesanan terjadwal ini. Terima kasih Sabuba! 🙏_`;
 
     const encodedMessage = encodeURIComponent(message);
     const waUrl = `https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=${encodedMessage}`;
     
     setIsSubmitting(false);
+
+    const orderDataObj = {
+      orderId,
+      timestamp,
+      customerName,
+      customerPhone,
+      scheduledFullText,
+      scheduledTag,
+      outletObj,
+      cartItems: [...cartItems],
+      notes,
+      subtotal,
+      waUrl
+    };
+
     window.open(waUrl, '_blank');
+    if (onSuccessOrder) {
+      onSuccessOrder(orderDataObj);
+    }
     onClose();
   };
 
