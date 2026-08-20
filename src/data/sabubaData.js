@@ -290,9 +290,9 @@ export const SABUBA_DATA = {
       id: "min-air-mineral",
       category: "minuman",
       subcategory: "AIR MINERAL",
-      name: "Mineral",
+      name: "Air Mineral",
       price: 3000,
-      image: "/assets/Foto Menu (5).png",
+      image: "https://drive.google.com/thumbnail?id=1AUvQZiR9LxMOnYPhAag9z_cqFYgSfy3d&sz=w800",
       description: "Air mineral murni menyegarkan.",
       ingredients: "Air mineral.",
       isBestSeller: false,
@@ -342,35 +342,35 @@ export const SABUBA_DATA = {
   ],
   outlets: [
     {
-      id: "out-ayani",
-      name: "SABUBA SARAPAN BUBUR BAKAR CAB A.YANI",
-      address: "Jl. Ahmad Yani (Depan Warung Leko Sidoarjo)",
+      id: "out-leko",
+      name: "Sabuba - Depan Warung Leko",
+      address: "Jl. Ahmad Yani No.3D, Pucang, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61219",
       city: "Sidoarjo",
       hours: "06.00 - 09.00 WIB",
       status: "Buka Sarapan Pagi",
-      mapsUrl: "https://maps.google.com/?q=Warung+Leko+Sidoarjo",
+      mapsUrl: "https://maps.app.goo.gl/CQzouJCAjf7XX6aD6",
       image: "/assets/unnamed (3).webp",
-      whatsapp: "6281359180156"
+      whatsapp: "6281332778277"
     },
     {
       id: "out-rsud",
-      name: "SABUBA SARAPAN BUBUR BAKAR CAB RSUD",
-      address: "Kantin RSUD Sidoarjo",
+      name: "Sabuba - Kantin RSUD",
+      address: "Jl. Mojopahit No.667, Sidowayah, Celep, Kec. Sidoarjo, Kabupaten Sidoarjo, Jawa Timur 61215",
       city: "Sidoarjo",
-      hours: "07.00 - 16.00 WIB",
+      hours: "07.00 - 10.00 WIB",
       status: "Buka Setiap Hari",
-      mapsUrl: "https://maps.google.com/?q=RSUD+Sidoarjo",
+      mapsUrl: "https://maps.app.goo.gl/oF2WALQ6RaB7dyay6",
       image: "/assets/unnamed (2).webp",
-      whatsapp: "6281359180156"
+      whatsapp: "6281332778277"
     },
     {
       id: "out-zeger-kemiri",
-      name: "SABUBA SARAPAN BUBUR BAKAR x Zeger Coffee",
-      address: "Perumahan Kemiri Indah Blok C7 No. 8 Sidoarjo",
+      name: "Sabuba X Zeger Coffee",
+      address: "Perum Kemiri Indah No.8 RT/RW 20/05 Blok C7, Bluru Cilik, Kemiri, Kec. Sidoarjo, Jawa Timur 61234",
       city: "Sidoarjo",
-      hours: "09.00 - 21.00 WIB",
+      hours: "07.00 - 12.00 WIB",
       status: "Buka Sarapan & Cafe",
-      mapsUrl: "https://maps.google.com/?q=Perumahan+Kemiri+Indah+Blok+C7+No+8+Sidoarjo",
+      mapsUrl: "https://maps.app.goo.gl/oxrfELDnjMpTvVmx8",
       image: "/assets/Konsep/4. Trial Zeger X Sabuba.png",
       whatsapp: "6281359180156"
     }
