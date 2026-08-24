@@ -39,7 +39,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Ori) Ayam",
       price: 15000,
-      image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=1OSEnCsfJq29y118BY349wViNXxmfaQCK&sz=w800",
       description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, daging ayam, jagung, sayur, keripik.",
       isBestSeller: false,
@@ -52,7 +52,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Ori) Sapi",
       price: 18000,
-      image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=161beYaRXQXQljnMuq9whYCQqgv7NwNZH&sz=w800",
       description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, daging sapi, jagung, sayur, keripik.",
       isBestSeller: false,
@@ -78,7 +78,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Kuah Laksa) Ayam",
       price: 16000,
-      image: "https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=1D1DbaCtrDo4BPQZHbHzWS7Upb_-Ep4yh&sz=w800",
       description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, kuah laksa, daging ayam, jagung, sayur, keripik.",
       isBestSeller: false,
@@ -91,7 +91,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Kuah Laksa) Sapi",
       price: 19000,
-      image: "https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=1HQt19A09XLGoibnMcb94reFBJ89IHc58&sz=w800",
       description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, kuah laksa, daging sapi, jagung, sayur, keripik.",
       isBestSeller: false,
@@ -117,7 +117,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Kuah Kuning) Ayam",
       price: 16000,
-      image: "https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=1s6zr7OG5KkVZ6GHEWdumAWBR9IDW2fe_&sz=w800",
       description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, kuah kuning, daging ayam, jagung, sayur, keripik.",
       isBestSeller: false,
@@ -130,7 +130,7 @@ export const SABUBA_DATA = {
       subcategory: "BUBUR",
       name: "Bubur (Kuah Kuning) Sapi",
       price: 19000,
-      image: "https://drive.google.com/thumbnail?id=1owibLb-n-rx0Z0UOZBbUVlRcBsP4kr2L&sz=w800",
+      image: "https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800",
       description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, kuah kuning, daging sapi, jagung, sayur, keripik.",
       isBestSeller: true,
@@ -418,4 +418,73 @@ export const formatImageUrl = (url) => {
 };
 
 export const SIGNATURE_ITEMS = SABUBA_DATA.menuItems.filter(item => item.isBestSeller || item.price <= 15000);
+
+export const syncSheetImagesWithAppData = async (onUpdate) => {
+  try {
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/1HuhlPIe-GF7fIewCD__NHIkt8xEBzXfx0LdBIek16Q0/export?format=csv&gid=1112273668';
+    const response = await fetch(csvUrl);
+    if (!response.ok) return;
+    const csvText = await response.text();
+    
+    // Parse CSV rows handling quotes & newlines
+    const rows = [];
+    let currentRow = [];
+    let currentVal = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < csvText.length; i++) {
+      const char = csvText[i];
+      const nextChar = csvText[i + 1];
+
+      if (char === '"') {
+        if (insideQuotes && nextChar === '"') {
+          currentVal += '"';
+          i++;
+        } else {
+          insideQuotes = !insideQuotes;
+        }
+      } else if (char === ',' && !insideQuotes) {
+        currentRow.push(currentVal.trim());
+        currentVal = '';
+      } else if ((char === '\r' || char === '\n') && !insideQuotes) {
+        if (char === '\r' && nextChar === '\n') i++;
+        currentRow.push(currentVal.trim());
+        if (currentRow.some(c => c)) rows.push(currentRow);
+        currentRow = [];
+        currentVal = '';
+      } else {
+        currentVal += char;
+      }
+    }
+    if (currentVal || currentRow.length > 0) {
+      currentRow.push(currentVal.trim());
+      rows.push(currentRow);
+    }
+
+    const photoMap = {};
+    for (let i = 1; i < rows.length; i++) {
+      const r = rows[i];
+      if (r.length > 9 && r[4] && r[9]) {
+        const cleanName = String(r[4]).trim().toLowerCase().replace(/\s+/g, ' ');
+        photoMap[cleanName] = formatImageUrl(r[9]);
+      }
+    }
+
+    let updatedCount = 0;
+    SABUBA_DATA.menuItems.forEach(item => {
+      const key = String(item.name).trim().toLowerCase().replace(/\s+/g, ' ');
+      if (photoMap[key] && photoMap[key] !== item.image) {
+        item.image = photoMap[key];
+        updatedCount++;
+      }
+    });
+
+    if (updatedCount > 0 && typeof onUpdate === 'function') {
+      onUpdate();
+    }
+  } catch (err) {
+    console.warn("Sheet live sync warning:", err);
+  }
+};
+
 

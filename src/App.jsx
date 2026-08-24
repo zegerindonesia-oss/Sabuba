@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -13,6 +13,7 @@ import ConceptGallery from './components/ConceptGallery';
 import FranchiseSection from './components/FranchiseSection';
 import Outlets from './components/Outlets';
 import Footer from './components/Footer';
+import { syncSheetImagesWithAppData } from './data/sabubaData';
 
 export default function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -23,6 +24,15 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [toastMessage, setToastMessage] = useState('');
+  const [, setRefreshKey] = useState(0);
+
+  useEffect(() => {
+    // Automatically sync latest menu photos from Google Sheet CSV
+    syncSheetImagesWithAppData(() => {
+      setRefreshKey(k => k + 1);
+    });
+  }, []);
+
 
   const totalCartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const totalCartPrice = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
