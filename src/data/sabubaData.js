@@ -254,11 +254,11 @@ export const SABUBA_DATA = {
       id: "top-krupuk",
       category: "topping",
       subcategory: "KRUPUK",
-      name: "Krupuk",
+      name: "Kerupuk Bawang",
       price: 3000,
-      image: "https://drive.google.com/thumbnail?id=1ueUkzBE8M1N7nBK0t3b_JhDM9CkH47HG&sz=w800",
-      description: "Krupuk renyah gurih.",
-      ingredients: "krupuk.",
+      image: "https://drive.google.com/thumbnail?id=1IrADC5QV1TDWv0mAdnzh0QF93BvdG_r_&sz=w800",
+      description: "Kerupuk Bawang renyah gurih.",
+      ingredients: "Kerupuk Bawang.",
       isBestSeller: false,
       spicyLevel: 0
     },
@@ -304,7 +304,7 @@ export const SABUBA_DATA = {
     { id: "top-daging-ayam", name: "Daging Ayam", price: 5000 },
     { id: "top-daging-sapi", name: "Daging Sapi", price: 5000 },
     { id: "top-sate-satean", name: "Sate Satean", price: 3000 },
-    { id: "top-krupuk", name: "Krupuk", price: 3000 }
+    { id: "top-krupuk", name: "Kerupuk Bawang", price: 3000 }
   ],
   concepts: [
     {
@@ -487,8 +487,10 @@ export const syncSheetImagesWithAppData = async (onUpdate) => {
     let updatedCount = 0;
     SABUBA_DATA.menuItems.forEach(item => {
       const key = String(item.name).trim().toLowerCase().replace(/\s+/g, ' ');
-      if (photoMap[key] && photoMap[key] !== item.image) {
-        item.image = photoMap[key];
+      const matchedPhoto = photoMap[key] || 
+        (item.id === 'top-krupuk' ? (photoMap['kerupuk bawang'] || photoMap['krupuk'] || photoMap['kerupuk']) : null);
+      if (matchedPhoto && matchedPhoto !== item.image) {
+        item.image = matchedPhoto;
         updatedCount++;
       }
     });
