@@ -308,6 +308,20 @@ export const SABUBA_DATA = {
   ],
   concepts: [
     {
+      id: "street-food",
+      title: "Konsep Street Food Kompact (Sabuba Classic)",
+      tagline: "Kompak • Praktis • Siap Jualan Di Mana Saja",
+      image: "/assets/Konsep/5. Konsep Street Food.jpg",
+      description: "Konsep jualan fleksibel menggunakan motor tiga roda custom khusus. Bebas buka di lokasi strategis mana saja, area perkantoran, event, hingga panggilan acara tanpa terbeban biaya sewa tempat yang mahal.",
+      highlights: [
+        "Fleksibel & Bebas/Hemat Biaya Sewa Tempat",
+        "Siap Buka Di Mana Saja & Terima Panggilan Acara",
+        "Mobilitas Tinggi - Siap Jualan Dalam Hitungan Menit",
+        "Rangka Kuat, Material Anti Karat & Irit Bahan Bakar",
+        "Desain Kompak, Fungsional & Untung Maksimal"
+      ]
+    },
+    {
       id: "tenda",
       title: "Konsep Tenda Sarapan Outdoor",
       tagline: "Merakyat, Ramai, & Menghadirkan Suasana Sarapan Pagi Yang Hangat",

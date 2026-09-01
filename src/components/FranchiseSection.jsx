@@ -1,13 +1,20 @@
 import React from 'react';
 import { SABUBA_DATA } from '../data/sabubaData';
-import { ArrowRight, CheckCircle, TrendingUp, Users, DollarSign, ShieldCheck } from 'lucide-react';
+import { ArrowRight, TrendingUp, Users, DollarSign, ShieldCheck, Bike, Sparkles, MapPin, Clock } from 'lucide-react';
 
 export default function FranchiseSection() {
   const benefits = [
-    { title: 'Investasi Terjangkau', desc: 'Modal usaha kompetitif dengan BEP cepat dalam hitungan bulan.', icon: DollarSign },
-    { title: 'Target Pasar Luas', desc: 'Menu favorit sarapan pagi yang dicari komunitas & keluarga setiap hari.', icon: Users },
-    { title: 'Sistem Operasional Mudah', desc: 'SOP terstandarisasi, bahan baku terpusat, & pelatihan tim.', icon: TrendingUp },
-    { title: 'Dukungan Pemasaran', desc: 'Promosi media sosial, materi branding, & listing ojek online.', icon: ShieldCheck },
+    { title: 'Bebas / Hemat Biaya Sewa', desc: 'Konsep Street Food motor custom tidak perlu sewa ruko mahal, BEP jauh lebih cepat.', icon: DollarSign },
+    { title: 'Mobilitas & Fleksibilitas Tinggi', desc: 'Bisa jualan di mana saja: pinggir jalan, area kantor, event, hingga panggilan acara.', icon: Bike },
+    { title: 'Sistem Operasional Mudah', desc: 'SOP terstandarisasi, bahan baku terpusat, & pelatihan tim lengkap dari pusat.', icon: TrendingUp },
+    { title: 'Dukungan Pemasaran Full', desc: 'Materi branding, promosi media sosial, & listing ojek online terintegrasi.', icon: ShieldCheck },
+  ];
+
+  const streetFoodFeatures = [
+    'Rangka kuat, ringan & material anti karat',
+    'Siap jualan dalam hitungan menit',
+    'Irit bahan bakar & lincah di jalan sempit',
+    'Desain kompak, bersih & sangat fungsional',
   ];
 
   return (
@@ -23,16 +30,18 @@ export default function FranchiseSection() {
           
           {/* Left Column Text */}
           <div className="lg:col-span-6">
-            <span className="px-3.5 py-1 rounded-full bg-white/15 text-white font-extrabold text-xs uppercase tracking-wider">
-              Kemitraan Usaha Sabuba
-            </span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400 text-red-950 font-black text-xs uppercase tracking-wider shadow-md">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Kemitraan Street Food Kompak</span>
+            </div>
             <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-3 leading-tight">
-              Buka Usaha Sarapan Bubur Bakar di Kota Anda!
+              Buka Usaha Sabuba Classic Di Mana Saja!
             </h2>
             <p className="text-red-100/90 text-xs sm:text-sm mt-4 leading-relaxed">
-              Bergabunglah menjadi mitra resmi **Bubur Bakar Sabuba**. Dapatkan sistem usaha siap jalan dengan potensi profit konsisten setiap pagi.
+              Bergabunglah menjadi mitra **Sabuba Classic**. Menggunakan motor tiga roda custom yang praktis, fleksibel buka lokasi baru kapan pun, melayani panggilan acara/catering, dan menekan biaya sewa lokasi hingga maksimal!
             </p>
 
+            {/* Benefits Grid */}
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((b, i) => {
                 const Icon = b.icon;
@@ -46,32 +55,55 @@ export default function FranchiseSection() {
               })}
             </div>
 
-            <div className="mt-8">
+            {/* Quick Specs */}
+            <div className="mt-6 p-4 rounded-2xl bg-black/20 border border-white/10">
+              <div className="text-xs font-black uppercase text-amber-300 tracking-wider mb-2">
+                Keunggulan Konsep Street Food Motor Custom:
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {streetFoodFeatures.map((feat, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-xs text-red-50 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                    <span>{feat}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <a
-                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20info%20Kemitraan%20Usaha%20Sabuba`}
+                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20info%20Kemitraan%20Street%20Food%20Sabuba%20Classic`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-red-950 hover:bg-red-50 font-black text-sm shadow-xl transition-all active:scale-95"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-400 hover:bg-amber-300 text-red-950 font-black text-sm shadow-xl transition-all active:scale-95"
               >
-                <span>Hubungi Tim Kemitraan WA</span>
-                <ArrowRight className="w-4 h-4 text-red-900" />
+                <span>Konsultasi Kemitraan Street Food</span>
+                <ArrowRight className="w-4 h-4 text-red-950" />
               </a>
             </div>
           </div>
 
           {/* Right Column Image Stack */}
           <div className="lg:col-span-6 relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20">
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group">
               <img
-                src="/assets/Konsep/2. Konsep Restaurant.png"
-                alt="Kemitraan Sabuba"
-                className="w-full h-80 sm:h-96 object-cover"
+                src="/assets/Konsep/5. Konsep Street Food.jpg"
+                alt="Konsep Street Food Sabuba Classic Motor Custom"
+                className="w-full h-[420px] sm:h-[480px] object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
-                <div>
-                  <span className="text-xs font-bold text-amber-300 uppercase">Outlet Kemitraan</span>
-                  <h3 className="font-extrabold text-lg text-white">Bubur Bakar Sabuba Sidoarjo</h3>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2.5 py-1 rounded-full bg-red-800 text-amber-300 font-extrabold text-[11px] uppercase">
+                    Sabuba Classic
+                  </span>
+                  <span className="px-2.5 py-1 rounded-full bg-amber-400 text-red-950 font-extrabold text-[11px] uppercase flex items-center gap-1">
+                    <MapPin className="w-3 h-3" /> Pindah Lokasi Mudah
+                  </span>
                 </div>
+                <h3 className="font-black text-xl text-white">Konsep Street Food Motor Custom</h3>
+                <p className="text-xs text-red-100/90 mt-1">
+                  Kompak, Praktis, Siap Jualan Di Mana Saja & Bebas Biaya Sewa Ruko!
+                </p>
               </div>
             </div>
           </div>
@@ -81,3 +113,4 @@ export default function FranchiseSection() {
     </section>
   );
 }
+

@@ -13,12 +13,12 @@ export default function ConceptGallery() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-black tracking-widest text-red-800 uppercase">Inovasi Outlet</span>
+          <span className="text-xs font-black tracking-widest text-red-800 uppercase">Inovasi Outlet & Kemitraan</span>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">
-            4 Konsep Kemitraan & Outlet Sabuba
+            {SABUBA_DATA.concepts.length} Pilihan Konsep Kemitraan Sabuba
           </h2>
           <p className="text-slate-600 text-xs sm:text-sm mt-1">
-            Fleksibel untuk berbagai lokasi usaha sarapan & tempat nongkrong kekinian.
+            Fleksibel mulai dari Motor Custom Street Food (Bebas Biaya Sewa), Tenda Outdoor, Booth Modular, hingga Restaurant Modern.
           </p>
         </div>
 
@@ -46,7 +46,7 @@ export default function ConceptGallery() {
         <div className="bg-slate-50 rounded-3xl p-6 sm:p-10 border border-slate-200/80 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Image Side */}
-          <div className="lg:col-span-7 relative h-64 sm:h-96 rounded-2xl overflow-hidden shadow-md bg-white">
+          <div className="lg:col-span-7 relative h-72 sm:h-[420px] rounded-2xl overflow-hidden shadow-md bg-white border border-slate-200/60">
             <motion.img
               key={activeConcept.id}
               initial={{ opacity: 0, scale: 0.98 }}
@@ -56,9 +56,16 @@ export default function ConceptGallery() {
               alt={activeConcept.title}
               className="w-full h-full object-cover"
             />
-            <div className="absolute top-4 left-4 px-3.5 py-1.5 rounded-full bg-red-800 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5">
-              <Flame className="w-3.5 h-3.5" />
-              <span>Konsep #{activeConceptIdx + 1}</span>
+            <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+              <div className="px-3.5 py-1.5 rounded-full bg-red-800 text-white text-xs font-extrabold shadow-md flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5" />
+                <span>Konsep #{activeConceptIdx + 1}</span>
+              </div>
+              {activeConcept.id === 'street-food' && (
+                <div className="px-3.5 py-1.5 rounded-full bg-amber-400 text-red-950 text-xs font-black shadow-md uppercase tracking-wide">
+                  ⚡ Motor Custom Fleksibel
+                </div>
+              )}
             </div>
           </div>
 
