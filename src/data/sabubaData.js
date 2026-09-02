@@ -11,7 +11,7 @@ export const SABUBA_DATA = {
   },
   // Target Google Sheet for customer and transaction data auto-sync:
   // https://docs.google.com/spreadsheets/d/1PSbBSYxsLbXBgzwoBS3Xm1i_C-nLYCffXXGeIJ5tbHA/edit#gid=0
-  appScriptUrl: "https://script.google.com/macros/s/AKfycbxiOagkGeuiCq6xwTeeV5xGb8dyUJIoVeclgBjPJs86ruMcc2W46ZI8CvyZlBGUrz4Uiw/exec",
+  appScriptUrl: "https://script.google.com/macros/s/AKfycbyzbeW4cIKBpVtx2umFXYRam4YiaQo4qS5TVdW74zoiWC8EvlSRNmZXs3VBjB1K7-2rag/exec",
   menuCategories: [
     { id: "all", name: "Semua Menu" },
     { id: "bubur", name: "Bubur Bakar" },

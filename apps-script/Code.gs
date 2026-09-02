@@ -164,7 +164,18 @@ function doPost(e) {
     let buktiBayarUrl = "-";
     if (data.buktiBayarData && typeof data.buktiBayarData === "string" && data.buktiBayarData.indexOf("data:") === 0) {
       try {
-        const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+        let folder;
+        try {
+          folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+        } catch (fErr) {
+          const folders = DriveApp.getFoldersByName("Sabuba Bukti Bayar");
+          if (folders.hasNext()) {
+            folder = folders.next();
+          } else {
+            folder = DriveApp.createFolder("Sabuba Bukti Bayar");
+          }
+        }
+
         const parts = data.buktiBayarData.split(";base64,");
         const contentType = parts[0].replace("data:", "");
         const base64Data = parts[1];
@@ -179,10 +190,16 @@ function doPost(e) {
         buktiBayarUrl = file.getUrl();
       } catch (uploadErr) {
         Logger.log("Error upload file to Drive: " + uploadErr.toString());
-        buktiBayarUrl = data.buktiBayarName ? (data.buktiBayarName + " (Gagal simpan link)") : "-";
+        buktiBayarUrl = data.buktiBayarName ? (data.buktiBayarName + " (Gagal simpan: " + uploadErr.message + ")") : "-";
       }
     } else if (data.buktiBayarName) {
       buktiBayarUrl = data.buktiBayarName;
+    }
+
+    // Format Link Klik di Google Sheet
+    let buktiBayarCell = buktiBayarUrl;
+    if (buktiBayarUrl && buktiBayarUrl.indexOf("http") === 0) {
+      buktiBayarCell = '=HYPERLINK("' + buktiBayarUrl + '", "' + (data.buktiBayarName || "Lihat Bukti Foto (GDrive)") + '")';
     }
 
     sheet.appendRow([
@@ -196,7 +213,7 @@ function doPost(e) {
       notes,
       totalAmount,
       status,
-      buktiBayarUrl
+      buktiBayarCell
     ]);
 
     return ContentService.createTextOutput(
