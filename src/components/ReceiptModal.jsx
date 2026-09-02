@@ -20,7 +20,135 @@ export default function ReceiptModal({ isOpen, onClose, orderData, onOpenWhatsAp
   } = orderData;
 
   const handlePrintPDF = () => {
-    window.print();
+    const receiptEl = document.getElementById('thermal-receipt');
+    if (!receiptEl) {
+      window.print();
+      return;
+    }
+
+    const printFrame = document.createElement('iframe');
+    printFrame.style.position = 'fixed';
+    printFrame.style.right = '0';
+    printFrame.style.bottom = '0';
+    printFrame.style.width = '0';
+    printFrame.style.height = '0';
+    printFrame.style.border = '0';
+    document.body.appendChild(printFrame);
+
+    const frameDoc = printFrame.contentWindow.document;
+    frameDoc.open();
+    frameDoc.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Struk Pesanan - #${orderId || 'Sabuba'}</title>
+          <style>
+            @page {
+              size: auto;
+              margin: 5mm;
+            }
+            body {
+              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+              font-size: 11px;
+              color: #000;
+              background: #fff;
+              margin: 0;
+              padding: 10px;
+              -webkit-print-color-adjust: exact;
+              print-color-adjust: exact;
+            }
+            * { box-sizing: border-box; }
+            .text-center { text-align: center; }
+            .font-extrabold { font-weight: 800; }
+            .font-bold { font-weight: 700; }
+            .font-semibold { font-weight: 600; }
+            .font-black { font-weight: 900; }
+            .font-medium { font-weight: 500; }
+            .uppercase { text-transform: uppercase; }
+            .flex { display: flex; }
+            .justify-between { justify-content: space-between; }
+            .items-center { align-items: center; }
+            .items-start { align-items: flex-start; }
+            .justify-center { justify-content: center; }
+            .flex-col { flex-direction: column; }
+            .space-y-1 > * + * { margin-top: 4px; }
+            .space-y-0\.5 > * + * { margin-top: 2px; }
+            .space-y-2\.5 > * + * { margin-top: 10px; }
+            .border-b { border-bottom: 1px solid #cbd5e1; }
+            .border-t { border-top: 1px solid #cbd5e1; }
+            .border-t-2 { border-top: 2px solid #0f172a; }
+            .border-dashed { border-style: dashed; }
+            .border-slate-300 { border-color: #cbd5e1; }
+            .border-slate-200 { border-color: #e2e8f0; }
+            .pb-4 { padding-bottom: 14px; }
+            .mb-4 { margin-bottom: 14px; }
+            .pb-3 { padding-bottom: 10px; }
+            .mb-3 { margin-bottom: 10px; }
+            .mt-3 { margin-top: 12px; }
+            .mt-4 { margin-top: 16px; }
+            .mt-6 { margin-top: 20px; }
+            .pt-2 { padding-top: 8px; }
+            .pt-2\.5 { padding-top: 10px; }
+            .pt-3 { padding-top: 12px; }
+            .pt-4 { padding-top: 14px; }
+            .px-3 { padding-left: 12px; padding-right: 12px; }
+            .py-1 { padding-top: 4px; padding-bottom: 4px; }
+            .bg-red-900 { background-color: #7f1d1d; color: #fff; }
+            .text-red-950 { color: #450a0a; }
+            .text-red-900 { color: #7f1d1d; }
+            .text-red-800 { color: #991b1b; }
+            .text-slate-900 { color: #0f172a; }
+            .text-slate-800 { color: #1e293b; }
+            .text-slate-700 { color: #334155; }
+            .text-slate-600 { color: #475569; }
+            .text-slate-500 { color: #64748b; }
+            .text-slate-400 { color: #94a3b8; }
+            .text-amber-900 { color: #78350f; }
+            .text-emerald-800 { color: #065f46; }
+            .text-emerald-950 { color: #022c22; }
+            .rounded-lg { border-radius: 8px; }
+            .rounded-full { border-radius: 9999px; }
+            .rounded-xl { border-radius: 12px; }
+            .tracking-wider { letter-spacing: 0.05em; }
+            .tracking-widest { letter-spacing: 0.1em; }
+            .text-4xl { font-size: 32px; line-height: 1; }
+            .text-3xl { font-size: 26px; line-height: 1.2; }
+            .text-base { font-size: 15px; }
+            .text-sm { font-size: 13px; }
+            .text-xs { font-size: 11px; }
+            .text-\[11px\] { font-size: 11px; }
+            .text-\[10px\] { font-size: 10px; }
+            .text-\[9px\] { font-size: 9px; }
+            .text-\[8px\] { font-size: 8px; }
+            .pl-3 { padding-left: 12px; }
+            .italic { font-style: italic; }
+            .inline-block { display: inline-block; }
+            .bg-emerald-100 { background-color: #d1fae5; }
+            .border-emerald-300 { border-color: #6ee7b7; }
+            .bg-slate-50 { background-color: #f8fafc; }
+            .flex-1 { flex: 1 1 0%; }
+            .pr-2 { padding-right: 8px; }
+            a { color: inherit; text-decoration: underline; }
+          </style>
+        </head>
+        <body>
+          <div style="max-width: 420px; margin: 0 auto;">
+            ${receiptEl.innerHTML}
+          </div>
+        </body>
+      </html>
+    `);
+    frameDoc.close();
+
+    setTimeout(() => {
+      printFrame.contentWindow.focus();
+      printFrame.contentWindow.print();
+      setTimeout(() => {
+        if (document.body.contains(printFrame)) {
+          document.body.removeChild(printFrame);
+        }
+      }, 1000);
+    }, 250);
   };
 
   return (
@@ -73,6 +201,14 @@ export default function ReceiptModal({ isOpen, onClose, orderData, onOpenWhatsAp
               <p className="text-[9px] text-slate-400">
                 {outletObj ? outletObj.address : 'Sidoarjo, Jawa Timur'}
               </p>
+
+              {/* No Antrian Header Display */}
+              <div className="mt-3 pt-2.5 border-t border-dashed border-slate-300 flex flex-col items-center justify-center">
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest">NO. ANTRIAN</span>
+                <span className="text-4xl font-black text-red-950 tracking-wider font-mono my-0.5">
+                  #{orderData.queueNo || '001'}
+                </span>
+              </div>
             </div>
 
             {/* Order Info Barcode/ID */}
@@ -166,11 +302,23 @@ export default function ReceiptModal({ isOpen, onClose, orderData, onOpenWhatsAp
               <div className="inline-block px-3 py-1 rounded-full bg-emerald-100 text-emerald-950 font-black uppercase tracking-wider text-[9px] mb-1 border border-emerald-300">
                 STATUS: LUNAS (QRIS TERJADWAL)
               </div>
-              {orderData.proofFileName && (
+              {orderData.driveProofUrl ? (
+                <p className="text-[9px] text-emerald-800 font-bold flex items-center justify-center gap-1">
+                  <span>✓ Bukti Bayar GDrive:</span>
+                  <a
+                    href={orderData.driveProofUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline text-emerald-950 font-extrabold hover:text-emerald-700"
+                  >
+                    Lihat Foto ({orderData.proofFileName || 'GDrive Link'})
+                  </a>
+                </p>
+              ) : orderData.proofFileName ? (
                 <p className="text-[9px] text-emerald-800 font-bold">
                   ✓ Bukti Bayar Terlampir: {orderData.proofFileName}
                 </p>
-              )}
+              ) : null}
               <p className="font-bold text-slate-700 mt-1">Terima kasih telah memesan di Sabuba!</p>
               <p>Harap tunjukkan struk ini saat pengambilan/kedatangan di outlet.</p>
               <p className="text-[8px] text-slate-400 pt-2">Powered by Sabuba Digital Order System</p>

@@ -106,6 +106,23 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
     setStep(2);
   };
 
+  const getNextDailyQueueNumber = () => {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    try {
+      const stored = localStorage.getItem('sabuba_daily_queue');
+      let data = stored ? JSON.parse(stored) : null;
+      if (!data || data.date !== todayStr) {
+        data = { date: todayStr, number: 1 };
+      } else {
+        data.number = data.number >= 999 ? 1 : data.number + 1;
+      }
+      localStorage.setItem('sabuba_daily_queue', JSON.stringify(data));
+      return String(data.number).padStart(3, '0');
+    } catch (err) {
+      return '001';
+    }
+  };
+
   const handleSendWhatsApp = async (e) => {
     e.preventDefault();
     if (!proofFile && !proofPreview) {
@@ -116,6 +133,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
 
     setIsSubmitting(true);
 
+    const queueNo = getNextDailyQueueNumber();
     const outletObj = SABUBA_DATA.outlets.find(o => o.id === selectedOutlet);
     const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const randId = Math.floor(1000 + Math.random() * 9000);
@@ -146,13 +164,15 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
       return text;
     }).join('\n');
 
-    const fullNotesText = `[Waktu Terjadwal: ${scheduledFullText}] ${notes ? '| Catatan: ' + notes : ''} ${proofFileName ? '| Bukti Bayar: ' + proofFileName : ''}`;
+    const fullNotesText = `[No. Antrian: #${queueNo}] [Waktu Terjadwal: ${scheduledFullText}] ${notes ? '| Catatan: ' + notes : ''} ${proofFileName ? '| Bukti Bayar: ' + proofFileName : ''}`;
 
     // Send payload to Google Apps Script (Auto-save customer & transaction data to Google Sheet)
+    let driveProofUrl = '';
     if (SABUBA_DATA.appScriptUrl) {
       try {
         const payload = {
           orderId,
+          queueNo,
           timestamp,
           customerName,
           customerPhone: customerPhone || '-',
@@ -166,24 +186,31 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
           buktiBayarData: proofPreview || '-' // base64 preview
         };
 
-        await fetch(SABUBA_DATA.appScriptUrl, {
+        const res = await fetch(SABUBA_DATA.appScriptUrl, {
           method: 'POST',
-          mode: 'no-cors',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'text/plain;charset=utf-8',
           },
           body: JSON.stringify(payload),
         });
+
+        if (res.ok) {
+          const resData = await res.json();
+          if (resData && resData.buktiBayarUrl && resData.buktiBayarUrl.indexOf('http') === 0) {
+            driveProofUrl = resData.buktiBayarUrl;
+          }
+        }
       } catch (err) {
         console.warn('Google Sheet auto-save status:', err);
       }
     }
 
-    // Build Thermal Receipt WA Message (Opsi 1)
+    // Build Thermal Receipt WA Message
     let message = `==================================\n`;
     message += `       *BUBUR BAKAR SABUBA*\n`;
     message += `  _Sarapan Claypot • Wonton • Laksa_\n`;
     message += `==================================\n`;
+    message += `🔢 *NO. ANTRIAN: #${queueNo}*\n`;
     message += `📋 *ID TRANSAKSI:* #${orderId}\n`;
     message += `🗓️ *WAKTU ORDER:* ${timestamp}\n`;
     message += `⏰ *JADWAL AMBIL:* ${scheduledFullText}\n`;
@@ -213,7 +240,15 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
 
     message += `💰 *TOTAL PEMBAYARAN:* *${formatRupiah(subtotal)}*\n`;
     message += `💳 *METODE BAYAR:* QRIS ZEGER COFFEE\n`;
-    message += `📸 *BUKTI BAYAR:* ${proofFile ? 'SUDAH DIUNGGAH (' + proofFileName + ')' : 'BELUM DIUNGGAH'}\n`;
+    
+    if (driveProofUrl) {
+      message += `📸 *BUKTI BAYAR:* SUDAH DIUNGGAH\n👉 ${driveProofUrl}\n`;
+    } else if (proofFileName) {
+      message += `📸 *BUKTI BAYAR:* SUDAH DIUNGGAH (${proofFileName})\n`;
+    } else {
+      message += `📸 *BUKTI BAYAR:* BELUM DIUNGGAH\n`;
+    }
+
     message += `==================================\n`;
     message += `STATUS: *PESANAN TERJADWAL (LUNAS)*\n`;
     message += `==================================\n`;
@@ -226,6 +261,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
 
     const orderDataObj = {
       orderId,
+      queueNo,
       timestamp,
       customerName,
       customerPhone,
@@ -237,6 +273,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
       subtotal,
       proofFileName,
       proofPreview,
+      driveProofUrl,
       waUrl
     };
 

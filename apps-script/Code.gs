@@ -159,7 +159,31 @@ function doPost(e) {
     const notes = data.notes || "-";
     const totalAmount = data.totalAmount || 0;
     const status = data.status || "Pending WA";
-    const buktiBayarName = data.buktiBayarName || "-";
+
+    // Standardize Bukti Bayar Google Drive Upload
+    let buktiBayarUrl = "-";
+    if (data.buktiBayarData && typeof data.buktiBayarData === "string" && data.buktiBayarData.indexOf("data:") === 0) {
+      try {
+        const folder = DriveApp.getFolderById(DRIVE_FOLDER_ID);
+        const parts = data.buktiBayarData.split(";base64,");
+        const contentType = parts[0].replace("data:", "");
+        const base64Data = parts[1];
+        const bytes = Utilities.base64Decode(base64Data);
+        
+        const fileName = orderId + "_" + (data.buktiBayarName || "bukti_bayar.jpg");
+        const blob = Utilities.newBlob(bytes, contentType, fileName);
+        const file = folder.createFile(blob);
+        
+        // Atur izin file publik (siapa saja yang memiliki link dapat melihat)
+        file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+        buktiBayarUrl = file.getUrl();
+      } catch (uploadErr) {
+        Logger.log("Error upload file to Drive: " + uploadErr.toString());
+        buktiBayarUrl = data.buktiBayarName ? (data.buktiBayarName + " (Gagal simpan link)") : "-";
+      }
+    } else if (data.buktiBayarName) {
+      buktiBayarUrl = data.buktiBayarName;
+    }
 
     sheet.appendRow([
       timestamp,
@@ -172,11 +196,16 @@ function doPost(e) {
       notes,
       totalAmount,
       status,
-      buktiBayarName
+      buktiBayarUrl
     ]);
 
     return ContentService.createTextOutput(
-      JSON.stringify({ result: "success", message: "Data pesanan berhasil disimpan", orderId: orderId })
+      JSON.stringify({ 
+        result: "success", 
+        message: "Data pesanan & bukti bayar berhasil disimpan", 
+        orderId: orderId,
+        buktiBayarUrl: buktiBayarUrl 
+      })
     ).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
