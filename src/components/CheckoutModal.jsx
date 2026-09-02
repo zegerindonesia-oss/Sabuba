@@ -12,23 +12,34 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
   const [orderType, setOrderType] = useState('scheduled'); 
   const [scheduledTag, setScheduledTag] = useState('dine-in'); // 'dine-in' | 'takeaway'
 
-  // Calculate min scheduled time (current time + 2 hours)
-  const getMinAllowedDateTime = () => {
+  // Rules: Scheduled order must be H-1 max 17:00 WIB today
+  // - If current time <= 17:00 WIB today: min allowed date is Tomorrow (H+1)
+  // - If current time > 17:00 WIB today: cut-off passed for tomorrow, min allowed date is H+2
+  const getMinAllowedScheduledDate = () => {
     const now = new Date();
-    now.setHours(now.getHours() + 2);
-    return now;
+    const currentHour = now.getHours();
+    const minDate = new Date();
+    
+    if (currentHour >= 17) {
+      // Cut-off 17:00 WIB passed, min date is Day After Tomorrow (H+2)
+      minDate.setDate(minDate.getDate() + 2);
+    } else {
+      // Before 17:00 WIB, min date is Tomorrow (H+1)
+      minDate.setDate(minDate.getDate() + 1);
+    }
+    return minDate;
   };
 
   const getInitialDateStr = () => {
-    const minTime = getMinAllowedDateTime();
-    return minTime.toISOString().slice(0, 10);
+    const minDate = getMinAllowedScheduledDate();
+    const year = minDate.getFullYear();
+    const month = String(minDate.getMonth() + 1).padStart(2, '0');
+    const day = String(minDate.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
   };
 
   const getInitialTimeStr = () => {
-    const minTime = getMinAllowedDateTime();
-    const hours = String(minTime.getHours()).padStart(2, '0');
-    const minutes = String(minTime.getMinutes()).padStart(2, '0');
-    return `${hours}:${minutes}`;
+    return '07:00';
   };
 
   const [scheduledDate, setScheduledDate] = useState(getInitialDateStr());
@@ -48,16 +59,35 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
   const [isSubmitting, setIsSubmitting] = useState(false);
   const subtotal = cartItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
-  // Validate scheduled datetime min 2 hours from now
+  // Validate scheduled order date rule (H-1 max 17:00 WIB)
   const validateScheduledTime = (dStr, tStr) => {
-    if (!dStr || !tStr) return true;
-    const selected = new Date(`${dStr}T${tStr}`);
-    const minAllowed = getMinAllowedDateTime();
+    if (!dStr) return true;
+    const now = new Date();
+    const currentHour = now.getHours();
     
-    if (selected < minAllowed) {
-      const minTimeString = minAllowed.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-      const minDateString = minAllowed.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
-      setTimeError(`Pesanan terjadwal minimal 2 jam dari sekarang (Paling awal: ${minDateString} jam ${minTimeString} WIB).`);
+    const parts = dStr.split('-');
+    const selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    const minAllowedDate = new Date(today);
+    if (currentHour >= 17) {
+      minAllowedDate.setDate(minAllowedDate.getDate() + 2);
+    } else {
+      minAllowedDate.setDate(minAllowedDate.getDate() + 1);
+    }
+    
+    if (selectedDate < minAllowedDate) {
+      const minDateFormatted = minAllowedDate.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+      if (currentHour >= 17) {
+        setTimeError(`Pemesanan untuk besok telah ditutup (Maksimal jam 17:00 WIB H-1). Paling awal jadwal pengambilan adalah ${minDateFormatted}.`);
+      } else {
+        setTimeError(`Pesanan terjadwal harus H-1 (Maksimal jam 17:00 WIB). Paling awal jadwal pengambilan adalah ${minDateFormatted}.`);
+      }
       return false;
     }
     setTimeError('');
@@ -353,7 +383,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
                         </span>
                       </div>
                       <span className="block text-xs font-black">Pesanan Terjadwal</span>
-                      <span className="text-[10px] text-red-800 font-semibold">Pre-Order Min. H+2 Jam</span>
+                      <span className="text-[10px] text-red-800 font-semibold">Pre-Order H-1 (Maks. 17.00 WIB)</span>
                     </button>
 
                     {/* Frozen Option: Dine-In Langsung */}
@@ -439,7 +469,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
                       Tentukan Tanggal & Jam Pengambilan / Konsumsi
                     </label>
                     <p className="text-[11px] text-red-900 mb-2 font-medium">
-                      ⚠️ Pengisian waktu minimal <span className="font-black underline">2 jam dari sekarang</span> untuk persiapan koki & claypot.
+                      ⚠️ Pesanan terjadwal <span className="font-black underline">wajib H-1 (Maksimal jam 17:00 WIB hari sebelumnya)</span>.
                     </p>
 
                     <div className="grid grid-cols-2 gap-2.5">
@@ -448,7 +478,7 @@ export default function CheckoutModal({ isOpen, onClose, cartItems, onSuccessOrd
                         <input
                           type="date"
                           required
-                          min={new Date().toISOString().slice(0, 10)}
+                          min={getInitialDateStr()}
                           value={scheduledDate}
                           onChange={handleDateChange}
                           className="w-full px-3.5 py-2.5 rounded-2xl bg-white border border-red-200 text-xs font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-800 shadow-sm"
