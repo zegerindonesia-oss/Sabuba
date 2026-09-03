@@ -5,7 +5,7 @@ import {
   DollarSign, ShieldCheck, Cpu, Smartphone, BarChart3, PieChart, Layers,
   Award, Play, CheckCircle2, ArrowRight, RefreshCw, Bot, Check, Maximize2,
   Minimize2, ExternalLink, Calendar, Building2, Zap, Flame, Star, Utensils,
-  AlertTriangle, HelpCircle, FileText, Bike
+  AlertTriangle, HelpCircle, FileText, Bike, Heart, Megaphone, Users
 } from 'lucide-react';
 import SabubaLogo from './SabubaLogo';
 import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
@@ -15,17 +15,17 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [customVideoUrl, setCustomVideoUrl] = useState('');
 
-  // Historical Screenshots Real Financial Data (Jan to Aug 2026)
+  // Historical POS Data (Jan to Aug 2026)
   const realPosData = [
-    { period: 'Jan 2026', omset: 32176000, profit: 16382000, margin: 50.9 },
-    { period: 'Feb-Mar 2026', omset: 37027000, profit: 19181000, margin: 51.8 },
-    { period: 'Apr 2026', omset: 51879000, profit: 28039500, margin: 54.0 },
-    { period: 'Mei 2026', omset: 71680000, profit: 38623500, margin: 53.8 },
-    { period: 'Jun 2026', omset: 66792000, profit: 36617000, margin: 54.8 },
-    { period: 'Agu 2026', omset: 80108009, profit: 40177509, margin: 50.1 },
+    { period: 'Jan 2026', omset: 32176000, profit: 16382000 },
+    { period: 'Feb-Mar 2026', omset: 37027000, profit: 19181000 },
+    { period: 'Apr 2026', omset: 51879000, profit: 28039500 },
+    { period: 'Mei 2026', omset: 71680000, profit: 38623500 },
+    { period: 'Jun 2026', omset: 66792000, profit: 36617000 },
+    { period: 'Agu 2026', omset: 80108009, profit: 40177509 },
   ];
 
-  // Feasibility Study Data (Matches Zeger! Feasibility Study Format attached by user)
+  // Feasibility Study Data (Exact Zeger! On The Wheels Canva Format)
   const feasibilityData = {
     brand: 'Sabuba Indonesia (Sabuba Classic)',
     status: 'Partnership / Mitra Pasif (Bagi Hasil 50% : 50%)',
@@ -34,7 +34,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     capex: 100000000, // Rp 100.000.000
     scenarios: [
       {
-        name: 'Rendah (50 Porsi)',
+        name: 'Rendah (50 Cup)',
         tcDay: 50,
         tcMonth: 1500,
         apc: 20000,
@@ -43,20 +43,17 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesYear: 360000000,
         hppPercent: 42,
         hppAmount: 12600000,
-        grossProfitPercent: 58,
         grossProfitAmount: 17400000,
         opsKaryawan: 3000000,
         opsRumahTangga: 450000,
         opsListrikAirFuel: 450000,
         totalOpsAmount: 3900000,
-        totalOpsPercent: 13,
         ebitdaNetProfitStore: 13500000,
-        ebitdaPercent: 45,
         mitraShare50: 6750000,
         paybackMonths: 14.8
       },
       {
-        name: 'Sedang (100 Porsi)',
+        name: 'Sedang (100 Cup)',
         tcDay: 100,
         tcMonth: 3000,
         apc: 20000,
@@ -65,20 +62,17 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesYear: 720000000,
         hppPercent: 42,
         hppAmount: 25200000,
-        grossProfitPercent: 58,
         grossProfitAmount: 34800000,
         opsKaryawan: 5500000,
         opsRumahTangga: 900000,
         opsListrikAirFuel: 900000,
         totalOpsAmount: 7300000,
-        totalOpsPercent: 12.1,
         ebitdaNetProfitStore: 27500000,
-        ebitdaPercent: 45.8,
         mitraShare50: 13750000,
         paybackMonths: 7.2
       },
       {
-        name: 'Ramai (150 Porsi)',
+        name: 'Ramai (150 Cup)',
         tcDay: 150,
         tcMonth: 4500,
         apc: 20000,
@@ -87,20 +81,17 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesYear: 1080000000,
         hppPercent: 40,
         hppAmount: 36000000,
-        grossProfitPercent: 60,
         grossProfitAmount: 54000000,
         opsKaryawan: 7500000,
         opsRumahTangga: 1350000,
         opsListrikAirFuel: 1350000,
         totalOpsAmount: 10200000,
-        totalOpsPercent: 11.3,
         ebitdaNetProfitStore: 43800000,
-        ebitdaPercent: 48.7,
         mitraShare50: 21900000,
         paybackMonths: 4.5
       },
       {
-        name: 'Ramai Sekali (200 Porsi)',
+        name: 'Ramai Sekali (200 Cup)',
         tcDay: 200,
         tcMonth: 6000,
         apc: 20000,
@@ -109,62 +100,49 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesYear: 1440000000,
         hppPercent: 40,
         hppAmount: 48000000,
-        grossProfitPercent: 60,
         grossProfitAmount: 72000000,
         opsKaryawan: 9500000,
         opsRumahTangga: 1800000,
         opsListrikAirFuel: 1800000,
         totalOpsAmount: 13100000,
-        totalOpsPercent: 10.9,
         ebitdaNetProfitStore: 58900000,
-        ebitdaPercent: 49.1,
         mitraShare50: 29450000,
         paybackMonths: 3.4
       }
     ]
   };
 
-  // Featured Menu Items for Product Showcase
+  // Clean Menu Cards (COGS Display Removed as requested)
   const featuredMenu = [
     {
       name: 'Bubur (Ori) Mix (Ayam + Sapi)',
       price: 19000,
       tag: 'BEST SELLER #1',
       image: 'https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800',
-      cogs: '32%',
-      margin: '68% Gross Margin',
     },
     {
       name: 'Bubur (Kuah Kuning) Sapi',
       price: 19000,
       tag: 'FAVORITE',
       image: 'https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800',
-      cogs: '30%',
-      margin: '70% Gross Margin',
     },
     {
       name: 'Bubur (Kuah Laksa) Mix',
       price: 19000,
       tag: 'SPICY SIGNATURE',
       image: 'https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800',
-      cogs: '31%',
-      margin: '69% Gross Margin',
     },
     {
       name: 'Wonton Kuah Dumpling Ayam',
       price: 13000,
       tag: 'HIGH REPEAT ORDER',
       image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800',
-      cogs: '28%',
-      margin: '72% Gross Margin',
     },
     {
       name: 'Dim Sum Siomay Ayam (4 Pcs)',
       price: 13000,
       tag: 'ADD-ON POPULER',
       image: 'https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800',
-      cogs: '27%',
-      margin: '73% Gross Margin',
     },
   ];
 
@@ -191,12 +169,12 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
   const slides = [
     // ----------------------------------------------------
-    // Slide 1: FRONT COVER - Clean White + Dark Red Sabuba Ornaments + Big Menu Image
+    // Slide 1: FRONT COVER - Clean Copywriting + Gradient Blended Menu Photo
     // ----------------------------------------------------
     {
       id: 'cover',
-      title: 'Kemitraan Proposal 2026',
-      subtitle: 'Sabuba Fast Casual Food Tech Startup',
+      title: 'Proposal Kemitraan 2026',
+      subtitle: 'Sajian Warm Claypot Khas Nusantara',
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-full items-center">
           
@@ -207,8 +185,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200 text-red-900 font-extrabold text-xs uppercase tracking-wider shadow-sm"
             >
-              <Sparkles className="w-3.5 h-3.5 text-red-700 animate-spin" />
-              <span>Investment Deck & Opportunity 2026</span>
+              <Heart className="w-3.5 h-3.5 text-red-700 fill-red-700" />
+              <span>Sajian Warm Claypot Khas Nusantara</span>
             </motion.div>
 
             <motion.h1
@@ -217,7 +195,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               transition={{ delay: 0.1 }}
               className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight"
             >
-              SABUBA <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#991B1B] via-[#7F1D1D] to-[#450A0A]">Fast Casual Food Tech</span>
+              SABUBA <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#991B1B] via-[#7F1D1D] to-[#450A0A]">Sarapan Bubur Bakar</span>
             </motion.h1>
 
             <motion.p
@@ -226,10 +204,10 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               transition={{ delay: 0.2 }}
               className="text-slate-600 text-sm sm:text-base leading-relaxed"
             >
-              Peluang kerjasama kemitraan strategis <strong className="text-red-900 font-bold">Sabuba Classic</strong>. Konsep <strong className="text-red-800 font-bold">Mitra Pasif 100%</strong> dengan <strong className="text-emerald-700 font-bold">Bagi Hasil 50% - 50%</strong>. Bebas dari kerumitan operasional harian, terpantau real-time 24/7 via sistem AI POS online.
+              Hadir sebagai hidangan sarapan pagi yang hangat, lezat, & bernutrisi tinggi untuk keluarga Indonesia. Membuka peluang kerjasama kemitraan <strong className="text-red-900 font-bold">Mitra Pasif 100%</strong> dengan <strong className="text-red-800 font-bold">Bagi Hasil 50% : 50%</strong> tanpa repot operasional harian.
             </motion.p>
 
-            {/* Key Value Glass Cards */}
+            {/* Key Value Glass Badges */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -244,7 +222,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
               <div className="p-3.5 rounded-2xl bg-white/90 border border-red-100 shadow-md backdrop-blur-md">
                 <div className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Bagi Hasil</div>
-                <div className="text-xl sm:text-2xl font-black text-emerald-700 mt-0.5">50% : 50%</div>
+                <div className="text-xl sm:text-2xl font-black text-red-900 mt-0.5">50% : 50%</div>
                 <div className="text-[10px] text-slate-600 font-semibold mt-0.5">Mitra Pasif</div>
               </div>
 
@@ -256,44 +234,32 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </motion.div>
           </div>
 
-          {/* Right Column: Big High-Res Menu Image Showcase */}
+          {/* Right Column: Gradient-Blended Big Menu Photo (No Hard Frame) */}
           <div className="lg:col-span-6 relative flex justify-center">
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.6, type: 'spring' }}
-              className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border-4 border-white group"
+              className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl group"
             >
               <img
                 src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800"
                 alt="Sabuba Bubur Bakar Claypot Signature"
-                className="w-full h-[360px] sm:h-[420px] object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-[380px] sm:h-[430px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
 
-              {/* Gradient overlay & Floating Badges */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-                
-                {/* Floating Top Badge */}
-                <motion.div
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute top-4 right-4 px-3.5 py-2 rounded-2xl bg-white/90 backdrop-blur-md border border-white/60 shadow-lg text-red-950 text-xs font-black flex items-center gap-2"
-                >
-                  <Flame className="w-4 h-4 text-red-700 fill-red-700" />
-                  <span>Khas Aromatis Claypot</span>
-                </motion.div>
-
-                {/* Bottom Content overlay */}
+              {/* Soft Gradient Overlay Fading into Content */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
                 <div className="space-y-1 text-white">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-red-950 font-black text-[10px] uppercase">
+                    <span className="px-3 py-0.5 rounded-full bg-amber-400 text-red-950 font-black text-[10px] uppercase">
                       Sabuba Classic (Motor Custom)
                     </span>
                     <span className="text-xs text-amber-200 font-bold">100% Halal & Fresh</span>
                   </div>
                   <h3 className="text-2xl font-black tracking-tight text-white">Bubur Bakar Claypot Sabuba</h3>
                   <p className="text-xs text-red-100 max-w-md">
-                    Konsep Street Food motor tiga roda custom yang hemat overhead tanpa sewa ruko mahal & mobilitas tinggi.
+                    Sajian hangat claypot beraroma khas dengan aneka topping lezat & disukai seluruh kalangan keluarga.
                   </p>
                 </div>
               </div>
@@ -305,169 +271,57 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 2: FEASIBILITY STUDY & FINANCE PROJECTION (MATCHES ZEGER! CANVA TEMPLATE EXACTLY)
+    // Slide 2: Problem & Solution (Mindset Startup Founder / Problem Solver)
     // ----------------------------------------------------
     {
-      id: 'feasibility-study',
-      title: 'Feasibility Study (Sabuba Classic)',
-      subtitle: 'Analisa Keuangan & Proyeksi Laba/Rugi Kemitraan Sabuba Motor Custom',
+      id: 'problem-solution',
+      title: 'Mengapa Harus Kemitraan Sabuba?',
+      subtitle: 'Solusi Bisnis Kuliner Sarapan Pagi Efisien & Bebas Repot Operasional',
       content: (
-        <div className="space-y-3 overflow-y-auto max-h-[70vh] pr-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
           
-          {/* Header Banner - Matches Zeger Feasibility Study Banner */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#991B1B] via-[#7F1D1D] to-[#450A0A] text-white shadow-md">
-            <div>
-              <div className="inline-block px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full mb-1">
-                FEASIBILITY STUDY (SABUBA CLASSIC)
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black italic tracking-wide">
-                Analisa Keuangan Sabuba Classic (Motor Custom)
-              </h3>
+          {/* Problem Card */}
+          <div className="p-6 rounded-3xl bg-red-50/70 border border-red-200 space-y-4 shadow-sm">
+            <div className="w-10 h-10 rounded-2xl bg-red-900 text-white flex items-center justify-center font-bold">
+              <AlertTriangle className="w-5 h-5" />
             </div>
-            <div className="text-right text-xs bg-black/30 px-3.5 py-2 rounded-xl border border-white/10 shrink-0">
-              <div className="text-amber-300 font-extrabold text-sm">TOTAL MODAL AWAL / CAPEX</div>
-              <div className="text-xl font-black text-white">Rp 100.000.000</div>
+            <h3 className="text-xl font-black text-slate-900">Tantangan Usaha Kuliner Saat Ini</h3>
+            <ul className="space-y-3 text-xs text-slate-600">
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                <span><strong>Sewa Tempat Ruko Mahal:</strong> Biaya sewa ruko & tempat permanen memakan puluhan juta/tahun yang memperlambat pengembalian modal.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                <span><strong>Rumit Kelola SDM & Operasional:</strong> Mengurus karyawan, rekrutmen, belanja bahan harian, & konsistensi rasa sering menguras waktu mitra.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                <span><strong>Kurang Higienis di Street Food:</strong> Tempat sarapan di pinggir jalan umum kurang bersih & penyajiannya sering lambat saat jam sibuk pagi.</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Solution Card */}
+          <div className="p-6 rounded-3xl bg-gradient-to-br from-red-900 to-red-950 text-white space-y-4 shadow-xl">
+            <div className="w-10 h-10 rounded-2xl bg-amber-400 text-red-950 flex items-center justify-center font-bold">
+              <CheckCircle2 className="w-5 h-5" />
             </div>
-          </div>
-
-          {/* Upper Info Box */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs p-3 rounded-xl bg-red-50/70 border border-red-100 font-semibold text-slate-800">
-            <div><span className="text-slate-500">Brand:</span> <strong className="text-red-900 block">Sabuba Indonesia</strong></div>
-            <div><span className="text-slate-500">Status Kepemilikan:</span> <strong className="text-slate-900 block">Partnership (Mitra Pasif 50:50)</strong></div>
-            <div><span className="text-slate-500">Paket Usaha:</span> <strong className="text-slate-900 block">Sabuba Classic (Motor Custom)</strong></div>
-            <div><span className="text-slate-500">Biaya Kemitraan:</span> <strong className="text-red-900 block">Rp 100.000.000</strong></div>
-          </div>
-
-          {/* Detailed Financial Table - Exactly Styled like Zeger Feasibility Table */}
-          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white text-[11px]">
-            <table className="w-full text-left border-collapse">
-              {/* Table Header */}
-              <thead>
-                <tr className="bg-red-900 text-white text-[10px] font-black uppercase tracking-wider">
-                  <th className="p-2.5 border-r border-red-800">ANALISIS PENDAPATAN</th>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <th key={i} className="p-2.5 text-center border-r border-red-800 last:border-0">
-                      {sc.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-slate-100 font-medium">
-                <tr className="bg-slate-50">
-                  <td className="p-2 font-bold text-slate-800">Jumlah Motor Custom / Outlet</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700 font-bold">1 Unit</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="p-2 font-bold text-slate-800">TC / Day (Transaksi per Hari)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center font-bold text-slate-900">{sc.tcDay} Porsi</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-2 font-bold text-slate-800">TC / Month (30 Hari)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700">{sc.tcMonth.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="p-2 font-bold text-slate-800">APC (Average per Check / Rata2 Belanja)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.apc.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-2 font-bold text-slate-800">Sales / Hari</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-900 font-bold">Rp {sc.salesDay.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-red-50 text-red-950 font-black">
-                  <td className="p-2">TOTAL REVENUE (NET SALES / BULAN)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-red-900 text-xs">Rp {sc.salesMonth.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                {/* HPP & Gross Profit Header */}
-                <tr className="bg-red-800 text-white font-black text-[10px] uppercase">
-                  <td className="p-2 border-r border-red-700">PROYEKSI LABA / RUGI BULANAN</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center border-r border-red-700 last:border-0">SIMULASI</td>
-                  ))}
-                </tr>
-
-                <tr>
-                  <td className="p-2 text-slate-700">HPP / Total Biaya Bahan Baku (~40-42%)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-red-700">Rp {sc.hppAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-emerald-50 text-emerald-950 font-bold">
-                  <td className="p-2 font-black">GROSS PROFIT (LABA KOTOR)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-emerald-800 font-black">Rp {sc.grossProfitAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                {/* Biaya Operasional */}
-                <tr className="bg-slate-50 font-semibold">
-                  <td className="p-2 text-slate-800">Biaya Karyawan / Gaji Tim Operasional Store</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsKaryawan.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr>
-                  <td className="p-2 text-slate-800">Biaya Rumah Tangga / Kebersihan</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsRumahTangga.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-50">
-                  <td className="p-2 text-slate-800">Biaya Listrik, Air & Bahan Bakar Motor</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsListrikAirFuel.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-100 font-bold text-slate-900">
-                  <td className="p-2">TOTAL BIAYA OPERASIONAL STORE</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-red-900 font-bold">Rp {sc.totalOpsAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                {/* Net Profit Store */}
-                <tr className="bg-amber-100 text-red-950 font-black">
-                  <td className="p-2.5">STORE NET PROFIT (KEUNTUNGAN BERSIH OUTLET)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2.5 text-center text-red-900 text-xs">Rp {sc.ebitdaNetProfitStore.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                {/* Bagi Hasil Mitra 50% */}
-                <tr className="bg-emerald-600 text-white font-black text-xs">
-                  <td className="p-2.5">HAK BAGI HASIL MITRA PASIF (50% DARI NET PROFIT)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2.5 text-center text-amber-300 text-sm">Rp {sc.mitraShare50.toLocaleString('id-ID')} / Bln</td>
-                  ))}
-                </tr>
-
-                {/* Payback Period Row */}
-                <tr className="bg-slate-900 text-white font-bold">
-                  <td className="p-2">Estimasi Payback Period (Berdasarkan Net Profit Mitra)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-2 text-center text-amber-400 font-extrabold">~{sc.paybackMonths} Bulan</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          {/* Bottom Note Disclaimer - Matches Zeger Canva Disclaimer */}
-          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-[10px] text-red-900 font-semibold leading-relaxed">
-            <strong className="text-red-950">Catatan & Disclaimer Proyeksi:</strong> Bukan merupakan jaminan hitungan pasti. Perhitungan di atas hanya merupakan proyeksi/simulasi matematis berdasarkan standar operasional. Hasil dapat berbeda-beda tergantung kondisi lokasi, tingkat keramaian, & faktor pasar masing-masing outlet.
+            <h3 className="text-xl font-black text-white">Solusi Inovatif Sabuba Classic</h3>
+            <ul className="space-y-3 text-xs text-red-100">
+              <li className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                <span><strong>Motor Custom 3 Roda (Bebas Sewa Ruko):</strong> Unit street food hemat overhead, fleksibel buka di lokasi strategis & bisa terima order panggilan acara.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                <span><strong>Skema Mitra Pasif 100%:</strong> Tim pusat Sabuba mengelola rekrutmen SDM, kitchen supply chain terpusat, & promosi tanpa membuat mitra repot.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                <span><strong>Speed of Service &lt; 2 Menit:</strong> SOP penyajian cepat dengan standar higiene tinggi & cita rasa claypot khas yang konsisten.</span>
+              </li>
+            </ul>
           </div>
 
         </div>
@@ -475,83 +329,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 3: REAL HISTORICAL POS DATA (Jan to Aug 2026)
-    // ----------------------------------------------------
-    {
-      id: 'real-pos-data',
-      title: 'Data Historis Real Penjualan POS Outlet',
-      subtitle: 'Rekam Penjualan Riil Kasir Cloud Sabuba Januari - Agustus 2026',
-      content: (
-        <div className="space-y-5">
-          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-              Data bersumber langsung dari Laporan Kasir Cloud POS Sabuba saat ini.
-            </span>
-            <span className="px-3 py-1 bg-emerald-700 text-white rounded-full font-black text-[10px] uppercase tracking-wider">
-              REAL HISTORICAL LOGS
-            </span>
-          </div>
-
-          {/* Real POS Data Table / Bar Visual */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
-            
-            {/* Chart Bars */}
-            <div className="lg:col-span-7 space-y-3 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
-              <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center justify-between">
-                <span>Grafik Penjualan & Profit Riil (Rp)</span>
-                <span className="text-red-800 font-extrabold text-[11px]">Agustus 2026 Peak: Rp 80,1 Jt</span>
-              </div>
-
-              {realPosData.map((d, i) => {
-                const maxOmset = 85000000;
-                const widthOmset = (d.omset / maxOmset) * 100;
-
-                return (
-                  <div key={i} className="space-y-1">
-                    <div className="flex justify-between text-xs font-bold text-slate-700">
-                      <span>{d.period}</span>
-                      <span>
-                        Omset: <strong className="text-slate-900">Rp {(d.omset / 1000000).toFixed(1)}M</strong> | Profit Store: <strong className="text-emerald-700">Rp {(d.profit / 1000000).toFixed(1)}M</strong>
-                      </span>
-                    </div>
-
-                    <div className="h-3.5 w-full bg-slate-100 rounded-full overflow-hidden relative flex">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${widthOmset}%` }}
-                        transition={{ duration: 0.8, delay: i * 0.1 }}
-                        className="h-full bg-gradient-to-r from-red-800 via-red-600 to-emerald-600 rounded-full"
-                      />
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Real Data Highlight Cards */}
-            <div className="lg:col-span-5 space-y-3">
-              <div className="p-5 rounded-3xl bg-gradient-to-br from-red-900 to-red-950 text-white shadow-lg space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">Penjualan Agustus 2026 (Real POS Log)</span>
-                <div className="text-3xl font-black">Rp 80.108.009</div>
-                <div className="text-xs font-bold text-emerald-300">Keuntungan Bersih Store: Rp 40.177.509 (50.1%)</div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs text-slate-600 leading-relaxed shadow-sm">
-                <div className="font-bold text-red-900 mb-1 flex items-center gap-1.5">
-                  <FileText className="w-4 h-4" /> Catatan Data Real:
-                </div>
-                Pencapaian di atas adalah bukti rekam jejak operasional outlet Sabuba yang berjalan saat ini. Data ini disajikan sebagai bukti validitas produk & daya terima pasar.
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )
-    },
-
-    // ----------------------------------------------------
-    // Slide 4: 3D Funnel Market Analysis (TAM / SAM / SOM)
+    // Slide 3: McKinsey Market Analysis (TAM / SAM / SOM)
     // ----------------------------------------------------
     {
       id: 'market-funnel',
@@ -563,10 +341,9 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             Pasar makanan sarapan & street food di Indonesia merupakan kebutuhan harian (daily essential) dengan tingkat repeat order sangat tinggi. Sabuba mengambil ceruk pasar fast casual street food modern yang efisien & higienis.
           </p>
 
-          {/* 3D Funnel Stack */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
             
-            {/* Left Column: 3D Funnel Visual Stack */}
+            {/* Left Column: 3D Funnel Stack */}
             <div className="md:col-span-6 space-y-3">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
@@ -668,18 +445,433 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 5: Product Showcase & Margins
+    // Slide 4: FEASIBILITY STUDY & FINANCE PROJECTION (MATCHES ZEGER CANVA FEASIBILITY STUDY)
+    // ----------------------------------------------------
+    {
+      id: 'feasibility-study',
+      title: 'Feasibility Study (Sabuba Classic)',
+      subtitle: 'Analisa Keuangan & Proyeksi Laba/Rugi Kemitraan Sabuba Motor Custom',
+      content: (
+        <div className="space-y-3 overflow-y-auto max-h-[70vh] pr-1">
+          
+          {/* Header Banner - Matches Zeger Feasibility Study Banner */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-2xl bg-gradient-to-r from-[#991B1B] via-[#7F1D1D] to-[#450A0A] text-white shadow-md">
+            <div>
+              <div className="inline-block px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full mb-1">
+                FEASIBILITY STUDY (SABUBA CLASSIC)
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black italic tracking-wide">
+                Analisa Keuangan Sabuba Classic (Motor Custom)
+              </h3>
+            </div>
+            <div className="text-right text-xs bg-black/30 px-3.5 py-2 rounded-xl border border-white/10 shrink-0">
+              <div className="text-amber-300 font-extrabold text-sm">TOTAL MODAL AWAL / CAPEX</div>
+              <div className="text-xl font-black text-white">Rp 100.000.000</div>
+            </div>
+          </div>
+
+          {/* Upper Info Box */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs p-3 rounded-xl bg-red-50/70 border border-red-100 font-semibold text-slate-800">
+            <div><span className="text-slate-500">Brand:</span> <strong className="text-red-900 block">Sabuba Indonesia</strong></div>
+            <div><span className="text-slate-500">Status Kepemilikan:</span> <strong className="text-slate-900 block">Partnership (Mitra Pasif 50:50)</strong></div>
+            <div><span className="text-slate-500">Paket Usaha:</span> <strong className="text-slate-900 block">Sabuba Classic (Motor Custom)</strong></div>
+            <div><span className="text-slate-500">Biaya Kemitraan:</span> <strong className="text-red-900 block">Rp 100.000.000</strong></div>
+          </div>
+
+          {/* Feasibility Table */}
+          <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm bg-white text-[11px]">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-red-900 text-white text-[10px] font-black uppercase tracking-wider">
+                  <th className="p-2.5 border-r border-red-800">ANALISIS PENDAPATAN</th>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <th key={i} className="p-2.5 text-center border-r border-red-800 last:border-0">
+                      {sc.name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-slate-100 font-medium">
+                <tr className="bg-slate-50">
+                  <td className="p-2 font-bold text-slate-800">Jumlah Motor Custom / Outlet</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700 font-bold">1 Unit</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-2 font-bold text-slate-800">TC / Day (Transaksi per Hari)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center font-bold text-slate-900">{sc.tcDay} Porsi</td>
+                  ))}
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="p-2 font-bold text-slate-800">TC / Month (30 Hari)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700">{sc.tcMonth.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-2 font-bold text-slate-800">APC (Average per Check / Rata2 Belanja)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.apc.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="p-2 font-bold text-slate-800">Sales / Hari</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-900 font-bold">Rp {sc.salesDay.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr className="bg-red-50 text-red-950 font-black">
+                  <td className="p-2">TOTAL REVENUE (NET SALES / BULAN)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-red-900 text-xs">Rp {sc.salesMonth.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+
+                <tr className="bg-red-800 text-white font-black text-[10px] uppercase">
+                  <td className="p-2 border-r border-red-700">PROYEKSI LABA / RUGI BULANAN</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center border-r border-red-700 last:border-0">SIMULASI</td>
+                  ))}
+                </tr>
+
+                <tr>
+                  <td className="p-2 text-slate-700">HPP / Total Biaya Bahan Baku (~40-42%)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-red-700">Rp {sc.hppAmount.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr className="bg-emerald-50 text-emerald-950 font-bold">
+                  <td className="p-2 font-black">GROSS PROFIT (LABA KOTOR)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-emerald-800 font-black">Rp {sc.grossProfitAmount.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+
+                <tr className="bg-slate-50 font-semibold">
+                  <td className="p-2 text-slate-800">Biaya Karyawan / Gaji Tim Operasional Store</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsKaryawan.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="p-2 text-slate-800">Biaya Rumah Tangga / Kebersihan</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsRumahTangga.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr className="bg-slate-50">
+                  <td className="p-2 text-slate-800">Biaya Listrik, Air & Bahan Bakar Motor</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-slate-700">Rp {sc.opsListrikAirFuel.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+                <tr className="bg-slate-100 font-bold text-slate-900">
+                  <td className="p-2">TOTAL BIAYA OPERASIONAL STORE</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-red-900 font-bold">Rp {sc.totalOpsAmount.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+
+                <tr className="bg-amber-100 text-red-950 font-black">
+                  <td className="p-2.5">STORE NET PROFIT (KEUNTUNGAN BERSIH OUTLET)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2.5 text-center text-red-900 text-xs">Rp {sc.ebitdaNetProfitStore.toLocaleString('id-ID')}</td>
+                  ))}
+                </tr>
+
+                <tr className="bg-emerald-600 text-white font-black text-xs">
+                  <td className="p-2.5">HAK BAGI HASIL MITRA PASIF (50% DARI NET PROFIT)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2.5 text-center text-amber-300 text-sm">Rp {sc.mitraShare50.toLocaleString('id-ID')} / Bln</td>
+                  ))}
+                </tr>
+
+                <tr className="bg-slate-900 text-white font-bold">
+                  <td className="p-2">Estimasi Payback Period (Berdasarkan Net Profit Mitra)</td>
+                  {feasibilityData.scenarios.map((sc, i) => (
+                    <td key={i} className="p-2 text-center text-amber-400 font-extrabold">~{sc.paybackMonths} Bulan</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-[10px] text-red-900 font-semibold leading-relaxed">
+            <strong className="text-red-950">Catatan & Disclaimer Proyeksi:</strong> Perhitungan di atas hanya merupakan proyeksi/simulasi matematis berdasarkan standar operasional. Hasil dapat berbeda-beda tergantung kondisi lokasi, tingkat keramaian, & faktor pasar masing-masing outlet.
+          </div>
+
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 5: REAL HISTORICAL POS DATA (Jan to Aug 2026)
+    // ----------------------------------------------------
+    {
+      id: 'real-pos-data',
+      title: 'Data Historis Real Penjualan POS Outlet',
+      subtitle: 'Rekam Penjualan Riil Kasir Cloud Sabuba Januari - Agustus 2026',
+      content: (
+        <div className="space-y-5">
+          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
+              Data bersumber langsung dari Laporan Kasir Cloud POS Sabuba saat ini.
+            </span>
+            <span className="px-3 py-1 bg-emerald-700 text-white rounded-full font-black text-[10px] uppercase tracking-wider">
+              REAL HISTORICAL LOGS
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+            
+            <div className="lg:col-span-7 space-y-3 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
+              <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center justify-between">
+                <span>Grafik Penjualan & Profit Riil (Rp)</span>
+                <span className="text-red-800 font-extrabold text-[11px]">Agustus 2026 Peak: Rp 80,1 Jt</span>
+              </div>
+
+              {realPosData.map((d, i) => {
+                const maxOmset = 85000000;
+                const widthOmset = (d.omset / maxOmset) * 100;
+
+                return (
+                  <div key={i} className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold text-slate-700">
+                      <span>{d.period}</span>
+                      <span>
+                        Omset: <strong className="text-slate-900">Rp {(d.omset / 1000000).toFixed(1)}M</strong> | Profit Store: <strong className="text-emerald-700">Rp {(d.profit / 1000000).toFixed(1)}M</strong>
+                      </span>
+                    </div>
+
+                    <div className="h-3.5 w-full bg-slate-100 rounded-full overflow-hidden relative flex">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${widthOmset}%` }}
+                        transition={{ duration: 0.8, delay: i * 0.1 }}
+                        className="h-full bg-gradient-to-r from-red-800 via-red-600 to-emerald-600 rounded-full"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="lg:col-span-5 space-y-3">
+              <div className="p-5 rounded-3xl bg-gradient-to-br from-red-900 to-red-950 text-white shadow-lg space-y-1">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">Penjualan Agustus 2026 (Real POS Log)</span>
+                <div className="text-3xl font-black">Rp 80.108.009</div>
+                <div className="text-xs font-bold text-emerald-300">Keuntungan Bersih Store: Rp 40.177.509 (50.1%)</div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs text-slate-600 leading-relaxed shadow-sm">
+                <div className="font-bold text-red-900 mb-1 flex items-center gap-1.5">
+                  <FileText className="w-4 h-4" /> Catatan Data Real:
+                </div>
+                Pencapaian di atas adalah bukti rekam jejak operasional outlet Sabuba yang berjalan saat ini. Data ini disajikan sebagai bukti validitas produk & daya terima pasar.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 6: MARKETING SUPPORT (MATCHES ZEGER CANVA SLIDE 2)
+    // ----------------------------------------------------
+    {
+      id: 'marketing-support',
+      title: 'Marketing Support & Channel Sales',
+      subtitle: 'Dukungan Pemasaran Full dari Tim Pusat untuk Mendorong Traffic & Omset',
+      content: (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          {/* Left Column: 2 iPhone Mockups showing Food Delivery App Storefront (Matches Zeger Canva Slide 2) */}
+          <div className="lg:col-span-6 flex justify-center items-center gap-3">
+            {/* iPhone 1 */}
+            <div className="w-44 h-[320px] bg-slate-900 rounded-[2.5rem] p-2.5 border-4 border-slate-800 shadow-xl relative flex flex-col justify-between">
+              <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1 z-10"></div>
+              <div className="flex-1 bg-red-900 rounded-[1.8rem] overflow-hidden p-2 text-white flex flex-col justify-between">
+                <div className="space-y-1">
+                  <div className="text-[9px] font-black text-amber-300 uppercase tracking-widest text-center">GOFOOD / GRABFOOD</div>
+                  <div className="p-1.5 rounded-lg bg-black/40 text-[9px]">
+                    <div className="font-bold">Sabuba - Outlet Kemiri</div>
+                    <div className="text-amber-300 text-[8px] font-bold">★ 4.9 (999+ Penilaian)</div>
+                  </div>
+                  <div className="p-1.5 rounded-lg bg-black/40 text-[8px] space-y-0.5">
+                    <div>• Promo Diskon 50% Ongkir</div>
+                    <div>• Flash Sale Sarapan Pagi</div>
+                  </div>
+                </div>
+                <div className="p-1 rounded-md bg-amber-400 text-red-950 font-black text-[8px] text-center uppercase">
+                  Listing Handled HQ
+                </div>
+              </div>
+            </div>
+
+            {/* iPhone 2 */}
+            <div className="w-44 h-[320px] bg-slate-900 rounded-[2.5rem] p-2.5 border-4 border-slate-800 shadow-xl relative flex flex-col justify-between hidden sm:flex">
+              <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1 z-10"></div>
+              <div className="flex-1 bg-amber-500 rounded-[1.8rem] overflow-hidden p-2 text-red-950 flex flex-col justify-between">
+                <div className="space-y-1">
+                  <div className="text-[9px] font-black text-red-950 uppercase tracking-widest text-center">SHOPEEFOOD PROMO</div>
+                  <div className="p-1.5 rounded-lg bg-white/80 text-[9px]">
+                    <div className="font-bold">Voucher Diskon Bundling</div>
+                    <div className="text-red-900 text-[8px] font-bold">Sarapan + Dimsum</div>
+                  </div>
+                  <div className="p-1.5 rounded-lg bg-white/80 text-[8px] space-y-0.5">
+                    <div>• Booster Campaign Active</div>
+                    <div>• Auto Push Menu Baru</div>
+                  </div>
+                </div>
+                <div className="p-1 rounded-md bg-red-900 text-white font-black text-[8px] text-center uppercase">
+                  Digital Ads Run
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Marketing Support Points */}
+          <div className="lg:col-span-6 space-y-3.5">
+            <h3 className="text-lg font-black text-slate-900">Dukungan Pemasaran dari Pusat Sabuba HQ:</h3>
+
+            <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-red-50 text-red-900 flex items-center justify-center shrink-0 font-bold">
+                <Megaphone className="w-4 h-4" />
+              </div>
+              <div className="text-xs">
+                <h4 className="font-extrabold text-slate-900">Pendaftaran Online Delivery (GoFood, GrabFood, ShopeeFood)</h4>
+                <p className="text-slate-500 mt-0.5">Proses pendaftaran & registrasi merchant online dikelola penuh oleh pusat.</p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center shrink-0 font-bold">
+                <TrendingUp className="w-4 h-4" />
+              </div>
+              <div className="text-xs">
+                <h4 className="font-extrabold text-slate-900">Program Marketing & Campaign Promo Diskon</h4>
+                <p className="text-slate-500 mt-0.5">Setting kampanye promo diskon ongkir & voucher belanja dilakukan terpusat.</p>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
+              <div className="w-8 h-8 rounded-xl bg-red-50 text-red-900 flex items-center justify-center shrink-0 font-bold">
+                <Users className="w-4 h-4" />
+              </div>
+              <div className="text-xs">
+                <h4 className="font-extrabold text-slate-900">Support Desain Materi Branding & Sosial Media</h4>
+                <p className="text-slate-500 mt-0.5">Disediakan desain materi promosi digital, spanduk, & banner promo berkala.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 7: GALLERY & SOCIAL PROOF (MATCHES ZEGER CANVA SLIDE 3)
+    // ----------------------------------------------------
+    {
+      id: 'gallery-socialproof',
+      title: 'Social Proof & Gallery Suasana Outlet',
+      subtitle: 'Antusiasme Pelanggan & Keramaian Outlet Operasional Sabuba',
+      content: (
+        <div className="space-y-4">
+          <p className="text-slate-600 text-xs sm:text-sm">
+            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari antrean sarapan pagi harian & liputan konten di media sosial.
+          </p>
+
+          {/* 3 iPhone Vertical Video Placeholders (Matches Zeger Canva Slide 3) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            
+            {/* iPhone Frame 1 */}
+            <div className="p-3 rounded-3xl bg-white border border-red-100 shadow-md flex flex-col justify-between group">
+              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center text-center p-4">
+                <img
+                  src="/assets/Konsep/1. Konsep Tenda.png"
+                  alt="Suasana Outlet Rame"
+                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col items-center justify-center p-3 text-white">
+                  <div className="w-12 h-12 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xl mb-2">
+                    <Play className="w-6 h-6 fill-white ml-0.5" />
+                  </div>
+                  <div className="text-xs font-black">Suasana Keramaian Outlet</div>
+                  <div className="text-[10px] text-amber-300 font-bold mt-0.5">Antrean Sarapan Pagi</div>
+                </div>
+              </div>
+              <div className="mt-2 text-center text-[11px] font-bold text-slate-800">
+                [ Placeholder Video TikTok / Reels 1 ]
+              </div>
+            </div>
+
+            {/* iPhone Frame 2 */}
+            <div className="p-3 rounded-3xl bg-white border border-red-100 shadow-md flex flex-col justify-between group">
+              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center text-center p-4">
+                <img
+                  src="/assets/Konsep/5. Konsep Street Food.jpg"
+                  alt="Operasional Motor Custom"
+                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col items-center justify-center p-3 text-white">
+                  <div className="w-12 h-12 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xl mb-2">
+                    <Play className="w-6 h-6 fill-white ml-0.5" />
+                  </div>
+                  <div className="text-xs font-black">Sabuba Classic in Action</div>
+                  <div className="text-[10px] text-amber-300 font-bold mt-0.5">Operasional Motor Custom</div>
+                </div>
+              </div>
+              <div className="mt-2 text-center text-[11px] font-bold text-slate-800">
+                [ Placeholder Video TikTok / Reels 2 ]
+              </div>
+            </div>
+
+            {/* iPhone Frame 3 */}
+            <div className="p-3 rounded-3xl bg-white border border-red-100 shadow-md flex flex-col justify-between group">
+              <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-950 flex flex-col items-center justify-center text-center p-4">
+                <img
+                  src="/assets/Konsep/4. Trial Zeger X Sabuba.png"
+                  alt="Review Foodie Kuliner"
+                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex flex-col items-center justify-center p-3 text-white">
+                  <div className="w-12 h-12 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xl mb-2">
+                    <Play className="w-6 h-6 fill-white ml-0.5" />
+                  </div>
+                  <div className="text-xs font-black">Review Foodie Kuliner</div>
+                  <div className="text-[10px] text-amber-300 font-bold mt-0.5">Testimoni Pelanggan Setia</div>
+                </div>
+              </div>
+              <div className="mt-2 text-center text-[11px] font-bold text-slate-800">
+                [ Placeholder Video TikTok / Reels 3 ]
+              </div>
+            </div>
+
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 8: KATALOG MENU FAVORIT (CLEAN CARDS WITHOUT COGS %)
     // ----------------------------------------------------
     {
       id: 'menu-showcase',
-      title: 'Katalog Menu & Potensi Margin Produk',
-      subtitle: 'Menu Favorit Berkualitas Tinggi dengan Gross Margin Hingga 73%',
+      title: 'Katalog Menu Favorit Sabuba',
+      subtitle: 'Hidangan Sarapan Pagi Lezat dengan Tingkat Penjualan Harian Tinggi',
       content: (
         <div className="space-y-4">
           <p className="text-slate-600 text-xs sm:text-sm">
             Sabuba menyajikan menu sarapan bubur bakar claypot, wonton kuah, & dim sum bernilai jual tinggi. Seluruh bahan diproduksi terpusat oleh Central Kitchen untuk menjaga konsistensi rasa & kebersihan.
           </p>
 
+          {/* Clean Menu Cards (COGS Display Removed completely as requested!) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 pt-2">
             {featuredMenu.map((item, idx) => (
               <motion.div
@@ -711,9 +903,9 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                 </div>
 
                 <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px]">
-                  <span className="text-slate-500 font-medium">COGS: {item.cogs}</span>
-                  <span className="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                    {item.margin}
+                  <span className="text-slate-500 font-medium">100% Halal & Fresh</span>
+                  <span className="font-bold text-red-900 bg-red-50 px-2 py-0.5 rounded-full">
+                    Signature Claypot
                   </span>
                 </div>
               </motion.div>
@@ -732,7 +924,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 6: Franchise Models Roadmap
+    // Slide 9: Franchise Models Roadmap
     // ----------------------------------------------------
     {
       id: 'models-roadmap',
@@ -824,151 +1016,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 7: Tech Stack & AI POS Cloud
-    // ----------------------------------------------------
-    {
-      id: 'tech-stack',
-      title: 'Teknologi AI POS & Transparansi 24/7',
-      subtitle: 'Sistem Cloud Kasir Online, AI Assistant Report, & Akses Real-Time HP',
-      content: (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-5 rounded-3xl bg-white border border-red-100 shadow-sm">
-              <div className="w-10 h-10 rounded-2xl bg-red-50 text-red-800 flex items-center justify-center mb-3">
-                <Smartphone className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-slate-900">POS Online Real-Time</h4>
-              <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                Setiap transaksi kasir di lapangan langsung tercatat di Cloud Database. Mitra memantau omset harian, porsi terjual, & metode bayar (QRIS/Cash).
-              </p>
-            </div>
-
-            <div className="p-5 rounded-3xl bg-white border border-red-100 shadow-sm">
-              <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
-                <Bot className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-slate-900">AI Assistant Report Bot</h4>
-              <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                Integrasi AI Chatbot untuk laporan otomatis harian via WhatsApp/App, rekomendasi spot jualan teramai, serta analisis prediksi stok bahan baku.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-3xl bg-white border border-red-100 shadow-sm">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-slate-900">Auto Export & Audit PDF</h4>
-              <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                Laporan keuangan bulanan dapat di-export instan ke format PDF / Excel secara otomatis untuk transparansi pembagian hasil mitra 100%.
-              </p>
-            </div>
-          </div>
-
-          <div className="p-5 rounded-3xl bg-slate-900 text-white border border-slate-800">
-            <div className="flex items-center justify-between mb-3 border-b border-slate-800 pb-3">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span className="text-xs font-bold text-white uppercase tracking-wider">Live POS Cloud Sync Feed</span>
-              </div>
-              <span className="text-[10px] text-slate-400">Status: Online Syncing</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-              <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700">
-                <div className="text-[10px] text-slate-400 uppercase font-bold">Penjualan Hari Ini</div>
-                <div className="text-lg font-black text-amber-400 mt-0.5">Rp 2.000.000</div>
-              </div>
-              <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700">
-                <div className="text-[10px] text-slate-400 uppercase font-bold">Total Transaksi</div>
-                <div className="text-lg font-black text-white mt-0.5">100 Trx</div>
-              </div>
-              <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700">
-                <div className="text-[10px] text-slate-400 uppercase font-bold">Est. Net Profit Store</div>
-                <div className="text-lg font-black text-emerald-400 mt-0.5">Rp 916.000</div>
-              </div>
-              <div className="p-3 rounded-2xl bg-slate-800 border border-slate-700">
-                <div className="text-[10px] text-slate-400 uppercase font-bold">Bagi Hasil Mitra (50%)</div>
-                <div className="text-lg font-black text-sky-400 mt-0.5">Rp 458.000</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    },
-
-    // ----------------------------------------------------
-    // Slide 8: Video Media Preview Frame
-    // ----------------------------------------------------
-    {
-      id: 'media-preview',
-      title: 'Media & Operational Video Showcase',
-      subtitle: 'Lihat Klip Operasional Outlet, Motor Custom, & Liputan Media',
-      content: (
-        <div className="space-y-4">
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-md space-y-4">
-            <div className="flex justify-between items-center">
-              <div>
-                <h4 className="text-sm font-extrabold text-slate-900">Video Player Showcase Frame</h4>
-                <p className="text-xs text-slate-500">Video operasional & custom motor Sabuba Classic</p>
-              </div>
-              <span className="px-3 py-1 bg-red-50 text-red-900 font-extrabold text-xs rounded-full border border-red-200">
-                Video Preview Ready
-              </span>
-            </div>
-
-            <div className="relative aspect-video rounded-2xl bg-slate-950 overflow-hidden border border-slate-300 flex items-center justify-center group shadow-2xl">
-              {customVideoUrl ? (
-                <iframe
-                  src={customVideoUrl}
-                  title="Sabuba Video Preview"
-                  className="w-full h-full object-cover"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              ) : (
-                <>
-                  <img
-                    src="/assets/Konsep/5. Konsep Street Food.jpg"
-                    alt="Sabuba Video Preview"
-                    className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent flex flex-col items-center justify-center p-6 text-center text-white">
-                    <div className="w-16 h-16 rounded-full bg-red-700 text-white flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform cursor-pointer mb-3">
-                      <Play className="w-8 h-8 fill-white ml-1" />
-                    </div>
-                    <h4 className="text-lg font-black">Video Operasional & Motor Custom Sabuba</h4>
-                    <p className="text-xs text-slate-300 max-w-md mt-1">
-                      Siap dihubungkan dengan link video YouTube/MP4 perakitan motor custom & outlet.
-                    </p>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="Paste URL Embed Video YouTube di sini (opsional)..."
-                value={customVideoUrl}
-                onChange={(e) => setCustomVideoUrl(e.target.value)}
-                className="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-red-700"
-              />
-              {customVideoUrl && (
-                <button
-                  onClick={() => setCustomVideoUrl('')}
-                  className="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-xs font-bold text-slate-700 rounded-xl"
-                >
-                  Reset
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )
-    },
-
-    // ----------------------------------------------------
-    // Slide 9: Investment Call to Action & Disclaimer
+    // Slide 10: Call to Action & Legal Disclaimer
     // ----------------------------------------------------
     {
       id: 'cta-investment',
@@ -1004,14 +1052,14 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-[11px] text-red-900 leading-relaxed flex items-start gap-2.5 font-semibold">
             <AlertTriangle className="w-4 h-4 text-red-700 shrink-0 mt-0.5" />
             <div>
-              <strong className="text-red-950 font-extrabold">DISCLAIMER KEMITRAAN:</strong> Setiap lokasi outlet memiliki karakteristik pasar, tingkat keramaian, serta biaya operasional lokal yang berbeda-beda. Data historis & simulasi proyeksi keuangan di atas disajikan sebagai bahan estimasi dan bukan merupakan jaminan BEP atau kepastian hasil di masa depan.
+              <strong className="text-red-950 font-extrabold">DISCLAIMER KEMITRAAN:</strong> Perhitungan pada slide feasibility study merupakan simulasi matematis berdasarkan parameter standar operasional. Performa penjualan setiap outlet bervariasi tergantung lokasi & kondisi pasar lokal.
             </div>
           </div>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-1">
             <a
-              href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Tim%20Sabuba,%20saya%20sudah%20membaca%20Feasibility%20Study%20%26%20Proposal%20Kemitraan%20Rp%20100Jt%20(Mitra%20Pasif%2050:50).%20Saya%20tertarik%20untuk%20diskusi%20lebih%20lanjut.`}
+              href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Tim%20Sabuba,%20saya%20sudah%20membaca%20Proposal%20Kemitraan%20Rp%20100Jt%20(Mitra%20Pasif%2050:50).%20Saya%20tertarik%20untuk%20diskusi%20lebih%20lanjut.`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-red-800 via-red-900 to-red-950 hover:from-red-700 hover:to-red-900 text-white font-black text-sm shadow-2xl transition-all flex items-center justify-center gap-2 active:scale-95"

@@ -67,7 +67,7 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpe
               className="px-3.5 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-red-950 text-xs font-black flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95"
             >
               <PieChart className="w-3.5 h-3.5" />
-              <span>Proposal Deck 100Jt</span>
+              <span>Proposal Deck</span>
             </button>
           </div>
 
