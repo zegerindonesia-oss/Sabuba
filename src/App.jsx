@@ -9,6 +9,7 @@ import CartDrawer from './components/CartDrawer';
 import FloatingCartBar from './components/FloatingCartBar';
 import CheckoutModal from './components/CheckoutModal';
 import ReceiptModal from './components/ReceiptModal';
+import PitchDeckModal from './components/PitchDeckModal';
 import ConceptGallery from './components/ConceptGallery';
 import FranchiseSection from './components/FranchiseSection';
 import Outlets from './components/Outlets';
@@ -19,6 +20,7 @@ export default function App() {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isPitchDeckOpen, setIsPitchDeckOpen] = useState(false);
   const [completedOrderData, setCompletedOrderData] = useState(null);
   const [quickViewItem, setQuickViewItem] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -120,6 +122,7 @@ export default function App() {
         totalItems={totalCartItemsCount}
         setIsCartOpen={setIsCartOpen}
         onSearchClick={handleFocusSearch}
+        onOpenPitchDeck={() => setIsPitchDeckOpen(true)}
       />
 
       {/* Main Sections */}
@@ -156,7 +159,7 @@ export default function App() {
         <ConceptGallery />
 
         {/* 6. Franchise Kemitraan */}
-        <FranchiseSection />
+        <FranchiseSection onOpenPitchDeck={() => setIsPitchDeckOpen(true)} />
 
         {/* 7. Outlets & Locations */}
         <Outlets />
@@ -208,6 +211,13 @@ export default function App() {
           }
         }}
       />
+
+      {/* McKinsey Pitch Deck & Proposal Modal */}
+      <PitchDeckModal
+        isOpen={isPitchDeckOpen}
+        onClose={() => setIsPitchDeckOpen(false)}
+      />
     </div>
   );
 }
+

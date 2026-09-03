@@ -1,20 +1,20 @@
 import React from 'react';
 import { SABUBA_DATA } from '../data/sabubaData';
-import { ArrowRight, TrendingUp, Users, DollarSign, ShieldCheck, Bike, Sparkles, MapPin, Clock } from 'lucide-react';
+import { ArrowRight, TrendingUp, Users, DollarSign, ShieldCheck, Bike, Sparkles, MapPin, FileText, Download, PieChart, Cpu, CheckCircle2 } from 'lucide-react';
 
-export default function FranchiseSection() {
+export default function FranchiseSection({ onOpenPitchDeck }) {
   const benefits = [
-    { title: 'Bebas / Hemat Biaya Sewa', desc: 'Konsep Street Food motor custom tidak perlu sewa ruko mahal, BEP jauh lebih cepat.', icon: DollarSign },
-    { title: 'Mobilitas & Fleksibilitas Tinggi', desc: 'Bisa jualan di mana saja: pinggir jalan, area kantor, event, hingga panggilan acara.', icon: Bike },
-    { title: 'Sistem Operasional Mudah', desc: 'SOP terstandarisasi, bahan baku terpusat, & pelatihan tim lengkap dari pusat.', icon: TrendingUp },
-    { title: 'Dukungan Pemasaran Full', desc: 'Materi branding, promosi media sosial, & listing ojek online terintegrasi.', icon: ShieldCheck },
+    { title: 'Mitra Pasif 100%', desc: 'Tanpa perlu pusing operasional, rekrutmen karyawan & belanja bahan. Semua dikelola 100% oleh HQ Sabuba.', icon: Users },
+    { title: 'Bagi Hasil 50% : 50%', desc: 'Pembagian 50% Net Profit untuk Mitra dari hasil penjualan harian outlet.', icon: DollarSign },
+    { title: 'POS Cloud & AI Analytics', desc: 'Penjualan terpantau real-time 24/7 dari smartphone investor lengkap dengan laporan AI.', icon: Cpu },
+    { title: 'Efisiensi Tanpa Sewa Ruko', desc: 'Motor tiga roda custom hemat overhead, BEP super cepat dalam ~5 Bulan!', icon: TrendingUp },
   ];
 
   const streetFoodFeatures = [
-    'Rangka kuat, ringan & material anti karat',
-    'Siap jualan dalam hitungan menit',
-    'Irit bahan bakar & lincah di jalan sempit',
-    'Desain kompak, bersih & sangat fungsional',
+    'Investasi Terjangkau Rp 100.000.000 (Sabuba Classic)',
+    '100% Bebas Repot Operasional (Mitra Pasif)',
+    'Transparansi Penjualan Online Real-Time 24/7',
+    'Est. Balik Modal Cepat (~5.3 - 7.2 Bulan)',
   ];
 
   return (
@@ -26,27 +26,53 @@ export default function FranchiseSection() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        {/* Top Header Badge */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-red-950 font-black text-xs uppercase tracking-wider shadow-lg">
+            <Sparkles className="w-4 h-4" />
+            <span>Peluang Investasi & Kemitraan Strategis 2026</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-4 leading-tight">
+            Kemitraan Mitra Pasif & Bagi Hasil 50% - 50%
+          </h2>
+
+          <p className="text-red-100/90 text-xs sm:text-sm mt-3 leading-relaxed">
+            Bergabunglah menjadi mitra owner <strong className="text-amber-300 font-extrabold">Sabuba Classic</strong>. Investasi Rp 100 Juta, nikmati passive income pembagian hasil 50% bersih tanpa repot operasional, dan pantau penjualan harian Anda via online real-time.
+          </p>
+
+          {/* Model Status Bar */}
+          <div className="mt-6 flex flex-wrap justify-center items-center gap-2.5">
+            <span className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Sabuba Classic (Rp 100 Jt) - DI BUKA SEKARANG
+            </span>
+            <span className="px-3 py-1.5 rounded-full bg-white/10 text-red-200 font-bold text-xs border border-white/20">
+              Sabuba Container - COMING SOON
+            </span>
+            <span className="px-3 py-1.5 rounded-full bg-white/10 text-red-200 font-bold text-xs border border-white/20">
+              Sabuba Resto - COMING SOON
+            </span>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column Text */}
           <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400 text-red-950 font-black text-xs uppercase tracking-wider shadow-md">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Kemitraan Street Food Kompak</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-3 leading-tight">
-              Buka Usaha Sabuba Classic Di Mana Saja!
-            </h2>
-            <p className="text-red-100/90 text-xs sm:text-sm mt-4 leading-relaxed">
-              Bergabunglah menjadi mitra **Sabuba Classic**. Menggunakan motor tiga roda custom yang praktis, fleksibel buka lokasi baru kapan pun, melayani panggilan acara/catering, dan menekan biaya sewa lokasi hingga maksimal!
+            <h3 className="text-2xl font-black text-white mb-2">
+              Mengapa Investasi Di Sabuba Classic Sangat Menguntungkan?
+            </h3>
+            <p className="text-red-100/90 text-xs sm:text-sm leading-relaxed mb-6">
+              Menggunakan unit motor tiga roda custom yang sangat fleksibel, bebas sewa ruko mahal, serta didukung ekosistem digital AI POS untuk transparansi omset & keuntungan 100%.
             </p>
 
             {/* Benefits Grid */}
-            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {benefits.map((b, i) => {
                 const Icon = b.icon;
                 return (
-                  <div key={i} className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15">
+                  <div key={i} className="p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:bg-white/15 transition-colors">
                     <Icon className="w-5 h-5 text-amber-300 mb-2" />
                     <h4 className="font-extrabold text-sm text-white">{b.title}</h4>
                     <p className="text-xs text-red-100/90 mt-0.5 leading-snug">{b.desc}</p>
@@ -56,9 +82,10 @@ export default function FranchiseSection() {
             </div>
 
             {/* Quick Specs */}
-            <div className="mt-6 p-4 rounded-2xl bg-black/20 border border-white/10">
-              <div className="text-xs font-black uppercase text-amber-300 tracking-wider mb-2">
-                Keunggulan Konsep Street Food Motor Custom:
+            <div className="mt-6 p-4 rounded-2xl bg-black/30 border border-white/15">
+              <div className="text-xs font-black uppercase text-amber-300 tracking-wider mb-2 flex items-center justify-between">
+                <span>Key Investment Highlights:</span>
+                <span className="text-[11px] text-emerald-400 font-bold">Verified Real Performance</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {streetFoodFeatures.map((feat, idx) => (
@@ -70,42 +97,71 @@ export default function FranchiseSection() {
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <a
-                href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Sabuba,%20saya%20tertarik%20dengan%20info%20Kemitraan%20Street%20Food%20Sabuba%20Classic`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-amber-400 hover:bg-amber-300 text-red-950 font-black text-sm shadow-xl transition-all active:scale-95"
+            {/* Pitch Deck Action Buttons */}
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button
+                onClick={onOpenPitchDeck}
+                className="px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-red-950 font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
               >
-                <span>Konsultasi Kemitraan Street Food</span>
-                <ArrowRight className="w-4 h-4 text-red-950" />
-              </a>
+                <PieChart className="w-4 h-4 text-red-950" />
+                <span>Lihat Pitch Deck Interaktif</span>
+              </button>
+
+              <button
+                onClick={onOpenPitchDeck}
+                className="px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-sm border border-white/25 backdrop-blur-md transition-all flex items-center justify-center gap-2 active:scale-95"
+              >
+                <Download className="w-4 h-4 text-amber-300" />
+                <span>Download Proposal PDF</span>
+              </button>
             </div>
           </div>
 
-          {/* Right Column Image Stack */}
-          <div className="lg:col-span-6 relative">
+          {/* Right Column Image & Pitch Deck Callout Card */}
+          <div className="lg:col-span-6 space-y-4">
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 group">
               <img
                 src="/assets/Konsep/5. Konsep Street Food.jpg"
                 alt="Konsep Street Food Sabuba Classic Motor Custom"
-                className="w-full h-[420px] sm:h-[480px] object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-[380px] sm:h-[420px] object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="px-2.5 py-1 rounded-full bg-red-800 text-amber-300 font-extrabold text-[11px] uppercase">
                     Sabuba Classic
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-amber-400 text-red-950 font-extrabold text-[11px] uppercase flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> Pindah Lokasi Mudah
+                    <MapPin className="w-3 h-3" /> Rp 100.000.000
                   </span>
                 </div>
                 <h3 className="font-black text-xl text-white">Konsep Street Food Motor Custom</h3>
                 <p className="text-xs text-red-100/90 mt-1">
-                  Kompak, Praktis, Siap Jualan Di Mana Saja & Bebas Biaya Sewa Ruko!
+                  Praktis, Fleksibel, Bebas Repot Operasional & Diolah Penuh oleh Pusat!
                 </p>
               </div>
             </div>
+
+            {/* Banner Callout for McKinsey Pitch Deck */}
+            <div
+              onClick={onOpenPitchDeck}
+              className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-slate-900 to-slate-900 border border-amber-400/40 cursor-pointer hover:border-amber-400 transition-all flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-xl bg-amber-400 text-red-950 font-black">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-white group-hover:text-amber-300 transition-colors">
+                    Lihat Analisis Pasar & Proyeksi Finansial McKinsey Deck
+                  </h4>
+                  <p className="text-xs text-slate-300">
+                    Analisis TAM/SAM/SOM, laporan keuangan real Jan-Jun 2026, & kalkulator ROI.
+                  </p>
+                </div>
+              </div>
+              <ArrowRight className="w-5 h-5 text-amber-400 group-hover:translate-x-1 transition-transform shrink-0" />
+            </div>
+
           </div>
 
         </div>
@@ -113,4 +169,5 @@ export default function FranchiseSection() {
     </section>
   );
 }
+
 

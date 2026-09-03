@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Menu as MenuIcon, X, Clock, MapPin, Search } from 'lucide-react';
+import { ShoppingBag, Menu as MenuIcon, X, Clock, MapPin, Search, PieChart, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SabubaLogo from './SabubaLogo';
 import { SABUBA_DATA } from '../data/sabubaData';
 
-export default function Navbar({ totalItems, setIsCartOpen, onSearchClick }) {
+export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpenPitchDeck }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
@@ -54,11 +54,21 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick }) {
             <SabubaLogo className="h-9 sm:h-10" variant="dark" />
           </a>
 
-          {/* Operating Status Badge */}
-          <div className="hidden lg:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200 text-xs font-bold text-red-900">
-            <Clock className="w-3.5 h-3.5 text-red-800 animate-pulse" />
-            <span>{SABUBA_DATA.brand.operatingHours}</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 ml-1"></span>
+          {/* Operating Status & Proposal Pitch Deck Trigger */}
+          <div className="hidden lg:flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200 text-xs font-bold text-red-900">
+              <Clock className="w-3.5 h-3.5 text-red-800 animate-pulse" />
+              <span>{SABUBA_DATA.brand.operatingHours}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 ml-1"></span>
+            </div>
+
+            <button
+              onClick={onOpenPitchDeck}
+              className="px-3.5 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-red-950 text-xs font-black flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95"
+            >
+              <PieChart className="w-3.5 h-3.5" />
+              <span>Proposal Deck 100Jt</span>
+            </button>
           </div>
 
           {/* Desktop Nav Links */}
@@ -159,10 +169,23 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick }) {
                   </button>
                 </div>
 
-                {/* Operating hours info badge mobile */}
-                <div className="mt-4 p-3 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-900 font-bold flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-red-800 shrink-0" />
-                  <span>{SABUBA_DATA.brand.operatingHours}</span>
+                {/* Operating hours & Proposal Deck Mobile Button */}
+                <div className="mt-4 space-y-2">
+                  <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-900 font-bold flex items-center gap-2">
+                    <Clock className="w-4 h-4 text-red-800 shrink-0" />
+                    <span>{SABUBA_DATA.brand.operatingHours}</span>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpenPitchDeck();
+                    }}
+                    className="w-full p-3 rounded-2xl bg-amber-400 text-red-950 font-black text-xs uppercase flex items-center justify-center gap-2 shadow-md active:scale-95"
+                  >
+                    <PieChart className="w-4 h-4" />
+                    <span>Lihat Proposal Pitch Deck</span>
+                  </button>
                 </div>
 
                 <div className="py-6 flex flex-col gap-2">
@@ -191,3 +214,4 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick }) {
     </>
   );
 }
+
