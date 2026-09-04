@@ -14,6 +14,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [currentSlide, setCurrentSlide] = useState(defaultSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [customVideoUrl, setCustomVideoUrl] = useState('');
+  const [motorTabSlide2, setMotorTabSlide2] = useState('poster');
 
   // Historical POS Data (Jan to Aug 2026)
   const realPosData = [
@@ -271,57 +272,125 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 2: Problem & Solution (Mindset Startup Founder / Problem Solver)
+    // Slide 2: Problem & Solution + Motor Custom Showcase
     // ----------------------------------------------------
     {
       id: 'problem-solution',
       title: 'Mengapa Harus Kemitraan Sabuba?',
-      subtitle: 'Solusi Bisnis Kuliner Sarapan Pagi Efisien & Bebas Repot Operasional',
+      subtitle: 'Solusi Bisnis Kuliner Sarapan Pagi Efisien & Unit Motor Custom 3 Roda Bebas Sewa Ruko',
       content: (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 h-full items-center">
           
-          {/* Problem Card */}
-          <div className="p-6 rounded-3xl bg-red-50/70 border border-red-200 space-y-4 shadow-sm">
-            <div className="w-10 h-10 rounded-2xl bg-red-900 text-white flex items-center justify-center font-bold">
-              <AlertTriangle className="w-5 h-5" />
+          {/* Left Column: Problem & Solution Cards (6 cols) */}
+          <div className="lg:col-span-6 space-y-4">
+            {/* Problem Card */}
+            <div className="p-4 sm:p-5 rounded-3xl bg-red-50/70 border border-red-200 space-y-2.5 shadow-sm">
+              <div className="flex items-center gap-2 text-red-900 font-extrabold text-sm">
+                <div className="w-8 h-8 rounded-xl bg-red-900 text-white flex items-center justify-center font-bold shrink-0">
+                  <AlertTriangle className="w-4 h-4" />
+                </div>
+                <span>Tantangan Usaha Kuliner Saat Ini</span>
+              </div>
+              <ul className="space-y-2 text-xs text-slate-600">
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                  <span><strong>Sewa Tempat Ruko Mahal:</strong> Biaya sewa ruko & tempat permanen memakan puluhan juta/tahun yang memperlambat pengembalian modal.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                  <span><strong>Rumit Kelola SDM & Operasional:</strong> Mengurus karyawan, rekrutmen, belanja bahan harian, & konsistensi rasa sering menguras waktu mitra.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
+                  <span><strong>Kurang Higienis di Street Food:</strong> Tempat sarapan di pinggir jalan umum kurang bersih & penyajiannya sering lambat.</span>
+                </li>
+              </ul>
             </div>
-            <h3 className="text-xl font-black text-slate-900">Tantangan Usaha Kuliner Saat Ini</h3>
-            <ul className="space-y-3 text-xs text-slate-600">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
-                <span><strong>Sewa Tempat Ruko Mahal:</strong> Biaya sewa ruko & tempat permanen memakan puluhan juta/tahun yang memperlambat pengembalian modal.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
-                <span><strong>Rumit Kelola SDM & Operasional:</strong> Mengurus karyawan, rekrutmen, belanja bahan harian, & konsistensi rasa sering menguras waktu mitra.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-700 shrink-0 mt-1.5"></span>
-                <span><strong>Kurang Higienis di Street Food:</strong> Tempat sarapan di pinggir jalan umum kurang bersih & penyajiannya sering lambat saat jam sibuk pagi.</span>
-              </li>
-            </ul>
+
+            {/* Solution Card */}
+            <div className="p-4 sm:p-5 rounded-3xl bg-gradient-to-br from-red-900 via-red-950 to-slate-950 text-white space-y-2.5 shadow-xl">
+              <div className="flex items-center gap-2 text-amber-300 font-extrabold text-sm">
+                <div className="w-8 h-8 rounded-xl bg-amber-400 text-red-950 flex items-center justify-center font-bold shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
+                <span>Solusi Inovatif Sabuba Classic</span>
+              </div>
+              <ul className="space-y-2 text-xs text-red-100">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                  <span><strong>Motor Custom 3 Roda (Bebas Sewa Ruko):</strong> Unit street food hemat overhead, fleksibel buka di lokasi strategis & terima panggilan acara.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                  <span><strong>Skema Mitra Pasif 100%:</strong> Tim pusat Sabuba mengelola rekrutmen SDM, kitchen supply chain terpusat, & promosi tanpa membuat mitra repot.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
+                  <span><strong>Speed of Service &lt; 2 Menit:</strong> SOP penyajian cepat dengan standar higiene tinggi & cita rasa claypot khas yang konsisten.</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          {/* Solution Card */}
-          <div className="p-6 rounded-3xl bg-gradient-to-br from-red-900 to-red-950 text-white space-y-4 shadow-xl">
-            <div className="w-10 h-10 rounded-2xl bg-amber-400 text-red-950 flex items-center justify-center font-bold">
-              <CheckCircle2 className="w-5 h-5" />
+          {/* Right Column: Big Motor Image Card Showcase (6 cols) */}
+          <div className="lg:col-span-6 relative flex flex-col items-center">
+            <div className="w-full rounded-3xl overflow-hidden border-2 border-red-900/20 shadow-2xl bg-slate-950 group relative">
+              <img
+                src={
+                  motorTabSlide2 === 'infographic'
+                    ? '/assets/Konsep/motor-infographic.png'
+                    : motorTabSlide2 === 'outdoor'
+                    ? '/assets/Konsep/5. Konsep Street Food.jpg'
+                    : '/assets/Konsep/motor-poster.png'
+                }
+                alt="Sabuba Classic Custom 3-Wheel Motor Unit"
+                className="w-full h-[320px] sm:h-[380px] object-cover transition-all duration-500 group-hover:scale-105"
+              />
+
+              {/* Gradient Overlay & Badge */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-between p-4 text-white">
+                <div className="flex justify-between items-center">
+                  <span className="px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow">
+                    UNIT MOTOR CUSTOM 3 RODA
+                  </span>
+                  
+                  {/* Image Switcher Tabs */}
+                  <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md p-1 rounded-xl border border-white/10 text-[10px]">
+                    <button
+                      onClick={() => setMotorTabSlide2('poster')}
+                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
+                        motorTabSlide2 === 'poster' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      Poster
+                    </button>
+                    <button
+                      onClick={() => setMotorTabSlide2('infographic')}
+                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
+                        motorTabSlide2 === 'infographic' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      Infografis
+                    </button>
+                    <button
+                      onClick={() => setMotorTabSlide2('outdoor')}
+                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
+                        motorTabSlide2 === 'outdoor' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      Operasional
+                    </button>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="text-xl font-black text-white">Sabuba Classic (Motor 3 Roda)</h4>
+                  <p className="text-xs text-amber-200 font-semibold mt-0.5">
+                    Bebas biaya sewa ruko • Mobilitas tinggi • Siap jualan dalam hitungan menit
+                  </p>
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl font-black text-white">Solusi Inovatif Sabuba Classic</h3>
-            <ul className="space-y-3 text-xs text-red-100">
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
-                <span><strong>Motor Custom 3 Roda (Bebas Sewa Ruko):</strong> Unit street food hemat overhead, fleksibel buka di lokasi strategis & bisa terima order panggilan acara.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
-                <span><strong>Skema Mitra Pasif 100%:</strong> Tim pusat Sabuba mengelola rekrutmen SDM, kitchen supply chain terpusat, & promosi tanpa membuat mitra repot.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="w-4 h-4 text-amber-300 shrink-0 mt-0.5" />
-                <span><strong>Speed of Service &lt; 2 Menit:</strong> SOP penyajian cepat dengan standar higiene tinggi & cita rasa claypot khas yang konsisten.</span>
-              </li>
-            </ul>
           </div>
 
         </div>
@@ -859,7 +928,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 6: MARKETING SUPPORT (MATCHES ZEGER CANVA SLIDE 2)
+    // Slide 6: MARKETING SUPPORT & IPHONE MOCKUP PLACEHOLDERS
     // ----------------------------------------------------
     {
       id: 'marketing-support',
@@ -868,53 +937,68 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           
-          {/* Left Column: 2 iPhone Mockups showing Food Delivery App Storefront (Matches Zeger Canva Slide 2) */}
-          <div className="lg:col-span-6 flex justify-center items-center gap-3">
-            {/* iPhone 1 */}
-            <div className="w-44 h-[320px] bg-slate-900 rounded-[2.5rem] p-2.5 border-4 border-slate-800 shadow-xl relative flex flex-col justify-between">
-              <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1 z-10"></div>
-              <div className="flex-1 bg-red-900 rounded-[1.8rem] overflow-hidden p-2 text-white flex flex-col justify-between">
-                <div className="space-y-1">
-                  <div className="text-[9px] font-black text-amber-300 uppercase tracking-widest text-center">GOFOOD / GRABFOOD</div>
-                  <div className="p-1.5 rounded-lg bg-black/40 text-[9px]">
-                    <div className="font-bold">Sabuba - Outlet Kemiri</div>
-                    <div className="text-amber-300 text-[8px] font-bold">★ 4.9 (999+ Penilaian)</div>
+          {/* Left Column: Sleek iPhone Mockup Placeholders (Ready for User Links) */}
+          <div className="lg:col-span-6 flex justify-center items-center gap-4">
+            
+            {/* iPhone Mockup 1 Placeholder */}
+            <div className="w-48 h-[340px] bg-slate-950 rounded-[2.8rem] p-3 border-4 border-slate-800 shadow-2xl relative flex flex-col justify-between group hover:border-red-600 transition-colors">
+              <div className="w-16 h-3.5 bg-black rounded-full mx-auto mb-1 z-10"></div>
+              
+              <div className="flex-1 bg-gradient-to-b from-red-900 via-red-950 to-slate-950 rounded-[2rem] overflow-hidden p-3 text-white flex flex-col justify-between border border-white/10 relative">
+                <div className="space-y-2 text-center pt-2">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-400/20 text-amber-300 flex items-center justify-center mx-auto">
+                    <Smartphone className="w-5 h-5" />
                   </div>
-                  <div className="p-1.5 rounded-lg bg-black/40 text-[8px] space-y-0.5">
-                    <div>• Promo Diskon 50% Ongkir</div>
-                    <div>• Flash Sale Sarapan Pagi</div>
-                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-amber-400 text-red-950 font-black text-[9px] uppercase tracking-wider block">
+                    MOCKUP IPHONE #1
+                  </span>
+                  <h4 className="text-xs font-black text-white">GoFood / GrabFood Merchant</h4>
+                  <p className="text-[10px] text-red-200 leading-tight">
+                    [ Placeholder Mockup App Storefront ]
+                  </p>
                 </div>
-                <div className="p-1 rounded-md bg-amber-400 text-red-950 font-black text-[8px] text-center uppercase">
-                  Listing Handled HQ
+
+                <div className="p-2 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-center">
+                  <div className="text-[9px] font-bold text-amber-300">Siap Ditampilkan</div>
+                  <div className="text-[8px] text-slate-300">Nanti link dishare oleh mitra/user</div>
                 </div>
               </div>
             </div>
 
-            {/* iPhone 2 */}
-            <div className="w-44 h-[320px] bg-slate-900 rounded-[2.5rem] p-2.5 border-4 border-slate-800 shadow-xl relative flex flex-col justify-between hidden sm:flex">
-              <div className="w-16 h-3 bg-black rounded-full mx-auto mb-1 z-10"></div>
-              <div className="flex-1 bg-amber-500 rounded-[1.8rem] overflow-hidden p-2 text-red-950 flex flex-col justify-between">
-                <div className="space-y-1">
-                  <div className="text-[9px] font-black text-red-950 uppercase tracking-widest text-center">SHOPEEFOOD PROMO</div>
-                  <div className="p-1.5 rounded-lg bg-white/80 text-[9px]">
-                    <div className="font-bold">Voucher Diskon Bundling</div>
-                    <div className="text-red-900 text-[8px] font-bold">Sarapan + Dimsum</div>
+            {/* iPhone Mockup 2 Placeholder */}
+            <div className="w-48 h-[340px] bg-slate-950 rounded-[2.8rem] p-3 border-4 border-slate-800 shadow-2xl relative flex flex-col justify-between group hover:border-amber-500 transition-colors hidden sm:flex">
+              <div className="w-16 h-3.5 bg-black rounded-full mx-auto mb-1 z-10"></div>
+              
+              <div className="flex-1 bg-gradient-to-b from-amber-600 via-red-900 to-slate-950 rounded-[2rem] overflow-hidden p-3 text-white flex flex-col justify-between border border-white/10 relative">
+                <div className="space-y-2 text-center pt-2">
+                  <div className="w-10 h-10 rounded-2xl bg-white/20 text-white flex items-center justify-center mx-auto">
+                    <Megaphone className="w-5 h-5" />
                   </div>
-                  <div className="p-1.5 rounded-lg bg-white/80 text-[8px] space-y-0.5">
-                    <div>• Booster Campaign Active</div>
-                    <div>• Auto Push Menu Baru</div>
-                  </div>
+                  <span className="px-2.5 py-0.5 rounded-full bg-white text-slate-950 font-black text-[9px] uppercase tracking-wider block">
+                    MOCKUP IPHONE #2
+                  </span>
+                  <h4 className="text-xs font-black text-white">Promo Ads & ShopeeFood</h4>
+                  <p className="text-[10px] text-amber-100 leading-tight">
+                    [ Placeholder Mockup Banner & Ads ]
+                  </p>
                 </div>
-                <div className="p-1 rounded-md bg-red-900 text-white font-black text-[8px] text-center uppercase">
-                  Digital Ads Run
+
+                <div className="p-2 rounded-xl bg-black/50 backdrop-blur-md border border-white/10 text-center">
+                  <div className="text-[9px] font-bold text-amber-300">Siap Ditampilkan</div>
+                  <div className="text-[8px] text-slate-300">Nanti link dishare oleh mitra/user</div>
                 </div>
               </div>
             </div>
+
           </div>
 
           {/* Right Column: Marketing Support Points */}
           <div className="lg:col-span-6 space-y-3.5">
+            <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 text-xs font-bold flex items-center justify-between shadow-sm">
+              <span>📌 Mockup iPhone siap menampilkan gambar/konten link dari Anda.</span>
+              <span className="px-2.5 py-1 bg-amber-400 text-red-950 rounded-full font-black text-[9px] uppercase">PLACEHOLDER READY</span>
+            </div>
+
             <h3 className="text-lg font-black text-slate-900">Dukungan Pemasaran dari Pusat Sabuba HQ:</h3>
 
             <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3">
@@ -1102,88 +1186,109 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 9: Franchise Models Roadmap
+    // Slide 9: Franchise Models Roadmap with Sabuba Classic Motor Showcase
     // ----------------------------------------------------
     {
       id: 'models-roadmap',
       title: 'Pilihan Model Kemitraan Sabuba',
-      subtitle: 'Sabuba Classic Beroperasi & Tersedia Sekarang! Model Lain Segera Hadir.',
+      subtitle: 'Sabuba Classic (Motor Custom 3 Roda) Beroperasi & Tersedia Sekarang! Model Lain Segera Hadir.',
       content: (
-        <div className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="space-y-4 overflow-y-auto max-h-[72vh] pr-1">
+          
+          {/* Main Hero Showcase: Sabuba Classic Motor 3 Roda (Available Now) */}
+          <div className="p-5 rounded-3xl bg-gradient-to-r from-red-950 via-red-900 to-slate-950 text-white border-2 border-amber-400 shadow-2xl relative grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
             
-            {/* Model 1: Sabuba Classic (AVAILABLE NOW) */}
-            <div className="p-5 rounded-3xl bg-gradient-to-b from-red-950 via-red-900 to-red-950 border-2 border-amber-400 text-white relative flex flex-col justify-between shadow-xl">
-              <div className="absolute -top-3 right-3 px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow">
-                OPEN NOW
-              </div>
-              <div>
-                <div className="text-xs font-bold text-amber-300 uppercase tracking-wider">Street Food Motor Custom</div>
-                <h4 className="text-xl font-black text-white mt-1">Sabuba Classic</h4>
-                <div className="text-2xl font-black text-amber-400 mt-2">Rp 100 Juta</div>
-                <p className="text-xs text-red-100 mt-2 leading-relaxed">
-                  Unit motor tiga roda custom fleksibel. Hemat sewa lokasi, mobilitas tinggi, siap jualan dalam hitungan menit.
-                </p>
-              </div>
+            <div className="absolute -top-3 right-4 px-3.5 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow z-10 flex items-center gap-1">
+              <Flame className="w-3.5 h-3.5 fill-red-950" />
+              <span>MODEL SAAT INI OPERASIONAL & TERSEDIA</span>
+            </div>
 
-              <div className="mt-4 pt-3 border-t border-white/20 text-xs font-bold text-emerald-300">
-                ✓ Bagi Hasil 50:50 Mitra Pasif
+            {/* Left Column: Big Image of Sabuba Classic 3-Wheel Custom Motor */}
+            <div className="lg:col-span-5 relative">
+              <div className="rounded-2xl overflow-hidden border border-white/20 shadow-lg bg-black group">
+                <img
+                  src="/assets/Konsep/motor-infographic.png"
+                  alt="Sabuba Classic Custom 3-Wheel Motor Infographic"
+                  className="w-full h-52 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
               </div>
             </div>
 
+            {/* Right Column: Specifications & Investment Info */}
+            <div className="lg:col-span-7 space-y-3">
+              <div>
+                <span className="text-[11px] font-bold text-amber-300 uppercase tracking-wider">Street Food Motor Custom 3 Roda</span>
+                <h3 className="text-2xl font-black text-white">Sabuba Classic</h3>
+                <div className="text-3xl font-black text-amber-400 mt-1">Rp 100.000.000</div>
+              </div>
+
+              <p className="text-xs text-red-100 leading-relaxed">
+                Unit motor tiga roda custom fleksibel & kompak. Bebas sewa lokasi, mobilitas tinggi, rangka besi hollow kuat, dilengkapi panel aluminium anti karat & kitchen setup lengkap.
+              </p>
+
+              <div className="flex flex-wrap gap-2 text-[10px] font-bold">
+                <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/15 text-white">✓ Motor 3 Roda Custom (200cc-250cc)</span>
+                <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/15 text-white">✓ Dimensi 2.40m x 1.10m x 1.80m</span>
+                <span className="px-2.5 py-1 bg-white/10 rounded-lg border border-white/15 text-white">✓ Beban 300 - 400 kg</span>
+                <span className="px-2.5 py-1 bg-emerald-500/30 text-emerald-300 rounded-lg border border-emerald-400/40 font-black">✓ Bagi Hasil 50% : 50% Mitra Pasif</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Upcoming Models (Container, Resto, Express) */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1">
+            
             {/* Model 2: Sabuba Container (SOON) */}
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 opacity-70 relative flex flex-col justify-between">
-              <div className="absolute -top-3 right-3 px-3 py-1 bg-slate-200 text-slate-600 font-bold text-[10px] uppercase rounded-full">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 opacity-75 relative flex flex-col justify-between">
+              <div className="absolute -top-2.5 right-3 px-2.5 py-0.5 bg-slate-200 text-slate-600 font-bold text-[9px] uppercase rounded-full">
                 SOON
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Semi-Permanent Hub</div>
-                <h4 className="text-xl font-black text-slate-800 mt-1">Sabuba Container</h4>
-                <div className="text-xl font-bold text-slate-500 mt-2">Coming Soon</div>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  Konsep container booth modern untuk lokasi strategis seperti SPBU, minimarket, & pelataran gedung.
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Semi-Permanent Hub</div>
+                <h4 className="text-lg font-black text-slate-800 mt-0.5">Sabuba Container</h4>
+                <div className="text-sm font-bold text-slate-500 mt-1">Coming Soon</div>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Konsep container booth modern untuk SPBU, minimarket, & pelataran gedung.
                 </p>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-100 text-xs font-semibold text-slate-500">
+              <div className="mt-3 pt-2 border-t border-slate-100 text-[10px] font-semibold text-slate-500">
                 ⏳ Dalam Tahap Persiapan
               </div>
             </div>
 
             {/* Model 3: Sabuba Resto (SOON) */}
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 opacity-70 relative flex flex-col justify-between">
-              <div className="absolute -top-3 right-3 px-3 py-1 bg-slate-200 text-slate-600 font-bold text-[10px] uppercase rounded-full">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 opacity-75 relative flex flex-col justify-between">
+              <div className="absolute -top-2.5 right-3 px-2.5 py-0.5 bg-slate-200 text-slate-600 font-bold text-[9px] uppercase rounded-full">
                 SOON
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dine-in Fast Casual</div>
-                <h4 className="text-xl font-black text-slate-800 mt-1">Sabuba Resto</h4>
-                <div className="text-xl font-bold text-slate-500 mt-2">Coming Soon</div>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  Format outlet ruko dengan tempat duduk ber-AC & area outdoor modern untuk pengalaman dine-in keluarga.
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Dine-in Fast Casual</div>
+                <h4 className="text-lg font-black text-slate-800 mt-0.5">Sabuba Resto</h4>
+                <div className="text-sm font-bold text-slate-500 mt-1">Coming Soon</div>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Format outlet ruko dengan tempat duduk ber-AC & area outdoor modern.
                 </p>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-100 text-xs font-semibold text-slate-500">
+              <div className="mt-3 pt-2 border-t border-slate-100 text-[10px] font-semibold text-slate-500">
                 ⏳ Dalam Tahap Persiapan
               </div>
             </div>
 
             {/* Model 4: Sabuba Express Mall (SOON) */}
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 opacity-70 relative flex flex-col justify-between">
-              <div className="absolute -top-3 right-3 px-3 py-1 bg-slate-200 text-slate-600 font-bold text-[10px] uppercase rounded-full">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 opacity-75 relative flex flex-col justify-between">
+              <div className="absolute -top-2.5 right-3 px-2.5 py-0.5 bg-slate-200 text-slate-600 font-bold text-[9px] uppercase rounded-full">
                 SOON
               </div>
               <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Island Kiosk Mall</div>
-                <h4 className="text-xl font-black text-slate-800 mt-1">Sabuba Express</h4>
-                <div className="text-xl font-bold text-slate-500 mt-2">Coming Soon</div>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-                  Format booth island eksklusif untuk food court pusat perbelanjaan & tempat keramaian indoor.
+                <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Island Kiosk Mall</div>
+                <h4 className="text-lg font-black text-slate-800 mt-0.5">Sabuba Express</h4>
+                <div className="text-sm font-bold text-slate-500 mt-1">Coming Soon</div>
+                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  Format booth island eksklusif untuk food court mall & indoor area.
                 </p>
               </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-100 text-xs font-semibold text-slate-500">
+              <div className="mt-3 pt-2 border-t border-slate-100 text-[10px] font-semibold text-slate-500">
                 ⏳ Dalam Tahap Persiapan
               </div>
             </div>
