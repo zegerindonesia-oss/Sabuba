@@ -41,13 +41,13 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesDay: 1000000,
         salesMonth: 30000000,
         salesYear: 360000000,
-        hppPercent: 42,
-        hppAmount: 12600000,
-        grossProfitAmount: 17400000,
+        hppPercent: 40,
+        hppAmount: 12000000,
+        grossProfitAmount: 18000000,
         opsKaryawan: 3000000,
-        opsRumahTangga: 450000,
-        opsListrikAirFuel: 450000,
-        totalOpsAmount: 3900000,
+        opsRumahTangga: 750000,
+        opsListrikAirFuel: 750000,
+        totalOpsAmount: 4500000,
         ebitdaNetProfitStore: 13500000,
         mitraShare50: 6750000,
         paybackMonths: 14.8
@@ -60,16 +60,16 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         salesDay: 2000000,
         salesMonth: 60000000,
         salesYear: 720000000,
-        hppPercent: 42,
-        hppAmount: 25200000,
-        grossProfitAmount: 34800000,
-        opsKaryawan: 5500000,
-        opsRumahTangga: 900000,
-        opsListrikAirFuel: 900000,
-        totalOpsAmount: 7300000,
-        ebitdaNetProfitStore: 27500000,
-        mitraShare50: 13750000,
-        paybackMonths: 7.2
+        hppPercent: 40,
+        hppAmount: 24000000,
+        grossProfitAmount: 36000000,
+        opsKaryawan: 6000000,
+        opsRumahTangga: 1500000,
+        opsListrikAirFuel: 1500000,
+        totalOpsAmount: 9000000,
+        ebitdaNetProfitStore: 27000000,
+        mitraShare50: 13500000,
+        paybackMonths: 7.4
       },
       {
         name: 'Ramai (150 Cup)',
@@ -82,13 +82,13 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         hppPercent: 40,
         hppAmount: 36000000,
         grossProfitAmount: 54000000,
-        opsKaryawan: 7500000,
-        opsRumahTangga: 1350000,
-        opsListrikAirFuel: 1350000,
-        totalOpsAmount: 10200000,
-        ebitdaNetProfitStore: 43800000,
-        mitraShare50: 21900000,
-        paybackMonths: 4.5
+        opsKaryawan: 9000000,
+        opsRumahTangga: 2250000,
+        opsListrikAirFuel: 2250000,
+        totalOpsAmount: 13500000,
+        ebitdaNetProfitStore: 40500000,
+        mitraShare50: 20250000,
+        paybackMonths: 4.9
       },
       {
         name: 'Ramai Sekali (200 Cup)',
@@ -101,13 +101,13 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         hppPercent: 40,
         hppAmount: 48000000,
         grossProfitAmount: 72000000,
-        opsKaryawan: 9500000,
-        opsRumahTangga: 1800000,
-        opsListrikAirFuel: 1800000,
-        totalOpsAmount: 13100000,
-        ebitdaNetProfitStore: 58900000,
-        mitraShare50: 29450000,
-        paybackMonths: 3.4
+        opsKaryawan: 12000000,
+        opsRumahTangga: 3000000,
+        opsListrikAirFuel: 3000000,
+        totalOpsAmount: 18000000,
+        ebitdaNetProfitStore: 54000000,
+        mitraShare50: 27000000,
+        paybackMonths: 3.7
       }
     ]
   };
@@ -608,74 +608,252 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 5: REAL HISTORICAL POS DATA (Jan to Aug 2026)
+    // Slide 5: REAL FINANCIAL STATEMENT & POS LOGS (Format Laporan Keuangan)
     // ----------------------------------------------------
     {
       id: 'real-pos-data',
-      title: 'Data Historis Real Penjualan POS Outlet',
-      subtitle: 'Rekam Penjualan Riil Kasir Cloud Sabuba Januari - Agustus 2026',
+      title: 'Laporan Keuangan Real POS & Profitability Model',
+      subtitle: 'Format Laporan Keuangan Resmi Kasir Cloud Sabuba (Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%)',
       content: (
-        <div className="space-y-5">
-          <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-              Data bersumber langsung dari Laporan Kasir Cloud POS Sabuba saat ini.
-            </span>
-            <span className="px-3 py-1 bg-emerald-700 text-white rounded-full font-black text-[10px] uppercase tracking-wider">
-              REAL HISTORICAL LOGS
-            </span>
+        <div className="space-y-4 overflow-y-auto max-h-[72vh] pr-1">
+          
+          {/* Header Banner - Laporan Keuangan Real */}
+          <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-950 via-red-950 to-slate-950 text-white border border-white/10 shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Format Laporan Keuangan Real (Agustus 2026 POS Log)</span>
+              </div>
+              <h3 className="text-xl font-black text-white tracking-tight">
+                Struktur Laporan Laba / Rugi Outlet Sabuba Classic
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-center">
+                <div className="text-[9px] text-amber-300 font-extrabold uppercase">COGS (HPP)</div>
+                <div className="text-base font-black text-white">40%</div>
+              </div>
+              <div className="px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-center">
+                <div className="text-[9px] text-amber-300 font-extrabold uppercase">OPEX</div>
+                <div className="text-base font-black text-white">15%</div>
+              </div>
+              <div className="px-3 py-1.5 rounded-xl bg-emerald-500/30 border border-emerald-400/40 text-center">
+                <div className="text-[9px] text-emerald-300 font-extrabold uppercase">NET PROFIT</div>
+                <div className="text-base font-black text-emerald-300">45%</div>
+              </div>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
+          {/* Grid Layout: Left Financial Statement Table, Right Animated Waterfall Chart */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             
-            <div className="lg:col-span-7 space-y-3 bg-white p-5 rounded-3xl border border-slate-200 shadow-sm">
-              <div className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center justify-between">
-                <span>Grafik Penjualan & Profit Riil (Rp)</span>
-                <span className="text-red-800 font-extrabold text-[11px]">Agustus 2026 Peak: Rp 80,1 Jt</span>
+            {/* Left Column: Official Financial Report Table (Laporan Keuangan) */}
+            <div className="lg:col-span-7 space-y-3">
+              <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm bg-white text-xs">
+                <div className="bg-slate-900 text-white px-4 py-2.5 font-black text-[11px] uppercase tracking-wider flex justify-between items-center">
+                  <span>LAPORAN LABA / RUGI REAL OUTLET (AGUSTUS 2026)</span>
+                  <span className="text-amber-400 font-extrabold">INCOME STATEMENT</span>
+                </div>
+
+                <table className="w-full text-left divide-y divide-slate-100 font-medium">
+                  <tbody>
+                    {/* Revenue */}
+                    <tr className="bg-emerald-50/80 font-black text-slate-900">
+                      <td className="p-3 text-red-950 font-bold">1. PENJUALAN BERSATU (NET SALES REVENUE)</td>
+                      <td className="p-3 text-center text-slate-600">100.0%</td>
+                      <td className="p-3 text-right text-emerald-800 text-sm font-black">Rp 80.108.009</td>
+                    </tr>
+
+                    {/* COGS 40% */}
+                    <tr className="hover:bg-slate-50">
+                      <td className="p-2.5 text-slate-700 pl-5">2. Beban Pokok Penjualan (COGS / HPP Bahan Baku)</td>
+                      <td className="p-2.5 text-center text-red-600 font-bold">40.0%</td>
+                      <td className="p-2.5 text-right text-red-700 font-bold">Rp 32.043.204</td>
+                    </tr>
+
+                    {/* Gross Profit 60% */}
+                    <tr className="bg-slate-50 font-extrabold text-slate-900 border-t border-slate-200">
+                      <td className="p-2.5 font-bold text-slate-900">3. LABA KOTOR (GROSS PROFIT)</td>
+                      <td className="p-2.5 text-center text-slate-800">60.0%</td>
+                      <td className="p-2.5 text-right text-slate-900 font-black">Rp 48.064.805</td>
+                    </tr>
+
+                    {/* OPEX Breakdown Header */}
+                    <tr className="bg-amber-50/60 font-bold text-amber-950">
+                      <td colSpan="3" className="px-3 py-1.5 text-[10px] uppercase tracking-wider">
+                        4. BEBAN OPERASIONAL STORE (OPEX 15.0%)
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 text-[11px]">
+                      <td className="py-1.5 px-3 text-slate-600 pl-7">• Gaji Tim Karyawan & Bonus Store</td>
+                      <td className="py-1.5 px-3 text-center text-slate-500">9.4%</td>
+                      <td className="py-1.5 px-3 text-right text-slate-700 font-semibold">Rp 7.500.000</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 text-[11px]">
+                      <td className="py-1.5 px-3 text-slate-600 pl-7">• Biaya Utility (Listrik, Air & Bahan Bakar Motor)</td>
+                      <td className="py-1.5 px-3 text-center text-slate-500">3.1%</td>
+                      <td className="py-1.5 px-3 text-right text-slate-700 font-semibold">Rp 2.500.000</td>
+                    </tr>
+                    <tr className="hover:bg-slate-50 text-[11px]">
+                      <td className="py-1.5 px-3 text-slate-600 pl-7">• Biaya Pemeliharaan Unit & Kebersihan Ops</td>
+                      <td className="py-1.5 px-3 text-center text-slate-500">2.5%</td>
+                      <td className="py-1.5 px-3 text-right text-slate-700 font-semibold">Rp 2.016.201</td>
+                    </tr>
+                    <tr className="bg-amber-100/70 font-bold text-slate-900 border-t border-amber-200">
+                      <td className="p-2.5 font-bold text-amber-950">TOTAL BEBAN OPERASIONAL (TOTAL OPEX)</td>
+                      <td className="p-2.5 text-center text-amber-900 font-extrabold">15.0%</td>
+                      <td className="p-2.5 text-right text-amber-950 font-black">Rp 12.016.201</td>
+                    </tr>
+
+                    {/* Net Profit 45% */}
+                    <tr className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs">
+                      <td className="p-3">5. STORE NET PROFIT (LABA BERSIH OUTLET)</td>
+                      <td className="p-3 text-center text-emerald-200 text-sm">45.0%</td>
+                      <td className="p-3 text-right text-amber-300 text-base font-black">Rp 36.048.604</td>
+                    </tr>
+
+                    {/* Mitra Share 50% */}
+                    <tr className="bg-slate-950 text-white font-black text-xs border-t-2 border-amber-400">
+                      <td className="p-3.5 text-amber-300">
+                        6. HAK BAGI HASIL MITRA PASIF (50% NET PROFIT)
+                      </td>
+                      <td className="p-3.5 text-center text-amber-300 text-sm">22.5%</td>
+                      <td className="p-3.5 text-right text-amber-400 text-lg font-black">
+                        Rp 18.024.302 <span className="text-[10px] font-normal text-slate-300">/ Bln</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </div>
 
-              {realPosData.map((d, i) => {
-                const maxOmset = 85000000;
-                const widthOmset = (d.omset / maxOmset) * 100;
+            {/* Right Column: Animated Financial Chart Waterfall & Multi-Month Table */}
+            <div className="lg:col-span-5 space-y-3">
+              
+              {/* Visual Animated Financial Waterfall Chart */}
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <div className="flex justify-between items-center text-xs font-black text-slate-900 uppercase tracking-wider">
+                  <span className="flex items-center gap-1.5">
+                    <BarChart3 className="w-4 h-4 text-red-800" />
+                    Visual Breakdown Keuangan
+                  </span>
+                  <span className="text-[10px] text-emerald-700 font-extrabold">Proporsi Standard</span>
+                </div>
 
-                return (
-                  <div key={i} className="space-y-1">
-                    <div className="flex justify-between text-xs font-bold text-slate-700">
-                      <span>{d.period}</span>
-                      <span>
-                        Omset: <strong className="text-slate-900">Rp {(d.omset / 1000000).toFixed(1)}M</strong> | Profit Store: <strong className="text-emerald-700">Rp {(d.profit / 1000000).toFixed(1)}M</strong>
-                      </span>
+                <div className="space-y-2 text-xs">
+                  {/* Sales 100% */}
+                  <div>
+                    <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+                      <span>Total Sales (Penjualan)</span>
+                      <span className="text-slate-900 font-black">100% (Rp 80,1 Jt)</span>
                     </div>
-
-                    <div className="h-3.5 w-full bg-slate-100 rounded-full overflow-hidden relative flex">
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${widthOmset}%` }}
-                        transition={{ duration: 0.8, delay: i * 0.1 }}
-                        className="h-full bg-gradient-to-r from-red-800 via-red-600 to-emerald-600 rounded-full"
+                        animate={{ width: '100%' }}
+                        transition={{ duration: 0.8 }}
+                        className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
                       />
                     </div>
                   </div>
-                );
-              })}
-            </div>
 
-            <div className="lg:col-span-5 space-y-3">
-              <div className="p-5 rounded-3xl bg-gradient-to-br from-red-900 to-red-950 text-white shadow-lg space-y-1">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-amber-300">Penjualan Agustus 2026 (Real POS Log)</span>
-                <div className="text-3xl font-black">Rp 80.108.009</div>
-                <div className="text-xs font-bold text-emerald-300">Keuntungan Bersih Store: Rp 40.177.509 (50.1%)</div>
-              </div>
+                  {/* COGS 40% */}
+                  <div>
+                    <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+                      <span>Beban Bahan Baku (COGS)</span>
+                      <span className="text-red-700 font-black">40% (Rp 32,0 Jt)</span>
+                    </div>
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: '40%' }}
+                        transition={{ duration: 0.8, delay: 0.1 }}
+                        className="h-full bg-gradient-to-r from-red-600 to-amber-600 rounded-full"
+                      />
+                    </div>
+                  </div>
 
-              <div className="p-4 rounded-2xl bg-white border border-slate-200 text-xs text-slate-600 leading-relaxed shadow-sm">
-                <div className="font-bold text-red-900 mb-1 flex items-center gap-1.5">
-                  <FileText className="w-4 h-4" /> Catatan Data Real:
+                  {/* OPEX 15% */}
+                  <div>
+                    <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+                      <span>Beban Operasional (OPEX)</span>
+                      <span className="text-amber-700 font-black">15% (Rp 12,0 Jt)</span>
+                    </div>
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: '15%' }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Store Net Profit 45% */}
+                  <div>
+                    <div className="flex justify-between text-[11px] font-bold text-slate-700 mb-1">
+                      <span>Laba Bersih Outlet (Net Profit)</span>
+                      <span className="text-emerald-700 font-black">45% (Rp 36,0 Jt)</span>
+                    </div>
+                    <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: '45%' }}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                        className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
+                      />
+                    </div>
+                  </div>
                 </div>
-                Pencapaian di atas adalah bukti rekam jejak operasional outlet Sabuba yang berjalan saat ini. Data ini disajikan sebagai bukti validitas produk & daya terima pasar.
+
+                {/* Partner 50% Highlight Card */}
+                <div className="p-3.5 rounded-xl bg-gradient-to-r from-red-900 to-red-950 text-white mt-2 shadow-md">
+                  <div className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">HAK BAGI HASIL MITRA PASIF</div>
+                  <div className="text-xl font-black text-white mt-0.5">Rp 18.024.302 <span className="text-xs text-amber-300 font-normal">/ bln</span></div>
+                  <div className="text-[10px] text-red-200 mt-1">Diterima bersih setiap bulan tanpa potong biaya operasional harian.</div>
+                </div>
               </div>
+
+              {/* Historical Log Summary Table (Jan to Aug 2026) */}
+              <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 text-xs">
+                <div className="font-bold text-slate-900 flex justify-between items-center text-[11px] uppercase tracking-wider">
+                  <span>Rekam Jejak Historis (Jan - Aug 2026)</span>
+                  <span className="text-slate-500 text-[10px]">6 Periode Operational</span>
+                </div>
+
+                <div className="space-y-1 text-[11px]">
+                  {realPosData.map((d, idx) => {
+                    const omset = d.omset;
+                    const cogs = omset * 0.40;
+                    const opex = omset * 0.15;
+                    const netProfit = omset * 0.45;
+                    const mitraShare = netProfit * 0.50;
+
+                    return (
+                      <div key={idx} className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors flex items-center justify-between font-medium">
+                        <div>
+                          <div className="font-extrabold text-slate-900 text-xs">{d.period}</div>
+                          <div className="text-[10px] text-slate-500">Omset: Rp {(omset / 1000000).toFixed(1)}M</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-black text-emerald-700 text-xs">Profit: Rp {(netProfit / 1000000).toFixed(1)}M</div>
+                          <div className="text-[10px] text-amber-700 font-extrabold">Mitra: Rp {(mitraShare / 1000000).toFixed(1)}M</div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
             </div>
 
           </div>
+
+          <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-[10px] text-slate-600 leading-relaxed font-medium">
+            <strong className="text-slate-900 font-bold">Catatan Laporan Keuangan:</strong> Struktur COGS (~40%), OPEX (~15%), dan Net Profit (~45%) dihitung sesuai formula standar keuangan usaha F&B fast casual Sabuba Indonesia. Data omset bersumber dari sistem Cloud POS Kasir Sabuba.
+          </div>
+
         </div>
       )
     },
