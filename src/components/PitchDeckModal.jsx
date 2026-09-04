@@ -332,61 +332,27 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </div>
           </div>
 
-          {/* Right Column: Big Motor Image Card Showcase (6 cols) */}
+          {/* Right Column: Sabuba Motor Poster Image Card Showcase (6 cols) */}
           <div className="lg:col-span-6 relative flex flex-col items-center">
             <div className="w-full rounded-3xl overflow-hidden border-2 border-red-900/20 shadow-2xl bg-slate-950 group relative">
               <img
-                src={
-                  motorTabSlide2 === 'infographic'
-                    ? '/assets/Konsep/motor-infographic.png'
-                    : motorTabSlide2 === 'outdoor'
-                    ? '/assets/Konsep/5. Konsep Street Food.jpg'
-                    : '/assets/Konsep/motor-poster.png'
-                }
-                alt="Sabuba Classic Custom 3-Wheel Motor Unit"
-                className="w-full h-[320px] sm:h-[380px] object-cover transition-all duration-500 group-hover:scale-105"
+                src="/assets/Konsep/motor-poster.png"
+                alt="Sabuba Classic Custom 3-Wheel Motor Unit Poster"
+                className="w-full h-[330px] sm:h-[390px] object-cover transition-all duration-500 group-hover:scale-105"
               />
 
               {/* Gradient Overlay & Badge */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-between p-4 text-white">
                 <div className="flex justify-between items-center">
                   <span className="px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow">
-                    UNIT MOTOR CUSTOM 3 RODA
+                    SABUBA CLASSIC - MOTOR CUSTOM 3 RODA
                   </span>
-                  
-                  {/* Image Switcher Tabs */}
-                  <div className="flex items-center gap-1 bg-black/60 backdrop-blur-md p-1 rounded-xl border border-white/10 text-[10px]">
-                    <button
-                      onClick={() => setMotorTabSlide2('poster')}
-                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
-                        motorTabSlide2 === 'poster' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
-                      }`}
-                    >
-                      Poster
-                    </button>
-                    <button
-                      onClick={() => setMotorTabSlide2('infographic')}
-                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
-                        motorTabSlide2 === 'infographic' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
-                      }`}
-                    >
-                      Infografis
-                    </button>
-                    <button
-                      onClick={() => setMotorTabSlide2('outdoor')}
-                      className={`px-2 py-0.5 rounded-lg transition-colors font-bold ${
-                        motorTabSlide2 === 'outdoor' ? 'bg-red-800 text-white' : 'text-slate-300 hover:text-white'
-                      }`}
-                    >
-                      Operasional
-                    </button>
-                  </div>
                 </div>
 
                 <div>
-                  <h4 className="text-xl font-black text-white">Sabuba Classic (Motor 3 Roda)</h4>
+                  <h4 className="text-xl font-black text-white">Sabuba Classic (Street Food Kompak)</h4>
                   <p className="text-xs text-amber-200 font-semibold mt-0.5">
-                    Bebas biaya sewa ruko • Mobilitas tinggi • Siap jualan dalam hitungan menit
+                    Bebas biaya sewa ruko • Mobilitas tinggi • Siap jualan di mana saja
                   </p>
                 </div>
               </div>
@@ -1203,12 +1169,12 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               <span>MODEL SAAT INI OPERASIONAL & TERSEDIA</span>
             </div>
 
-            {/* Left Column: Big Image of Sabuba Classic 3-Wheel Custom Motor */}
+            {/* Left Column: Big Image of Sabuba Classic 3-Wheel Custom Motor Poster */}
             <div className="lg:col-span-5 relative">
               <div className="rounded-2xl overflow-hidden border border-white/20 shadow-lg bg-black group">
                 <img
-                  src="/assets/Konsep/motor-infographic.png"
-                  alt="Sabuba Classic Custom 3-Wheel Motor Infographic"
+                  src="/assets/Konsep/motor-poster.png"
+                  alt="Sabuba Classic Custom 3-Wheel Motor Poster"
                   className="w-full h-52 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -1459,26 +1425,34 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </div>
           </div>
 
-          {/* Bottom Controls Bar */}
-          <div className="p-4 border-t border-slate-200/80 bg-white/90 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+          {/* Bottom Controls Bar (PDF Pitch Deck Inspired Footer) */}
+          <div className="p-4 border-t border-slate-200/80 bg-white/90 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0 text-xs">
             
-            {/* Slide Navigation Dots */}
-            <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0">
-              {slides.map((s, idx) => (
-                <button
-                  key={s.id}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={`h-2.5 rounded-full transition-all ${
-                    idx === currentSlide
-                      ? 'w-8 bg-red-900'
-                      : 'w-2.5 bg-slate-200 hover:bg-slate-400'
-                  }`}
-                  title={`Slide ${idx + 1}: ${s.title}`}
-                />
-              ))}
+            {/* Slide Navigation Dots & PDF Style Website Meta */}
+            <div className="flex items-center gap-4 overflow-x-auto max-w-full">
+              <div className="flex items-center gap-1.5">
+                {slides.map((s, idx) => (
+                  <button
+                    key={s.id}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`h-2.5 rounded-full transition-all ${
+                      idx === currentSlide
+                        ? 'w-8 bg-red-900 shadow-sm'
+                        : 'w-2.5 bg-slate-200 hover:bg-slate-400'
+                    }`}
+                    title={`Slide ${idx + 1}: ${s.title}`}
+                  />
+                ))}
+              </div>
+
+              <div className="hidden md:flex items-center gap-2 text-slate-400 font-bold border-l border-slate-200 pl-4 text-[11px]">
+                <span className="text-slate-600 font-extrabold">sabuba.flowstack.com</span>
+                <span>•</span>
+                <span>Proposal Kemitraan 2026</span>
+              </div>
             </div>
 
-            {/* Prev / Next Controls */}
+            {/* Prev / Next Controls + PDF Style Page Number */}
             <div className="flex items-center gap-3">
               <button
                 onClick={prevSlide}
@@ -1489,9 +1463,9 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                 <span>Sebelumnya</span>
               </button>
 
-              <span className="text-xs font-extrabold text-slate-500">
-                {currentSlide + 1} / {slides.length}
-              </span>
+              <div className="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 font-black text-slate-700 text-xs">
+                Page <span className="text-red-900">0{currentSlide + 1}</span> / 10
+              </div>
 
               <button
                 onClick={nextSlide}
