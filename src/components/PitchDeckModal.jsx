@@ -14,7 +14,6 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [currentSlide, setCurrentSlide] = useState(defaultSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [customVideoUrl, setCustomVideoUrl] = useState('');
-  const [motorTabSlide2, setMotorTabSlide2] = useState('poster');
 
   // Historical POS Data (Jan to Aug 2026)
   const realPosData = [
@@ -333,29 +332,13 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           {/* Right Column: Sabuba Motor Poster Image Card Showcase (6 cols) */}
-          <div className="lg:col-span-6 relative flex flex-col items-center">
-            <div className="w-full rounded-3xl overflow-hidden border-2 border-red-900/20 shadow-2xl bg-slate-950 group relative">
+          <div className="lg:col-span-6 flex flex-col items-center justify-center">
+            <div className="w-full rounded-3xl overflow-hidden border border-slate-800 shadow-2xl bg-slate-950 p-2 group relative">
               <img
                 src="/assets/Konsep/motor-poster.png"
                 alt="Sabuba Classic Custom 3-Wheel Motor Unit Poster"
-                className="w-full h-[330px] sm:h-[390px] object-cover transition-all duration-500 group-hover:scale-105"
+                className="w-full h-[380px] sm:h-[440px] object-contain rounded-2xl transition-transform duration-500 group-hover:scale-[1.01]"
               />
-
-              {/* Gradient Overlay & Badge */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent flex flex-col justify-between p-4 text-white">
-                <div className="flex justify-between items-center">
-                  <span className="px-3 py-1 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow">
-                    SABUBA CLASSIC - MOTOR CUSTOM 3 RODA
-                  </span>
-                </div>
-
-                <div>
-                  <h4 className="text-xl font-black text-white">Sabuba Classic (Street Food Kompak)</h4>
-                  <p className="text-xs text-amber-200 font-semibold mt-0.5">
-                    Bebas biaya sewa ruko • Mobilitas tinggi • Siap jualan di mana saja
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -643,24 +626,24 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 5: REAL FINANCIAL STATEMENT & POS LOGS (Format Laporan Keuangan)
+    // Slide 5: REAL FINANCIAL STATEMENT (HQ Central Performance Only)
     // ----------------------------------------------------
     {
       id: 'real-pos-data',
-      title: 'Laporan Keuangan Real POS & Profitability Model',
-      subtitle: 'Format Laporan Keuangan Resmi Kasir Cloud Sabuba (Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%)',
+      title: 'Laporan Keuangan Real Outlet (HQ Performance)',
+      subtitle: 'Format Laporan Keuangan Resmi Kinerja Operasional Outlet Sabuba Pusat (Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%)',
       content: (
         <div className="space-y-4 overflow-y-auto max-h-[72vh] pr-1">
           
-          {/* Header Banner - Laporan Keuangan Real */}
+          {/* Header Banner - Laporan Keuangan Real HQ */}
           <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-950 via-red-950 to-slate-950 text-white border border-white/10 shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>Format Laporan Keuangan Real (Agustus 2026 POS Log)</span>
+                <span>Format Laporan Keuangan Real Outlet Pusat (Agustus 2026 POS Log)</span>
               </div>
               <h3 className="text-xl font-black text-white tracking-tight">
-                Struktur Laporan Laba / Rugi Outlet Sabuba Classic
+                Struktur Laporan Laba / Rugi Operasional Outlet Sabuba
               </h3>
             </div>
 
@@ -687,7 +670,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <div className="lg:col-span-7 space-y-3">
               <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-sm bg-white text-xs">
                 <div className="bg-slate-900 text-white px-4 py-2.5 font-black text-[11px] uppercase tracking-wider flex justify-between items-center">
-                  <span>LAPORAN LABA / RUGI REAL OUTLET (AGUSTUS 2026)</span>
+                  <span>LAPORAN LABA / RUGI REAL OUTLET PUSAT (AGUSTUS 2026)</span>
                   <span className="text-amber-400 font-extrabold">INCOME STATEMENT</span>
                 </div>
 
@@ -742,21 +725,10 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                     </tr>
 
                     {/* Net Profit 45% */}
-                    <tr className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs">
-                      <td className="p-3">5. STORE NET PROFIT (LABA BERSIH OUTLET)</td>
-                      <td className="p-3 text-center text-emerald-200 text-sm">45.0%</td>
-                      <td className="p-3 text-right text-amber-300 text-base font-black">Rp 36.048.604</td>
-                    </tr>
-
-                    {/* Mitra Share 50% */}
-                    <tr className="bg-slate-950 text-white font-black text-xs border-t-2 border-amber-400">
-                      <td className="p-3.5 text-amber-300">
-                        6. HAK BAGI HASIL MITRA PASIF (50% NET PROFIT)
-                      </td>
-                      <td className="p-3.5 text-center text-amber-300 text-sm">22.5%</td>
-                      <td className="p-3.5 text-right text-amber-400 text-lg font-black">
-                        Rp 18.024.302 <span className="text-[10px] font-normal text-slate-300">/ Bln</span>
-                      </td>
+                    <tr className="bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs border-t-2 border-emerald-400">
+                      <td className="p-3.5">5. STORE NET PROFIT (LABA BERSIH OUTLET PUSAT)</td>
+                      <td className="p-3.5 text-center text-emerald-200 text-sm font-bold">45.0%</td>
+                      <td className="p-3.5 text-right text-amber-300 text-lg font-black">Rp 36.048.604</td>
                     </tr>
                   </tbody>
                 </table>
@@ -771,7 +743,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                 <div className="flex justify-between items-center text-xs font-black text-slate-900 uppercase tracking-wider">
                   <span className="flex items-center gap-1.5">
                     <BarChart3 className="w-4 h-4 text-red-800" />
-                    Visual Breakdown Keuangan
+                    Visual Breakdown Keuangan Outlet
                   </span>
                   <span className="text-[10px] text-emerald-700 font-extrabold">Proporsi Standard</span>
                 </div>
@@ -842,38 +814,35 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                   </div>
                 </div>
 
-                {/* Partner 50% Highlight Card */}
-                <div className="p-3.5 rounded-xl bg-gradient-to-r from-red-900 to-red-950 text-white mt-2 shadow-md">
-                  <div className="text-[10px] text-amber-300 font-bold uppercase tracking-wider">HAK BAGI HASIL MITRA PASIF</div>
-                  <div className="text-xl font-black text-white mt-0.5">Rp 18.024.302 <span className="text-xs text-amber-300 font-normal">/ bln</span></div>
-                  <div className="text-[10px] text-red-200 mt-1">Diterima bersih setiap bulan tanpa potong biaya operasional harian.</div>
+                {/* EBITDA Store Profit Card */}
+                <div className="p-3.5 rounded-xl bg-gradient-to-r from-emerald-800 to-teal-900 text-white mt-2 shadow-md">
+                  <div className="text-[10px] text-emerald-300 font-bold uppercase tracking-wider">STORE NET PROFIT (LABA BERSIH OUTLET HQ)</div>
+                  <div className="text-xl font-black text-white mt-0.5">Rp 36.048.604 <span className="text-xs text-emerald-200 font-normal">/ bln (45.0%)</span></div>
+                  <div className="text-[10px] text-emerald-100 mt-1">Performa laba bersih outlet operasional aktif saat ini yang dikelola terpusat oleh Sabuba HQ.</div>
                 </div>
               </div>
 
               {/* Historical Log Summary Table (Jan to Aug 2026) */}
               <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2 text-xs">
                 <div className="font-bold text-slate-900 flex justify-between items-center text-[11px] uppercase tracking-wider">
-                  <span>Rekam Jejak Historis (Jan - Aug 2026)</span>
+                  <span>Rekam Jejak Historis Outlet Pusat (Jan - Aug 2026)</span>
                   <span className="text-slate-500 text-[10px]">6 Periode Operational</span>
                 </div>
 
                 <div className="space-y-1 text-[11px]">
                   {realPosData.map((d, idx) => {
                     const omset = d.omset;
-                    const cogs = omset * 0.40;
-                    const opex = omset * 0.15;
                     const netProfit = omset * 0.45;
-                    const mitraShare = netProfit * 0.50;
 
                     return (
                       <div key={idx} className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors flex items-center justify-between font-medium">
                         <div>
                           <div className="font-extrabold text-slate-900 text-xs">{d.period}</div>
-                          <div className="text-[10px] text-slate-500">Omset: Rp {(omset / 1000000).toFixed(1)}M</div>
+                          <div className="text-[10px] text-slate-500">Penjualan: Rp {(omset / 1000000).toFixed(1)}M</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-black text-emerald-700 text-xs">Profit: Rp {(netProfit / 1000000).toFixed(1)}M</div>
-                          <div className="text-[10px] text-amber-700 font-extrabold">Mitra: Rp {(mitraShare / 1000000).toFixed(1)}M</div>
+                          <div className="font-black text-emerald-700 text-xs">Laba Bersih Store: Rp {(netProfit / 1000000).toFixed(1)}M</div>
+                          <div className="text-[10px] text-slate-500 font-extrabold">Margin Net: 45.0%</div>
                         </div>
                       </div>
                     );
@@ -886,7 +855,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           <div className="p-3 rounded-xl bg-slate-100 border border-slate-200 text-[10px] text-slate-600 leading-relaxed font-medium">
-            <strong className="text-slate-900 font-bold">Catatan Laporan Keuangan:</strong> Struktur COGS (~40%), OPEX (~15%), dan Net Profit (~45%) dihitung sesuai formula standar keuangan usaha F&B fast casual Sabuba Indonesia. Data omset bersumber dari sistem Cloud POS Kasir Sabuba.
+            <strong className="text-slate-900 font-bold">Catatan Kinerja Outlet Pusat:</strong> Data di atas menggambarkan performa keuangan murni dari operasional outlet Sabuba yang berjalan saat ini di bawah pengelolaan penuh Tim Pusat Sabuba HQ.
           </div>
 
         </div>
@@ -1169,13 +1138,13 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               <span>MODEL SAAT INI OPERASIONAL & TERSEDIA</span>
             </div>
 
-            {/* Left Column: Big Image of Sabuba Classic 3-Wheel Custom Motor Poster */}
-            <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl overflow-hidden border border-white/20 shadow-lg bg-black group">
+            {/* Left Column: Sabuba Classic 3-Wheel Custom Motor Poster (Full Image, Uncropped) */}
+            <div className="lg:col-span-5 flex items-center justify-center">
+              <div className="w-full rounded-2xl overflow-hidden border border-white/20 shadow-lg bg-slate-950 p-1.5 group">
                 <img
                   src="/assets/Konsep/motor-poster.png"
                   alt="Sabuba Classic Custom 3-Wheel Motor Poster"
-                  className="w-full h-52 sm:h-60 object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-[280px] sm:h-[340px] object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-500"
                 />
               </div>
             </div>
