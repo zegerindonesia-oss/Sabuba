@@ -333,11 +333,11 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
           {/* Right Column: Sabuba Motor Poster Image Card Showcase (6 cols) */}
           <div className="lg:col-span-6 flex flex-col items-center justify-center">
-            <div className="w-full rounded-[2.5rem] overflow-hidden border border-slate-200/60 shadow-2xl bg-white/90 p-3 group relative backdrop-blur-xl">
+            <div className="w-full rounded-[2.5rem] overflow-hidden border border-slate-200/60 shadow-2xl bg-white/90 p-3 group relative backdrop-blur-xl flex items-center justify-center">
               <img
-                src="/assets/Konsep/motor-poster.png"
+                src="/assets/Konsep/sabuba-classic-poster.jpg"
                 alt="Sabuba Classic Custom 3-Wheel Motor Unit Poster"
-                className="w-full h-[400px] sm:h-[480px] object-contain rounded-3xl transition-transform duration-500 group-hover:scale-[1.02]"
+                className="w-full h-auto max-h-[480px] object-contain rounded-2xl transition-transform duration-500 group-hover:scale-[1.01]"
               />
             </div>
           </div>
@@ -629,8 +629,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     // ----------------------------------------------------
     {
       id: 'real-pos-data',
-      title: 'Laporan Keuangan Real Outlet',
-      subtitle: 'Kinerja Operasional Outlet Sabuba Pusat (Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%)',
+      title: 'Laporan Laba Rugi Outlet',
+      subtitle: '(Sabuba Jl. A Yani Sidoarjo) — Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%',
       content: (
         <div className="space-y-6 overflow-y-auto max-h-[72vh] pr-2">
           
@@ -640,7 +640,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <div className="lg:col-span-7 space-y-4">
               <div className="rounded-[2rem] border border-slate-200/60 overflow-hidden shadow-xl bg-white/90 backdrop-blur-xl text-sm">
                 <div className="bg-slate-100 text-slate-800 px-5 py-4 font-black text-xs uppercase tracking-wider flex justify-between items-center border-b border-slate-200">
-                  <span>LAPORAN LABA / RUGI REAL (AGUSTUS 2026)</span>
+                  <span>LAPORAN LABA RUGI OUTLET (SABUBA JL. A YANI SIDOARJO)</span>
                   <span className="text-slate-500">INCOME STATEMENT</span>
                 </div>
 
@@ -909,69 +909,111 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 7: GALLERY
+    // Slide 7: GALLERY & TIKTOK SOCIAL PROOF
     // ----------------------------------------------------
     {
       id: 'gallery-socialproof',
-      title: 'Social Proof & Suasana Outlet',
-      subtitle: 'Antusiasme Pelanggan & Keramaian Outlet Operasional Sabuba',
+      title: 'Social Proof & Liputan Media Sosial',
+      subtitle: 'Antusiasme Pelanggan & Review Foodie Viral di TikTok',
       content: (
-        <div className="space-y-6">
+        <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
           <p className="text-slate-600 text-sm sm:text-base max-w-3xl font-medium">
-            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari antrean sarapan pagi harian & liputan konten di media sosial.
+            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari antrean sarapan pagi harian & liputan viral para food vlogger di TikTok!
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
             
-            {/* Frame 1 */}
+            {/* TikTok Video 1 */}
             <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="relative aspect-[9/16] rounded-3xl overflow-hidden bg-slate-100 flex flex-col items-center justify-center text-center p-4">
-                <img
-                  src="/assets/Konsep/1. Konsep Tenda.png"
-                  alt="Suasana Outlet Rame"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col items-center justify-center p-4 text-white">
-                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-xl mb-3 border border-white/30">
-                    <Play className="w-6 h-6 fill-white ml-1" />
-                  </div>
-                  <div className="text-sm font-extrabold text-white">Suasana Keramaian Outlet</div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-xs font-black text-slate-900">@dilarang.duduk</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
+                  <iframe
+                    src="https://www.tiktok.com/embed/v2/7680878284493688072"
+                    className="w-full h-full border-0 rounded-2xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="TikTok Review @dilarang.duduk"
+                  />
                 </div>
               </div>
+
+              <a
+                href="https://www.tiktok.com/@dilarang.duduk/video/7680878284493688072"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>Buka di TikTok</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </a>
             </div>
 
-            {/* Frame 2 */}
+            {/* TikTok Video 2 */}
             <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="relative aspect-[9/16] rounded-3xl overflow-hidden bg-slate-100 flex flex-col items-center justify-center text-center p-4">
-                <img
-                  src="/assets/Konsep/5. Konsep Street Food.jpg"
-                  alt="Operasional Motor Custom"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col items-center justify-center p-4 text-white">
-                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-xl mb-3 border border-white/30">
-                    <Play className="w-6 h-6 fill-white ml-1" />
-                  </div>
-                  <div className="text-sm font-extrabold text-white">Sabuba Classic in Action</div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-xs font-black text-slate-900">@mmekuliner</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
+                  <iframe
+                    src="https://www.tiktok.com/embed/v2/7632959962536283413"
+                    className="w-full h-full border-0 rounded-2xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="TikTok Review @mmekuliner"
+                  />
                 </div>
               </div>
+
+              <a
+                href="https://www.tiktok.com/@mmekuliner/video/7632959962536283413"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>Buka di TikTok</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </a>
             </div>
 
-            {/* Frame 3 */}
+            {/* TikTok Video 3 */}
             <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="relative aspect-[9/16] rounded-3xl overflow-hidden bg-slate-100 flex flex-col items-center justify-center text-center p-4">
-                <img
-                  src="/assets/Konsep/4. Trial Zeger X Sabuba.png"
-                  alt="Review Foodie Kuliner"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex flex-col items-center justify-center p-4 text-white">
-                  <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md text-white flex items-center justify-center shadow-xl mb-3 border border-white/30">
-                    <Play className="w-6 h-6 fill-white ml-1" />
-                  </div>
-                  <div className="text-sm font-extrabold text-white">Review Foodie Kuliner</div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-xs font-black text-slate-900">@aprilliachil</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
+                  <iframe
+                    src="https://www.tiktok.com/embed/v2/7657353179687947541"
+                    className="w-full h-full border-0 rounded-2xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="TikTok Review @aprilliachil"
+                  />
                 </div>
               </div>
+
+              <a
+                href="https://www.tiktok.com/@aprilliachil/video/7657353179687947541"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>Buka di TikTok</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </a>
             </div>
 
           </div>
@@ -980,49 +1022,56 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 8: MENU FAVORIT
+    // Slide 8: ALL MENU CATALOGUE
     // ----------------------------------------------------
     {
       id: 'menu-showcase',
-      title: 'Katalog Menu Favorit Sabuba',
-      subtitle: 'Hidangan Sarapan Pagi Lezat dengan Tingkat Penjualan Harian Tinggi',
+      title: 'Katalog Menu Lengkap Sabuba',
+      subtitle: 'Seluruh Hidangan Sarapan Pagi, Dim Sum, Wonton, Topping & Minuman',
       content: (
-        <div className="space-y-6">
+        <div className="space-y-4 overflow-y-auto max-h-[68vh] pr-2">
           <p className="text-slate-600 text-sm sm:text-base max-w-3xl font-medium">
-            Sabuba menyajikan menu sarapan bubur bakar claypot, wonton kuah, & dim sum bernilai jual tinggi. Seluruh bahan diproduksi terpusat oleh Central Kitchen untuk menjaga konsistensi rasa & kebersihan.
+            Sabuba menyajikan menu sarapan bubur bakar claypot, wonton kuah, dim sum, ekstra topping, & minuman bernilai jual tinggi. Seluruh bahan diproduksi terpusat oleh Central Kitchen.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 pt-2">
-            {featuredMenu.map((item, idx) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-2">
+            {SABUBA_DATA.menuItems.map((item, idx) => (
               <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                key={item.id || idx}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl flex flex-col justify-between group overflow-hidden backdrop-blur-xl"
+                transition={{ delay: Math.min(idx * 0.04, 0.4) }}
+                className="p-3.5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md flex flex-col justify-between group overflow-hidden backdrop-blur-xl hover:shadow-xl transition-all"
               >
                 <div>
-                  <div className="relative aspect-square rounded-2xl overflow-hidden mb-4 bg-slate-100 border border-slate-200">
+                  <div className="relative aspect-square rounded-2xl overflow-hidden mb-3 bg-slate-100 border border-slate-200">
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
+                    {item.isBestSeller && (
+                      <span className="absolute top-2 left-2 px-2.5 py-0.5 bg-red-700 text-white font-extrabold text-[10px] uppercase rounded-full shadow-md">
+                        Best Seller
+                      </span>
+                    )}
                   </div>
 
-                  <h4 className="font-extrabold text-sm text-slate-900 line-clamp-2 leading-tight">
+                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                    {item.subcategory || item.category}
+                  </div>
+
+                  <h4 className="font-extrabold text-xs text-slate-900 line-clamp-2 leading-snug">
                     {item.name}
                   </h4>
-                  <div className="text-base font-black text-red-700 mt-2">
-                    Rp {item.price.toLocaleString('id-ID')}
-                  </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                  <span className="text-slate-500 font-bold">100% Halal</span>
-                  <span className="font-extrabold text-amber-600">
-                    Signature
+                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                  <div className="text-sm font-black text-red-700">
+                    Rp {item.price.toLocaleString('id-ID')}
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-full">
+                    100% Halal
                   </span>
                 </div>
               </motion.div>
@@ -1050,11 +1099,11 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </div>
 
             <div className="lg:col-span-6 flex items-center justify-center">
-              <div className="w-full rounded-[2rem] overflow-hidden border border-white/20 shadow-2xl bg-white/90 p-2 group">
+              <div className="w-full rounded-[2rem] overflow-hidden border border-white/20 shadow-2xl bg-white/90 p-2 group flex items-center justify-center">
                 <img
-                  src="/assets/Konsep/motor-poster.png"
+                  src="/assets/Konsep/sabuba-classic-poster.jpg"
                   alt="Sabuba Classic Custom 3-Wheel Motor Poster"
-                  className="w-full h-[300px] sm:h-[380px] object-contain rounded-xl group-hover:scale-[1.02] transition-transform duration-700"
+                  className="w-full h-auto max-h-[400px] object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-500"
                 />
               </div>
             </div>
@@ -1217,8 +1266,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           {/* Top Bar Header */}
           <div className="p-5 sm:p-6 border-b border-slate-200 flex items-center justify-between bg-white/80 backdrop-blur-2xl shrink-0 z-10">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-black text-sm border border-red-100 shadow-sm">
-                SBB
+              <div className="w-10 h-10 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-black text-sm border border-red-100 shadow-sm overflow-hidden p-1">
+                <img src="/assets/sabuba-logo-3d.png" alt="Logo Sabuba 3D" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h3 className="font-extrabold text-base text-slate-900 tracking-wide">
@@ -1260,8 +1309,18 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           {/* Main Slide Content Area */}
-          <div className="p-6 sm:p-10 flex-1 overflow-y-auto min-h-[440px] flex flex-col z-10">
-            <div className="mb-6">
+          <div className="p-6 sm:p-10 flex-1 overflow-y-auto min-h-[440px] flex flex-col z-10 relative">
+            
+            {/* Top Right Logo Attached No 1 on Every Slide */}
+            <div className="absolute top-6 right-6 sm:top-8 sm:right-10 z-20 flex items-center gap-2 p-1.5 sm:p-2 rounded-2xl bg-white/95 border border-slate-200/80 shadow-md backdrop-blur-xl pointer-events-none">
+              <img
+                src="/assets/sabuba-logo-3d.png"
+                alt="Logo Sabuba 3D"
+                className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
+              />
+            </div>
+
+            <div className="mb-6 pr-16 sm:pr-24">
               <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-2">
                 {currentSlideObj.subtitle}
               </div>
@@ -1341,6 +1400,29 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
         </motion.div>
+      </div>
+
+      {/* Hidden Print Container for Generating Complete Multi-Page Proposal PDF */}
+      <div id="proposal-print-container" className="hidden print:block">
+        {slides.map((s, idx) => (
+          <div key={s.id} className="slide-print-page p-8 bg-white min-h-[90vh] flex flex-col justify-between">
+            <div className="flex justify-between items-center pb-4 mb-6 border-b-2 border-red-700">
+              <div>
+                <span className="text-xs font-black text-red-700 uppercase tracking-widest">SABUBA CLASSIC — PROPOSAL KEMITRAAN 2026</span>
+                <h2 className="text-2xl font-black text-slate-900 mt-1">{s.title}</h2>
+                <div className="text-xs text-slate-500 font-bold">{s.subtitle}</div>
+              </div>
+              <img src="/assets/sabuba-logo-3d.png" alt="Sabuba Logo" className="w-14 h-14 object-contain" />
+            </div>
+
+            <div className="flex-1 my-4">{s.content}</div>
+
+            <div className="pt-4 border-t border-slate-200 flex justify-between items-center text-xs text-slate-500 font-bold">
+              <span>sabuba.flowstack.com • Proposal Kemitraan Pasif 50:50</span>
+              <span>Halaman {idx + 1} dari {slides.length}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </AnimatePresence>
   );
