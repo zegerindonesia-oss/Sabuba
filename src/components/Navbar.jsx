@@ -67,7 +67,7 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpe
               className="px-3.5 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-red-950 text-xs font-black flex items-center gap-1.5 shadow-sm transition-all hover:scale-105 active:scale-95"
             >
               <PieChart className="w-3.5 h-3.5" />
-              <span>Proposal Deck</span>
+              <span>Proposal Kemitraan</span>
             </button>
           </div>
 
@@ -184,7 +184,7 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpe
                     className="w-full p-3 rounded-2xl bg-amber-400 text-red-950 font-black text-xs uppercase flex items-center justify-center gap-2 shadow-md active:scale-95"
                   >
                     <PieChart className="w-4 h-4" />
-                    <span>Lihat Proposal Pitch Deck</span>
+                    <span>Lihat Proposal Kemitraan</span>
                   </button>
                 </div>
 

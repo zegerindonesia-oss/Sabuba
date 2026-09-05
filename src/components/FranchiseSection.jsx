@@ -104,7 +104,7 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
                 className="px-6 py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-red-950 font-black text-sm shadow-xl transition-all flex items-center justify-center gap-2 active:scale-95"
               >
                 <PieChart className="w-4 h-4 text-red-950" />
-                <span>Lihat Pitch Deck Interaktif</span>
+                <span>Lihat Proposal Kemitraan</span>
               </button>
 
               <button
