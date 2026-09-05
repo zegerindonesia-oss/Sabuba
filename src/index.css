@@ -55,11 +55,13 @@ body {
 /* Print Styles - Thermal Receipt & Proposal Pitch Deck */
 @media print {
   @page {
-    size: A4 landscape;
-    margin: 8mm;
+    size: 297mm 210mm; /* A4 Landscape */
+    margin: 0;
   }
   
-  body {
+  html, body {
+    width: 297mm !important;
+    height: 210mm !important;
     background: #ffffff !important;
     color: #000000 !important;
     margin: 0 !important;
@@ -107,7 +109,7 @@ body {
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;
-    width: 100% !important;
+    width: 297mm !important;
     background: #ffffff !important;
     color: #000000 !important;
     margin: 0 !important;
@@ -115,9 +117,30 @@ body {
   }
 
   .slide-print-page {
-    break-after: page !important;
-    page-break-after: always !important;
+    width: 297mm !important;
+    height: 210mm !important;
+    max-height: 210mm !important;
+    padding: 10mm 15mm !important;
     box-sizing: border-box !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Reset all CSS transforms & motion animations during printing */
+  #proposal-print-container *,
+  .slide-print-page * {
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
   }
 
   .print\:hidden {

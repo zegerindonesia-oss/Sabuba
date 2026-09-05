@@ -909,110 +909,205 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 7: GALLERY & TIKTOK SOCIAL PROOF
+    // Slide 7: TIKTOK SOCIAL PROOF (PART 1)
     // ----------------------------------------------------
     {
-      id: 'gallery-socialproof',
-      title: 'Social Proof & Liputan Media Sosial',
-      subtitle: 'Antusiasme Pelanggan & Review Foodie Viral di TikTok',
+      id: 'socialproof-part1',
+      title: 'Social Proof & Liputan TikTok (Part 1)',
+      subtitle: 'Antusiasme Pelanggan & Review Food Vlogger di TikTok',
       content: (
-        <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
-          <p className="text-slate-600 text-sm sm:text-base max-w-3xl font-medium">
-            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari antrean sarapan pagi harian & liputan viral para food vlogger di TikTok!
+        <div className="space-y-4 overflow-y-auto max-h-[70vh] pr-2">
+          <p className="text-slate-600 text-xs sm:text-sm max-w-3xl font-medium">
+            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari liputan viral para food vlogger ternama di TikTok!
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1">
             
-            {/* TikTok Video 1 */}
-            <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-black text-slate-900">@dilarang.duduk</span>
-                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7680878284493688072"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok Review @dilarang.duduk"
-                  />
-                </div>
+            {/* TikTok 1: @dilarang.duduk */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@dilarang.duduk</span>
               </div>
-
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7680878284493688072"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @dilarang.duduk"
+                />
+              </div>
               <a
                 href="https://www.tiktok.com/@dilarang.duduk/video/7680878284493688072"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
               >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka di TikTok</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
               </a>
             </div>
 
-            {/* TikTok Video 2 */}
-            <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-black text-slate-900">@mmekuliner</span>
-                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7632959962536283413"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok Review @mmekuliner"
-                  />
-                </div>
+            {/* TikTok 2: @mmekuliner */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@mmekuliner</span>
               </div>
-
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7632959962536283413"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @mmekuliner"
+                />
+              </div>
               <a
                 href="https://www.tiktok.com/@mmekuliner/video/7632959962536283413"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
               >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka di TikTok</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
               </a>
             </div>
 
-            {/* TikTok Video 3 */}
-            <div className="p-4 rounded-[2.5rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group">
-              <div className="space-y-3">
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-black text-slate-900">@aprilliachil</span>
-                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative aspect-[9/16] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-inner">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7657353179687947541"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok Review @aprilliachil"
-                  />
-                </div>
+            {/* TikTok 3: @aprilliachil 1 */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@aprilliachil</span>
               </div>
-
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7657353179687947541"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @aprilliachil 1"
+                />
+              </div>
               <a
                 href="https://www.tiktok.com/@aprilliachil/video/7657353179687947541"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 px-4 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
               >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka di TikTok</span>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
+              </a>
+            </div>
+
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 8: TIKTOK SOCIAL PROOF (PART 2)
+    // ----------------------------------------------------
+    {
+      id: 'socialproof-part2',
+      title: 'Social Proof & Viral Review (Bagian 2)',
+      subtitle: 'Liputan Kuliner & Review Vlogger di TikTok',
+      content: (
+        <div className="space-y-4 overflow-y-auto max-h-[70vh] pr-2">
+          <p className="text-slate-600 text-xs sm:text-base max-w-3xl font-medium">
+            Antusiasme penikmat sarapan pagi Sabuba terus merambah pengguna TikTok melalui pengalaman langsung para food vlogger!
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1">
+            
+            {/* TikTok 4: @amaryroose */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@amaryroose</span>
+              </div>
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7646970069733362964"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @amaryroose"
+                />
+              </div>
+              <a
+                href="https://www.tiktok.com/@amaryroose/video/7646970069733362964"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
+              >
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
+              </a>
+            </div>
+
+            {/* TikTok 5: @aprilliachil (Part 2) */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@aprilliachil (Part 2)</span>
+              </div>
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7628636632308075796"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @aprilliachil 2"
+                />
+              </div>
+              <a
+                href="https://www.tiktok.com/@aprilliachil/video/7628636632308075796"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
+              >
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
+              </a>
+            </div>
+
+            {/* TikTok 6: @aliyaeat */}
+            <div className="w-full max-w-[240px] mx-auto bg-slate-950 rounded-[2.6rem] p-3 border-[5px] border-slate-900 shadow-2xl flex flex-col justify-between group">
+              <div className="w-16 h-3 bg-slate-900 rounded-full mx-auto mb-2 border border-slate-800"></div>
+              <div className="text-[10px] font-black text-white text-center mb-1.5 flex items-center justify-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span>@aliyaeat</span>
+              </div>
+              <div className="relative aspect-[9/16] w-full rounded-[2rem] overflow-hidden bg-black border border-slate-800 shadow-inner">
+                <iframe
+                  src="https://www.tiktok.com/embed/v2/7649362405088103701"
+                  className="w-full h-full border-0 rounded-[2rem]"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  title="TikTok @aliyaeat"
+                />
+              </div>
+              <a
+                href="https://www.tiktok.com/@aliyaeat/video/7649362405088103701"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 px-3 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-[11px] flex items-center justify-center gap-1.5 transition-all shadow-md"
+              >
+                <Play className="w-3 h-3 fill-white" />
+                <span>Buka TikTok</span>
+                <ExternalLink className="w-3 h-3 text-red-200" />
               </a>
             </div>
 
