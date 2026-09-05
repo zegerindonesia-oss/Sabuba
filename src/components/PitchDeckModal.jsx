@@ -920,95 +920,98 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari liputan viral para food vlogger ternama di TikTok!
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1">
             
             {/* TikTok 1: @dilarang.duduk */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@dilarang.duduk</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7680878284493688072"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @dilarang.duduk"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@dilarang.duduk/video/7680878284493688072"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @dilarang.duduk</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @dilarang.duduk</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
             {/* TikTok 2: @mmekuliner */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@mmekuliner</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7632959962536283413"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @mmekuliner"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@mmekuliner/video/7632959962536283413"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @mmekuliner</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @mmekuliner</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
             {/* TikTok 3: @aprilliachil 1 */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@aprilliachil</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7657353179687947541"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @aprilliachil 1"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@aprilliachil/video/7657353179687947541"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @aprilliachil</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @aprilliachil</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
@@ -1030,95 +1033,98 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             Antusiasme penikmat sarapan pagi Sabuba terus merambah pengguna TikTok melalui pengalaman langsung para food vlogger!
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1 items-start">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-1">
             
             {/* TikTok 4: @amaryroose */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@amaryroose</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7646970069733362964"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @amaryroose"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@amaryroose/video/7646970069733362964"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @amaryroose</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @amaryroose</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
             {/* TikTok 5: @aprilliachil (Part 2) */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@aprilliachil #2</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7628636632308075796"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @aprilliachil 2"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@aprilliachil/video/7628636632308075796"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @aprilliachil #2</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @aprilliachil</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
             {/* TikTok 6: @aliyaeat */}
-            <div className="flex flex-col items-center">
-              <div className="relative w-full max-w-[210px] sm:max-w-[230px] aspect-[9/18.5] mx-auto group transform hover:-translate-y-1 transition-all duration-300 drop-shadow-2xl">
-                <div className="absolute inset-[3.2%_4.6%_3.2%_4.6%] rounded-[2rem] sm:rounded-[2.3rem] overflow-hidden bg-black z-0">
+            <div className="p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-black text-slate-900">@aliyaeat</span>
+                  <span className="px-2.5 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
+                </div>
+                
+                <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
                   <iframe
                     src="https://www.tiktok.com/embed/v2/7649362405088103701"
-                    className="w-full h-full border-0 rounded-[2rem] sm:rounded-[2.3rem]"
+                    className="w-full h-full border-0 rounded-2xl"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
                     title="TikTok @aliyaeat"
                   />
                 </div>
-                <img
-                  src="/assets/iphone-mockup.png"
-                  alt="iPhone Frame"
-                  className="relative z-10 w-full h-full object-contain pointer-events-none drop-shadow-xl"
-                />
               </div>
+
               <a
                 href="https://www.tiktok.com/@aliyaeat/video/7649362405088103701"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 px-4 py-2 rounded-xl bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md"
+                className="mt-4 px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-md"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka @aliyaeat</span>
-                <ExternalLink className="w-3 h-3 text-red-200" />
+                <span>Buka TikTok @aliyaeat</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
               </a>
             </div>
 
@@ -1370,16 +1376,16 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
           {/* Top Bar Header */}
-          <div className="p-5 sm:p-6 border-b border-slate-200 flex items-center justify-between bg-white/80 backdrop-blur-2xl shrink-0 z-10">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-black text-sm border border-red-100 shadow-sm overflow-hidden p-1">
+          <div className="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between bg-white/80 backdrop-blur-2xl shrink-0 z-10">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-black text-sm border border-red-100 shadow-sm overflow-hidden p-1 shrink-0">
                 <img src="/assets/sabuba-logo-3d.png" alt="Logo Sabuba 3D" className="w-full h-full object-contain" />
               </div>
               <div>
-                <h3 className="font-extrabold text-base text-slate-900 tracking-wide">
-                  Sabuba Proposal Kemitraan 2026
+                <h3 className="font-extrabold text-sm sm:text-base text-slate-900 tracking-wide">
+                  Proposal Kemitraan
                 </h3>
-                <p className="text-xs text-slate-500 font-bold mt-0.5">
+                <p className="text-[11px] sm:text-xs text-slate-500 font-bold mt-0.5">
                   Slide {currentSlide + 1} dari {slides.length}: <span className="text-red-700">{currentSlideObj.title}</span>
                 </p>
               </div>
@@ -1511,19 +1517,21 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       {/* Hidden Print Container for Generating Complete Multi-Page Proposal PDF */}
       <div id="proposal-print-container" className="hidden print:block">
         {slides.map((s, idx) => (
-          <div key={s.id} className="slide-print-page p-8 bg-white min-h-[90vh] flex flex-col justify-between">
-            <div className="flex justify-between items-center pb-4 mb-6 border-b-2 border-red-700">
+          <div key={s.id} className="slide-print-page">
+            <div className="flex justify-between items-center pb-2 mb-2 border-b-2 border-red-700 shrink-0">
               <div>
-                <span className="text-xs font-black text-red-700 uppercase tracking-widest">SABUBA CLASSIC — PROPOSAL KEMITRAAN 2026</span>
-                <h2 className="text-2xl font-black text-slate-900 mt-1">{s.title}</h2>
-                <div className="text-xs text-slate-500 font-bold">{s.subtitle}</div>
+                <span className="text-[10px] font-black text-red-700 uppercase tracking-widest">SABUBA CLASSIC — PROPOSAL KEMITRAAN 2026</span>
+                <h2 className="text-lg font-black text-slate-900 mt-0.5">{s.title}</h2>
+                <div className="text-[10px] text-slate-500 font-bold">{s.subtitle}</div>
               </div>
-              <img src="/assets/sabuba-logo-3d.png" alt="Sabuba Logo" className="w-14 h-14 object-contain" />
+              <img src="/assets/sabuba-logo-3d.png" alt="Sabuba Logo" className="w-8 h-8 object-contain" />
             </div>
 
-            <div className="flex-1 my-4">{s.content}</div>
+            <div className="flex-1 overflow-hidden my-1 text-slate-800 text-xs">
+              {s.content}
+            </div>
 
-            <div className="pt-4 border-t border-slate-200 flex justify-between items-center text-xs text-slate-500 font-bold">
+            <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-[9px] text-slate-400 font-bold shrink-0">
               <span>sabuba.flowstack.com • Proposal Kemitraan Pasif 50:50</span>
               <span>Halaman {idx + 1} dari {slides.length}</span>
             </div>

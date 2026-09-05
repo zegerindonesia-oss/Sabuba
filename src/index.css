@@ -118,9 +118,9 @@ body {
 
   .slide-print-page {
     width: 297mm !important;
-    height: 210mm !important;
-    max-height: 210mm !important;
-    padding: 10mm 15mm !important;
+    height: 209mm !important;
+    max-height: 209mm !important;
+    padding: 8mm 12mm !important;
     box-sizing: border-box !important;
     page-break-after: always !important;
     break-after: page !important;
@@ -141,6 +141,7 @@ body {
     opacity: 1 !important;
     animation: none !important;
     transition: none !important;
+    box-shadow: none !important;
   }
 
   .print\:hidden {
