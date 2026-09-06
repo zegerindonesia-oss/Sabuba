@@ -97,50 +97,50 @@ function TikTokCard({ video }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-md flex flex-col justify-between hover:border-red-300 transition-all">
-      <div className="relative rounded-xl overflow-hidden bg-slate-950 aspect-[9/14] max-h-56">
+    <div className="p-4 rounded-3xl bg-white border border-slate-200 shadow-lg flex flex-col justify-between hover:border-red-400 hover:shadow-xl transition-all duration-300 group">
+      <div className="relative rounded-2xl overflow-hidden bg-slate-950 aspect-[9/16] w-full h-[320px] sm:h-[360px] shadow-inner">
         {isPlaying ? (
           <iframe
             src={`https://www.tiktok.com/embed/v2/${video.videoId}`}
-            className="w-full h-full rounded-xl border-0"
-            allow="fullscreen"
+            className="w-full h-full rounded-2xl border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             title={video.handle}
           />
         ) : (
-          <div className="relative w-full h-full group cursor-pointer" onClick={() => setIsPlaying(true)}>
-            <img src={video.image} alt={video.handle} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
-            <div className="absolute inset-0 bg-slate-950/40 flex flex-col items-center justify-center gap-2 p-3 text-center">
-              <div className="w-10 h-10 rounded-full bg-red-800 text-white flex items-center justify-center shadow-xl transform group-hover:scale-110 transition-transform">
-                <Play className="w-5 h-5 fill-white ml-0.5" />
+          <div className="relative w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
+            <img src={video.image} alt={video.handle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex flex-col items-center justify-center gap-3 p-4 text-center">
+              <div className="w-14 h-14 rounded-full bg-red-800 text-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform group-hover:scale-110 transition-all duration-300">
+                <Play className="w-7 h-7 fill-white ml-1" />
               </div>
-              <span className="text-[10px] font-bold text-white bg-slate-900/80 px-2 py-0.5 rounded backdrop-blur-sm">
-                Klik untuk Play Video
+              <span className="text-xs font-extrabold text-white bg-slate-900/90 px-3 py-1 rounded-full backdrop-blur-md border border-white/20 shadow-md">
+                ▶ Klik Untuk Play Video
               </span>
             </div>
-            <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-red-800 text-[9px] font-extrabold text-white shadow-sm">
+            <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-800 text-[10px] font-black uppercase text-white shadow-md tracking-wider">
               {video.tag}
             </span>
           </div>
         )}
       </div>
 
-      <div className="space-y-1.5 pt-2">
+      <div className="space-y-2 pt-3">
         <div className="flex items-center justify-between">
-          <div className="font-extrabold text-xs text-red-800 flex items-center gap-1">
-            <Video className="w-3.5 h-3.5" />
+          <div className="font-black text-sm text-red-900 flex items-center gap-1.5">
+            <Video className="w-4 h-4 text-red-800" />
             <span>{video.handle}</span>
           </div>
           <a
             href={video.url}
             target="_blank"
             rel="noreferrer"
-            className="text-[10px] text-slate-500 hover:text-red-800 flex items-center gap-0.5 font-bold"
+            className="text-xs text-slate-500 hover:text-red-800 flex items-center gap-1 font-bold transition-colors"
           >
-            <span>TikTok</span>
-            <ExternalLink className="w-2.5 h-2.5" />
+            <span>Buka TikTok</span>
+            <ExternalLink className="w-3 h-3" />
           </a>
         </div>
-        <p className="text-[11px] text-slate-700 italic line-clamp-2 leading-snug">"{video.quote}"</p>
+        <p className="text-xs text-slate-700 italic line-clamp-2 leading-relaxed font-medium">"{video.quote}"</p>
       </div>
     </div>
   );
@@ -405,17 +405,20 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </div>
           </div>
 
-          <div className="lg:col-span-6 relative flex justify-center">
-            <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
-              <img
-                src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800"
-                alt="Bubur Bakar Claypot Sabuba Signature"
-                className="w-full h-[420px] object-cover transition-transform duration-700 group-hover:scale-105"
+          {/* Frameless & Background-Free Product Image (Image 2) */}
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center">
+            <div className="relative w-full flex items-center justify-center">
+              <motion.img
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                src="/assets/bubur-ori-mix-hero.jpg"
+                alt="Bubur Ori Ayam & Sapi Claypot Sabuba"
+                className="w-full max-w-lg lg:max-w-xl h-auto max-h-[460px] object-contain rounded-3xl drop-shadow-[0_25px_35px_rgba(153,27,27,0.25)] hover:scale-[1.02] transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex flex-col justify-end p-6 text-white">
-                <DataBadge type="ACTUAL" text="HERO PRODUCT: BUBUR BAKAR CLAYPOT" />
-                <h3 className="text-2xl font-extrabold mt-2 text-white">Signature Warm Claypot Experience</h3>
-                <p className="text-xs text-slate-200 mt-1">Sensasi bubur panas beraroma khas claypot, topping kaya rasa, &amp; pelayanan cepat di bawah 3 menit.</p>
+              <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-red-900/90 text-white text-xs font-black px-4 py-2 rounded-full shadow-lg backdrop-blur-md uppercase tracking-wider flex items-center gap-1.5 border border-red-700/50">
+                <Flame className="w-4 h-4 text-amber-400 fill-amber-400" />
+                <span>Bubur Ori Ayam & Sapi</span>
               </div>
             </div>
           </div>
@@ -884,16 +887,16 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 10: SOCIAL PROOF — EMBEDDED TIKTOK VIDEOS (6 VIDEO SHOWCASE)
+    // Slide 10: SOCIAL PROOF & VIRAL REVIEWS (PART 1: 3 VIDEOS)
     // ----------------------------------------------------
     {
-      id: 'slide-10-social-proof-tiktok',
-      title: 'SOCIAL PROOF (6 VIRAL EMBEDDED TIKTOK REVIEWS)',
+      id: 'slide-10-social-proof-part-1',
+      title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 1)',
       content: (
         <div className="space-y-4 h-full flex flex-col justify-center">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <DataBadge type="ACTUAL" text="6 PLAYABLE VIRAL TIKTOK REVIEWS" />
+              <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 1)" />
             </div>
             <span className="text-xs font-bold text-red-800">Klik Card / Play Untuk Memutar Video</span>
           </div>
@@ -905,9 +908,41 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <div className="w-16 h-1 bg-red-700 rounded-full" />
           </div>
 
-          {/* 6 Embed Playable TikTok Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
-            {tiktokVideos.map((vid, idx) => (
+          {/* First 3 Playable TikTok Videos (Large Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {tiktokVideos.slice(0, 3).map((vid, idx) => (
+              <TikTokCard key={idx} video={vid} />
+            ))}
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 11: SOCIAL PROOF & VIRAL REVIEWS (PART 2: 3 VIDEOS)
+    // ----------------------------------------------------
+    {
+      id: 'slide-11-social-proof-part-2',
+      title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 2)',
+      content: (
+        <div className="space-y-4 h-full flex flex-col justify-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 2)" />
+            </div>
+            <span className="text-xs font-bold text-red-800">Klik Card / Play Untuk Memutar Video</span>
+          </div>
+
+          <div className="max-w-3xl space-y-1">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
+              Antusiasme &amp; Liputan <span className="text-red-800">Sarapan Sabuba.</span>
+            </h2>
+            <div className="w-16 h-1 bg-red-700 rounded-full" />
+          </div>
+
+          {/* Next 3 Playable TikTok Videos (Large Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            {tiktokVideos.slice(3, 6).map((vid, idx) => (
               <TikTokCard key={idx} video={vid} />
             ))}
           </div>
@@ -1427,56 +1462,71 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 18: CLOSING & CTA
+    // Slide 19: CLOSING & CTA (WITH FRAMELESS PRODUCT IMAGE)
     // ----------------------------------------------------
     {
-      id: 'slide-18-closing',
+      id: 'slide-19-closing',
       title: 'CLOSING — FROM ONE BOWL TO A NATIONAL BRAND',
       content: (
-        <div className="space-y-6 h-full flex flex-col justify-center text-center items-center max-w-4xl mx-auto">
-          <DataBadge type="ACTUAL" text="PESAN UTAMA BRAND" />
-
-          <motion.h1
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight"
-          >
-            FROM ONE BOWL <br />
-            TO A <span className="text-red-800">NATIONAL INDONESIAN</span> FOOD BRAND.
-          </motion.h1>
-          <div className="w-24 h-1.5 bg-red-700 rounded-full mx-auto" />
-
-          <p className="text-slate-700 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
-            Sabuba dimulai dari satu kebutuhan sederhana: <strong>sarapan hangat untuk keluarga Indonesia.</strong> Hari ini kami membangun unit pertama. Besok kami membangun sistem. Dan berikutnya, kami membangun brand nasional.
-          </p>
-
-          <div className="p-6 rounded-3xl bg-red-950 text-white w-full max-w-2xl space-y-4 shadow-2xl border border-red-900">
-            <h3 className="text-xl font-extrabold text-amber-300">Partner With Sabuba Today</h3>
-            <p className="text-xs text-slate-200 font-medium">Bergabunglah sebagai mitra pasif awal dalam membangun brand kuliner sarapan Indonesia masa depan.</p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-              <a
-                href="https://wa.me/6281359180156?text=Halo%20HQ%20Sabuba,%20saya%20tertarik%20diskusi%20kemitraan%20Sabuba%20Classic"
-                target="_blank"
-                rel="noreferrer"
-                className="px-6 py-3 rounded-2xl bg-white hover:bg-slate-100 text-red-950 font-black text-sm flex items-center gap-2 shadow-lg transition-all"
-              >
-                <span>Konsultasi via WhatsApp</span>
-                <ArrowRight className="w-4 h-4 text-red-800" />
-              </a>
-
-              <button
-                onClick={() => window.print()}
-                className="px-6 py-3 rounded-2xl bg-red-800 hover:bg-red-700 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all border border-red-700"
-              >
-                <Download className="w-4 h-4" />
-                <span>Export PDF Proposal</span>
-              </button>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center max-w-6xl mx-auto">
+          {/* Left Column: Frameless & Background-Free Product Image (Image 2) */}
+          <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              src="/assets/bubur-ori-mix-hero.jpg"
+              alt="Bubur Ori Ayam & Sapi Claypot Sabuba"
+              className="w-full max-w-md h-auto max-h-[420px] object-contain rounded-3xl drop-shadow-[0_25px_35px_rgba(153,27,27,0.25)] hover:scale-[1.02] transition-transform duration-500"
+            />
+            <div className="mt-3 bg-red-800 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider flex items-center gap-1.5">
+              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+              <span>Signature Hero Product Sabuba</span>
             </div>
           </div>
 
-          <div className="text-xs text-slate-500 font-semibold pt-2">
-            Official Website: www.sabubabuburbakar.com | WhatsApp HQ: +62 813-5918-0156
+          {/* Right Column: Text & CTA */}
+          <div className="lg:col-span-7 space-y-4 text-left">
+            <DataBadge type="ACTUAL" text="PESAN UTAMA BRAND" />
+
+            <h1 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight">
+              FROM ONE BOWL <br />
+              TO A <span className="text-red-800">NATIONAL INDONESIAN</span> FOOD BRAND.
+            </h1>
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+
+            <p className="text-slate-700 text-xs sm:text-sm font-medium leading-relaxed">
+              Sabuba dimulai dari satu kebutuhan sederhana: <strong>sarapan hangat untuk keluarga Indonesia.</strong> Hari ini kami membangun unit pertama. Besok kami membangun sistem. Dan berikutnya, kami membangun brand nasional.
+            </p>
+
+            <div className="p-5 rounded-3xl bg-red-950 text-white space-y-3 shadow-2xl border border-red-900">
+              <h3 className="text-lg font-extrabold text-amber-300">Partner With Sabuba Today</h3>
+              <p className="text-xs text-slate-200 font-medium">Bergabunglah sebagai mitra pasif awal dalam membangun brand kuliner sarapan Indonesia masa depan.</p>
+              
+              <div className="flex flex-wrap items-center gap-3 pt-1">
+                <a
+                  href="https://wa.me/6281359180156?text=Halo%20HQ%20Sabuba,%20saya%20tertarik%20diskusi%20kemitraan%20Sabuba%20Classic"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-5 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-red-950 font-black text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all"
+                >
+                  <span>Konsultasi via WhatsApp</span>
+                  <ArrowRight className="w-4 h-4 text-red-800" />
+                </a>
+
+                <button
+                  onClick={() => window.print()}
+                  className="px-5 py-2.5 rounded-xl bg-red-800 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all border border-red-700"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Export PDF Proposal</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="text-[11px] text-slate-500 font-semibold pt-1">
+              Official Website: www.sabubabuburbakar.com | WhatsApp HQ: +62 813-5918-0156
+            </div>
           </div>
         </div>
       )
