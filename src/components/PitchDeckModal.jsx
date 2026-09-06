@@ -3,147 +3,123 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   X, ChevronLeft, ChevronRight, Download, Share2, Sparkles, TrendingUp,
   DollarSign, ShieldCheck, Cpu, Smartphone, BarChart3, PieChart, Layers,
-  Award, Play, CheckCircle2, ArrowRight, RefreshCw, Bot, Check, Maximize2,
+  Award, Play, CheckCircle2, ArrowRight, RefreshCw, Maximize2,
   Minimize2, ExternalLink, Calendar, Building2, Zap, Flame, Star, Utensils,
-  AlertTriangle, HelpCircle, FileText, Bike, Heart, Megaphone, Users
+  AlertTriangle, HelpCircle, FileText, Bike, Heart, Users, MapPin, Store,
+  Clock, Target, Shield, CheckCircle, Info
 } from 'lucide-react';
 import SabubaLogo from './SabubaLogo';
 import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
 
+// ----------------------------------------------------
+// Reusable Visual Classification Tag (Data Taxonomy)
+// ----------------------------------------------------
+function DataBadge({ type, text }) {
+  let badgeStyle = "bg-slate-100 text-slate-700 border-slate-300";
+  let label = text || type;
+
+  switch (type) {
+    case 'ACTUAL':
+      badgeStyle = "bg-emerald-500/10 text-emerald-700 border-emerald-300/60";
+      label = text || "ACTUAL POS DATA";
+      break;
+    case 'ASSUMPTION':
+      badgeStyle = "bg-sky-500/10 text-sky-700 border-sky-300/60";
+      label = text || "ASSUMPTION";
+      break;
+    case 'TARGET':
+      badgeStyle = "bg-amber-500/10 text-amber-700 border-amber-300/60";
+      label = text || "TARGET OPERASIONAL";
+      break;
+    case 'FORECAST':
+      badgeStyle = "bg-purple-500/10 text-purple-700 border-purple-300/60";
+      label = text || "PROYEKSI / FORECAST";
+      break;
+    case 'VERIFY':
+    case 'DATA_NEEDED':
+      badgeStyle = "bg-rose-500/10 text-rose-700 border-rose-300/60 font-semibold";
+      label = text || "DATA NEEDED — VERIFY BEFORE PUBLICATION";
+      break;
+    case 'CONCEPT':
+    case 'FUTURE':
+      badgeStyle = "bg-teal-500/10 text-teal-700 border-teal-300/60 font-semibold";
+      label = text || "FUTURE / CONCEPT VISUALIZATION";
+      break;
+    default:
+      break;
+  }
+
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md ${badgeStyle}`}>
+      <Info className="w-3 h-3 shrink-0" />
+      <span>{label}</span>
+    </span>
+  );
+}
+
 export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [currentSlide, setCurrentSlide] = useState(defaultSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [customVideoUrl, setCustomVideoUrl] = useState('');
+  const [activeScenarioIdx, setActiveScenarioIdx] = useState(1); // Default: 100 Cups (Sedang)
 
-  // Historical POS Data (Jan to Aug 2026)
-  const realPosData = [
-    { period: 'Jan 2026', omset: 32176000, profit: 16382000 },
-    { period: 'Feb-Mar 2026', omset: 37027000, profit: 19181000 },
-    { period: 'Apr 2026', omset: 51879000, profit: 28039500 },
-    { period: 'Mei 2026', omset: 71680000, profit: 38623500 },
-    { period: 'Jun 2026', omset: 66792000, profit: 36617000 },
-    { period: 'Agu 2026', omset: 80108009, profit: 40177509 },
-  ];
-
-  // Feasibility Study Data (Exact Zeger! On The Wheels Canva Format)
-  const feasibilityData = {
-    brand: 'Sabuba Indonesia (Sabuba Classic)',
-    status: 'Partnership / Mitra Pasif (Bagi Hasil 50% : 50%)',
-    lokasi: 'Sidoarjo & Jawa Timur',
-    paketUsaha: 'Sabuba Classic (Motor Custom 3 Roda, Kitchen Setup, Branding, POS System)',
-    capex: 100000000, // Rp 100.000.000
-    scenarios: [
-      {
-        name: 'Rendah (50 Cup)',
-        tcDay: 50,
-        tcMonth: 1500,
-        apc: 20000,
-        salesDay: 1000000,
-        salesMonth: 30000000,
-        salesYear: 360000000,
-        hppPercent: 40,
-        hppAmount: 12000000,
-        grossProfitAmount: 18000000,
-        opsKaryawan: 3000000,
-        opsRumahTangga: 750000,
-        opsListrikAirFuel: 750000,
-        totalOpsAmount: 4500000,
-        ebitdaNetProfitStore: 13500000,
-        mitraShare50: 6750000,
-        paybackMonths: 14.8
-      },
-      {
-        name: 'Sedang (100 Cup)',
-        tcDay: 100,
-        tcMonth: 3000,
-        apc: 20000,
-        salesDay: 2000000,
-        salesMonth: 60000000,
-        salesYear: 720000000,
-        hppPercent: 40,
-        hppAmount: 24000000,
-        grossProfitAmount: 36000000,
-        opsKaryawan: 6000000,
-        opsRumahTangga: 1500000,
-        opsListrikAirFuel: 1500000,
-        totalOpsAmount: 9000000,
-        ebitdaNetProfitStore: 27000000,
-        mitraShare50: 13500000,
-        paybackMonths: 7.4
-      },
-      {
-        name: 'Ramai (150 Cup)',
-        tcDay: 150,
-        tcMonth: 4500,
-        apc: 20000,
-        salesDay: 3000000,
-        salesMonth: 90000000,
-        salesYear: 1080000000,
-        hppPercent: 40,
-        hppAmount: 36000000,
-        grossProfitAmount: 54000000,
-        opsKaryawan: 9000000,
-        opsRumahTangga: 2250000,
-        opsListrikAirFuel: 2250000,
-        totalOpsAmount: 13500000,
-        ebitdaNetProfitStore: 40500000,
-        mitraShare50: 20250000,
-        paybackMonths: 4.9
-      },
-      {
-        name: 'Ramai Sekali (200 Cup)',
-        tcDay: 200,
-        tcMonth: 6000,
-        apc: 20000,
-        salesDay: 4000000,
-        salesMonth: 120000000,
-        salesYear: 1440000000,
-        hppPercent: 40,
-        hppAmount: 48000000,
-        grossProfitAmount: 72000000,
-        opsKaryawan: 12000000,
-        opsRumahTangga: 3000000,
-        opsListrikAirFuel: 3000000,
-        totalOpsAmount: 18000000,
-        ebitdaNetProfitStore: 54000000,
-        mitraShare50: 27000000,
-        paybackMonths: 3.7
-      }
-    ]
-  };
-
-  // Clean Menu Cards
-  const featuredMenu = [
+  // 4 Unit Economics Scenarios (Slide 13)
+  const financialScenarios = [
     {
-      name: 'Bubur (Ori) Mix (Ayam + Sapi)',
-      price: 19000,
-      tag: 'BEST SELLER #1',
-      image: 'https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800',
+      name: 'Konservatif',
+      cupsDay: 50,
+      apc: 20000,
+      salesDay: 1000000,
+      salesMonth: 30000000,
+      cogsPercent: 40,
+      cogsAmount: 12000000,
+      grossProfit: 18000000,
+      opexAmount: 4500000,
+      storeNetProfit: 13500000,
+      partnerShare50: 6750000,
+      paybackMonths: '14.8 bln'
     },
     {
-      name: 'Bubur (Kuah Kuning) Sapi',
-      price: 19000,
-      tag: 'FAVORITE',
-      image: 'https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800',
+      name: 'Moderat (Target Baseline)',
+      cupsDay: 100,
+      apc: 20000,
+      salesDay: 2000000,
+      salesMonth: 60000000,
+      cogsPercent: 40,
+      cogsAmount: 24000000,
+      grossProfit: 36000000,
+      opexAmount: 9000000,
+      storeNetProfit: 27000000,
+      partnerShare50: 13500000,
+      paybackMonths: '7.4 bln'
     },
     {
-      name: 'Bubur (Kuah Laksa) Mix',
-      price: 19000,
-      tag: 'SPICY SIGNATURE',
-      image: 'https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800',
+      name: 'Optimis',
+      cupsDay: 150,
+      apc: 20000,
+      salesDay: 3000000,
+      salesMonth: 90000000,
+      cogsPercent: 40,
+      cogsAmount: 36000000,
+      grossProfit: 54000000,
+      opexAmount: 13500000,
+      storeNetProfit: 40500000,
+      partnerShare50: 20250000,
+      paybackMonths: '4.9 bln'
     },
     {
-      name: 'Wonton Kuah Dumpling Ayam',
-      price: 13000,
-      tag: 'HIGH REPEAT ORDER',
-      image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800',
-    },
-    {
-      name: 'Dim Sum Siomay Ayam (4 Pcs)',
-      price: 13000,
-      tag: 'ADD-ON POPULER',
-      image: 'https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800',
-    },
+      name: 'High Performance',
+      cupsDay: 200,
+      apc: 20000,
+      salesDay: 4000000,
+      salesMonth: 120000000,
+      cogsPercent: 40,
+      cogsAmount: 48000000,
+      grossProfit: 72000000,
+      opexAmount: 18000000,
+      storeNetProfit: 54000000,
+      partnerShare50: 27000000,
+      paybackMonths: '3.7 bln'
+    }
   ];
 
   useEffect(() => {
@@ -167,645 +143,578 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
   if (!isOpen) return null;
 
+  // ----------------------------------------------------
+  // STORYBOARD 17 SLIDES (Master Hybrid Structure)
+  // ----------------------------------------------------
   const slides = [
     // ----------------------------------------------------
-    // Slide 1: FRONT COVER
+    // Slide 01: COVER
     // ----------------------------------------------------
     {
-      id: 'cover',
-      title: 'Proposal Kemitraan 2026',
-      subtitle: 'Sajian Warm Claypot Khas Nusantara',
+      id: 'slide-01-cover',
+      title: 'SABUBA — Indonesia\'s Modern Breakfast & Comfort Food Brand',
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
-          
-          {/* Left Column Text */}
           <div className="lg:col-span-6 space-y-6">
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-slate-200 text-slate-800 font-bold text-xs uppercase tracking-wider shadow-sm backdrop-blur-md"
-            >
-              <Heart className="w-4 h-4 text-red-600 fill-red-600" />
-              <span>Sajian Warm Claypot Khas Nusantara</span>
-            </motion.div>
+            <div className="flex flex-wrap items-center gap-2">
+              <DataBadge type="ACTUAL" text="HYBRID PROPOSAL 2026" />
+              <DataBadge type="ACTUAL" text="SABUBA CLASSIC ENTRY FORMAT" />
+            </div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-5xl sm:text-7xl font-extrabold text-slate-900 leading-tight tracking-tight"
+              className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight"
             >
-              SABUBA <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-700 to-amber-600">Sarapan Bubur Bakar</span>
+              SABUBA <span className="text-red-700">Modern Indonesian</span> Breakfast & Comfort Food
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-xl"
+              transition={{ delay: 0.1 }}
+              className="text-slate-600 text-lg leading-relaxed max-w-xl font-medium"
             >
-              Hadir sebagai hidangan sarapan pagi yang hangat, lezat, & bernutrisi tinggi untuk keluarga Indonesia. Membuka peluang kerjasama kemitraan <strong className="text-slate-900 font-extrabold">Mitra Pasif 100%</strong> dengan <strong className="text-red-700 font-extrabold">Bagi Hasil 50% : 50%</strong> tanpa repot operasional harian.
+              Born from Bubur Bakar Claypot. Built for Indonesian families. Designed to scale across the nation.
             </motion.p>
 
-            {/* Key Value Glass Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="grid grid-cols-3 gap-4 pt-4"
-            >
-              <div className="p-4 rounded-3xl bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Investasi CAPEX</div>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">Rp 100 Jt</div>
-                <div className="text-xs text-red-600 font-bold mt-1">Sabuba Classic</div>
-              </div>
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300/70 text-amber-900 font-extrabold text-sm flex items-center gap-3">
+              <Flame className="w-5 h-5 text-amber-600 shrink-0" />
+              <span>CORE STRATEGY: <em>"The motor is the entry point, NOT the destination."</em></span>
+            </div>
 
-              <div className="p-4 rounded-3xl bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Bagi Hasil</div>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">50% : 50%</div>
-                <div className="text-xs text-amber-600 font-bold mt-1">Mitra Pasif</div>
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
+                <div className="text-[11px] font-bold text-slate-500 uppercase">CAPEX Usaha</div>
+                <div className="text-2xl font-black text-slate-900 mt-1">Rp 100 Jt</div>
+                <DataBadge type="ACTUAL" text="Rp 100M Fixed" />
               </div>
-
-              <div className="p-4 rounded-3xl bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Operasional</div>
-                <div className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">100% HQ</div>
-                <div className="text-xs text-emerald-600 font-bold mt-1">Hands-Off</div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
+                <div className="text-[11px] font-bold text-slate-500 uppercase">Bagi Hasil</div>
+                <div className="text-2xl font-black text-slate-900 mt-1">50% : 50%</div>
+                <DataBadge type="ACTUAL" text="Mitra Pasif" />
               </div>
-            </motion.div>
+              <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
+                <div className="text-[11px] font-bold text-slate-500 uppercase">Operasional</div>
+                <div className="text-2xl font-black text-slate-900 mt-1">100% HQ</div>
+                <DataBadge type="ACTUAL" text="Hands-Off" />
+              </div>
+            </div>
           </div>
 
-          {/* Right Column: Gradient-Blended Big Menu Photo */}
           <div className="lg:col-span-6 relative flex justify-center">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, type: 'spring' }}
-              className="relative w-full max-w-lg rounded-[2.5rem] overflow-hidden shadow-2xl border border-white group"
-            >
+            <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-white group">
               <img
                 src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800"
-                alt="Sabuba Bubur Bakar Claypot Signature"
-                className="w-full h-[400px] sm:h-[480px] object-cover transition-transform duration-700 group-hover:scale-105"
+                alt="Bubur Bakar Claypot Sabuba Signature"
+                className="w-full h-[420px] object-cover transition-transform duration-700 group-hover:scale-105"
               />
-
-              {/* Soft Gradient Overlay Fading into Content */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent flex flex-col justify-end p-8">
-                <div className="space-y-2 text-white">
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-white/90 text-red-700 font-black text-[10px] uppercase shadow-sm">
-                      Sabuba Classic (Motor Custom)
-                    </span>
-                    <span className="text-xs text-white/90 font-bold shadow-sm">100% Halal & Fresh</span>
-                  </div>
-                  <h3 className="text-3xl font-black tracking-tight text-white drop-shadow-md">Bubur Bakar Claypot Sabuba</h3>
-                  <p className="text-sm text-slate-200 max-w-md drop-shadow-sm">
-                    Sajian hangat claypot beraroma khas dengan aneka topping lezat & disukai seluruh kalangan keluarga.
-                  </p>
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex flex-col justify-end p-6 text-white">
+                <DataBadge type="ACTUAL" text="HERO PRODUCT: BUBUR BAKAR CLAYPOT" />
+                <h3 className="text-2xl font-extrabold mt-2">Signature Warm Claypot Experience</h3>
+                <p className="text-xs text-slate-200 mt-1">Sensasi bubur panas beraroma khas claypot, topping kaya rasa, & pelayanan cepat di bawah 3 menit.</p>
               </div>
-            </motion.div>
+            </div>
           </div>
-
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 2: Problem & Solution
+    // Slide 02: EVERY MORNING, INDONESIA EATS
     // ----------------------------------------------------
     {
-      id: 'problem-solution',
-      title: 'Mengapa Harus Kemitraan Sabuba?',
-      subtitle: 'Solusi Bisnis Kuliner Sarapan Pagi Efisien & Unit Motor Custom 3 Roda Bebas Sewa Ruko',
+      id: 'slide-02-every-morning',
+      title: 'EVERY MORNING, INDONESIA EATS',
       content: (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
-          
-          {/* Left Column: Problem & Solution Cards (6 cols) */}
-          <div className="lg:col-span-6 space-y-6">
-            {/* Problem Card */}
-            <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 space-y-4 shadow-xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 text-slate-900 font-extrabold text-lg">
-                <div className="w-10 h-10 rounded-2xl bg-slate-100 flex items-center justify-center shrink-0 border border-slate-200">
-                  <AlertTriangle className="w-5 h-5 text-red-600" />
-                </div>
-                <span>Tantangan Usaha Kuliner Saat Ini</span>
-              </div>
-              <ul className="space-y-3 text-sm text-slate-600">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-2"></span>
-                  <span><strong className="text-slate-900">Sewa Tempat Ruko Mahal:</strong> Biaya sewa ruko & tempat permanen memakan puluhan juta/tahun yang memperlambat pengembalian modal.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-2"></span>
-                  <span><strong className="text-slate-900">Rumit Kelola SDM & Operasional:</strong> Mengurus karyawan, rekrutmen, belanja bahan harian, & konsistensi rasa sering menguras waktu mitra.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0 mt-2"></span>
-                  <span><strong className="text-slate-900">Kurang Higienis di Street Food:</strong> Tempat sarapan di pinggir jalan umum kurang bersih & penyajiannya sering lambat.</span>
-                </li>
-              </ul>
-            </div>
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="ASSUMPTION" text="HABITUAL DAILY MARKET DEMAND" />
+          </div>
 
-            {/* Solution Card */}
-            <div className="p-6 rounded-[2rem] bg-gradient-to-br from-red-800 via-red-900 to-slate-900 border border-white/20 space-y-4 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-3 text-white font-extrabold text-lg">
-                <div className="w-10 h-10 rounded-2xl bg-amber-400 text-red-900 flex items-center justify-center shrink-0 shadow-lg shadow-amber-500/30">
-                  <CheckCircle2 className="w-5 h-5" />
-                </div>
-                <span>Solusi Inovatif Sabuba Classic</span>
-              </div>
-              <ul className="space-y-3 text-sm text-red-100">
-                <li className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Motor Custom 3 Roda (Bebas Sewa Ruko):</strong> Unit street food hemat overhead, fleksibel buka di lokasi strategis & terima panggilan acara.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Skema Mitra Pasif 100%:</strong> Tim pusat Sabuba mengelola rekrutmen SDM, kitchen supply chain terpusat, & promosi tanpa membuat mitra repot.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <Check className="w-5 h-5 text-amber-300 shrink-0 mt-0.5" />
-                  <span><strong className="text-white">Speed of Service &lt; 2 Menit:</strong> SOP penyajian cepat dengan standar higiene tinggi & cita rasa claypot khas yang konsisten.</span>
-                </li>
-              </ul>
+          <div className="max-w-3xl space-y-3">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              Sarapan Bukan Tren. <br />
+              <span className="text-red-700">Sarapan Adalah Kebiasaan Harian.</span>
+            </h2>
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium">
+              Setiap pagi, jutaan keluarga Indonesia, pekerja kantor, pelajar, dan komuter membutuhkan makanan hangat, praktis, lezat, bernutrisi, dan terjangkau yang siap saji.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-bold text-xl">01</div>
+              <h3 className="text-xl font-bold text-slate-900">Keluarga & Anak-Anak</h3>
+              <p className="text-sm text-slate-600">Sarapan bernutrisi, aman, 100% Halal, & disukai seluruh anggota keluarga.</p>
+            </div>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xl">02</div>
+              <h3 className="text-xl font-bold text-slate-900">Pekerja &amp; Komuter Pagi</h3>
+              <p className="text-sm text-slate-600">Pelayanan super cepat (&lt; 3 menit) untuk orang beraktivitas tinggi di jam 06:00 - 09:00 WIB.</p>
+            </div>
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xl">03</div>
+              <h3 className="text-xl font-bold text-slate-900">Konsistensi Harian</h3>
+              <p className="text-sm text-slate-600">Bukan makanan musiman. Memiliki frekuensi pembelian ulang (repeat order) yang sangat tinggi.</p>
             </div>
           </div>
 
-          {/* Right Column: Sabuba Motor Poster Image Card Showcase (6 cols) */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center">
-            <div className="w-full rounded-[2.5rem] overflow-hidden border border-slate-200/60 shadow-2xl bg-white/90 p-3 group relative backdrop-blur-xl flex items-center justify-center">
+          <div className="p-5 rounded-2xl bg-slate-900 text-white flex items-center justify-between shadow-lg">
+            <span className="font-extrabold text-sm sm:text-base">THE OPPORTUNITY STARTS EVERY SINGLE MORNING.</span>
+            <span className="text-xs bg-red-700 px-3 py-1.5 rounded-full font-bold">100% Habitual Market</span>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 03: THE PROBLEM
+    // ----------------------------------------------------
+    {
+      id: 'slide-03-problem',
+      title: 'THE PROBLEM',
+      content: (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <DataBadge type="VERIFY" text="INDUSTRY SCALABILITY BOTTLENECK" />
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              Indonesia Has Great Food. <br />
+              <span className="text-red-700">But Great Food Is Hard To Scale.</span>
+            </h2>
+            <p className="text-slate-600 text-base font-medium leading-relaxed">
+              Bisnis makanan tradisional Indonesia memiliki permintaan (demand) yang sangat besar, tetapi sering gagal berkembang saat membuka cabang baru.
+            </p>
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-900 font-extrabold text-sm">
+              "The problem is NOT demand. The problem is SCALABILITY."
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <h4 className="font-extrabold text-slate-900 text-base">Ketergantungan Pada Lokasi</h4>
+              <p className="text-xs text-slate-600">Sewa ruko permanen yang mahal memperlambat ROI & mengunci fleksibilitas usaha.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <h4 className="font-extrabold text-slate-900 text-base">Ketergantungan Koki & SDM</h4>
+              <p className="text-xs text-slate-600">Rasa berubah ketika koki berganti karena resep tidak terstandarisasi dengan ketat.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <h4 className="font-extrabold text-slate-900 text-base">Supply Chain Berkelanjutan</h4>
+              <p className="text-xs text-slate-600">Kesulitan menjaga pasokan bahan baku segar dan berkualitas di banyak lokasi sekaligus.</p>
+            </div>
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <h4 className="font-extrabold text-slate-900 text-base">Operasional Rumit</h4>
+              <p className="text-xs text-slate-600">Manajemen outlet manual membuat pemilik usaha kewalahan saat unit bertambah.</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 04: THE OPPORTUNITY
+    // ----------------------------------------------------
+    {
+      id: 'slide-04-opportunity',
+      title: 'THE OPPORTUNITY',
+      content: (
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="TARGET" text="STRATEGIC MARKET POSITIONING" />
+          </div>
+
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight max-w-3xl">
+            Turn a Daily Habit into a <span className="text-red-700">Scalable Food Brand.</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div className="p-6 rounded-3xl bg-slate-100 border border-slate-300 space-y-3 opacity-80">
+              <span className="text-xs font-bold text-slate-500 uppercase">Format Tradisional</span>
+              <h3 className="text-lg font-bold text-slate-800">Traditional Street Food</h3>
+              <ul className="text-xs text-slate-600 space-y-2">
+                <li>• Murah & Merakyat</li>
+                <li>• Resep tidak terstandar</li>
+                <li>• Manajemen manual & acak</li>
+                <li>• Sulit di-scale</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-red-700 text-white space-y-3 shadow-2xl ring-4 ring-red-100 transform scale-105 z-10">
+              <span className="text-xs font-bold text-amber-300 uppercase">Posisi Sabuba</span>
+              <h3 className="text-xl font-black">SABUBA SYSTEM</h3>
+              <ul className="text-xs text-red-100 space-y-2 font-medium">
+                <li>✓ Signature Product Claypot</li>
+                <li>✓ Central Kitchen Production</li>
+                <li>✓ Standardized SOP & Fast Service</li>
+                <li>✓ Replicable Unit Economics</li>
+              </ul>
+            </div>
+
+            <div className="p-6 rounded-3xl bg-slate-100 border border-slate-300 space-y-3 opacity-80">
+              <span className="text-xs font-bold text-slate-500 uppercase">Format Korporat</span>
+              <h3 className="text-lg font-bold text-slate-800">Modern Chain F&B</h3>
+              <ul className="text-xs text-slate-600 space-y-2">
+                <li>• Standar & Sistem Baik</li>
+                <li>• CAPEX sangat tinggi (&gt;Rp 1M)</li>
+                <li>• Harga kurang terjangkau</li>
+                <li>• Lambat melakukan ekspansi</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 05: SIGNATURE PRODUCT
+    // ----------------------------------------------------
+    {
+      id: 'slide-05-signature-product',
+      title: 'SIGNATURE PRODUCT',
+      content: (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <DataBadge type="ACTUAL" text="PRODUCT CATALOGUE & MENU" />
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              Bubur Bakar <span className="text-red-700">Claypot</span>
+            </h2>
+            <p className="text-slate-600 text-base font-medium leading-relaxed">
+              Bukan sekadar bubur biasa. Sabuba menyajikan aroma harum panggang claypot hangat dengan pilihan kuah khas (Laksa, Semur, Ori, Kuning) serta aneka topping pilihan.
+            </p>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold">
+                🔥 Hot Claypot Served
+              </div>
+              <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold">
+                ⏱️ &lt; 3 Min Turnaround
+              </div>
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs font-bold">
+                🥟 Wonton & Dim Sum Add-ons
+              </div>
+              <div className="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-xs font-bold">
+                ☕ Kopi Hitam Nusantara
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800" alt="Bubur Ori Mix" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Bubur (Ori) Mix</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 19.000</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800" alt="Bubur Kuah Laksa" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Bubur Kuah Laksa</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 19.000</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800" alt="Bubur Kuah Semur" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Kuah Semur + Telur</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 18.000</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800" alt="Wonton Kuah" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Wonton Kuah Ayam</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 13.000</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800" alt="Dim Sum Siomay" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Dim Sum Siomay (4pcs)</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 13.000</div>
+            </div>
+            <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <img src="https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800" alt="Kopi Nusantara" className="w-full h-28 object-cover rounded-xl" />
+              <div className="font-black text-xs text-slate-900">Kopi Hitam Nusantara</div>
+              <div className="text-xs text-red-700 font-extrabold">Rp 8.000</div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 06: SABUBA IS A SYSTEM
+    // ----------------------------------------------------
+    {
+      id: 'slide-06-system',
+      title: 'SABUBA IS A SYSTEM',
+      content: (
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="ACTUAL" text="OPERATIONAL SYSTEM ARCHITECTURE" />
+          </div>
+
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              We Don't Just Replicate Outlets. <br />
+              <span className="text-red-700">We Replicate A System.</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              Kunci keberhasilan scale-up Sabuba adalah standarisasi seluruh rantai pasok dan operasional dari hilir ke hulu.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-3 pt-2">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">1</div>
+              <div className="font-extrabold text-xs text-slate-900">Central Kitchen</div>
+              <div className="text-[10px] text-slate-500">Pembuatan bumbu & kuah terpusat.</div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">2</div>
+              <div className="font-extrabold text-xs text-slate-900">Supply Chain</div>
+              <div className="text-[10px] text-slate-500">Distribusi vacuum terstandar.</div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">3</div>
+              <div className="font-extrabold text-xs text-slate-900">Unit Sabuba</div>
+              <div className="text-[10px] text-slate-500">Penyajian cepat di lokasi.</div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">4</div>
+              <div className="font-extrabold text-xs text-slate-900">SOP Pelatihan</div>
+              <div className="text-[10px] text-slate-500">Crew terlatih tanpa koki khusus.</div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">5</div>
+              <div className="font-extrabold text-xs text-slate-900">POS Cloud</div>
+              <div className="text-[10px] text-slate-500">Data penjualan real-time 24/7.</div>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
+              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">6</div>
+              <div className="font-extrabold text-xs text-slate-900">Customer</div>
+              <div className="text-[10px] text-slate-500">Pengalaman rasa konsisten.</div>
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 07: SABUBA CLASSIC (ENTRY FORMAT)
+    // ----------------------------------------------------
+    {
+      id: 'slide-07-sabuba-classic',
+      title: 'THE FIRST FORMAT — SABUBA CLASSIC',
+      content: (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
+          <div className="lg:col-span-6 space-y-5">
+            <div className="flex flex-wrap items-center gap-2">
+              <DataBadge type="ACTUAL" text="CURRENT COMMERCIAL FORMAT" />
+              <DataBadge type="ACTUAL" text="SABUBA CLASSIC (3-WHEEL MOTOR)" />
+            </div>
+
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              Motor Custom 3 Roda <br />
+              <span className="text-red-700">Entry Format Teruji.</span>
+            </h2>
+
+            <ul className="space-y-3 text-sm text-slate-600 font-medium">
+              <li className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 100 Juta lengkap dengan kitchen setup & sistem POS.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-slate-900">Mobilitas Tinggi:</strong> Fleksibel jemput bola di titik traffic sarapan pagi (perkantoran, sekolah, perumahan).</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <span><strong className="text-slate-900">Validasi Pasar Cepat:</strong> Menguji potensi titik lokasi baru tanpa risiko biaya sewa tempat jangka panjang.</span>
+              </li>
+            </ul>
+
+            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300 text-amber-900 font-bold text-xs">
+              <strong>Catatan Strategis:</strong> Motor adalah kendaraan awal untuk penguasaan titik ceruk sarapan pagi, bukan tujuan akhir bentuk fisik brand.
+            </div>
+          </div>
+
+          <div className="lg:col-span-6 flex justify-center">
+            <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <img
-                src="/assets/Konsep/sabuba-classic-poster.jpg"
-                alt="Sabuba Classic Custom 3-Wheel Motor Unit Poster"
-                className="w-full h-auto max-h-[480px] object-contain rounded-2xl transition-transform duration-500 group-hover:scale-[1.01]"
+                src="/assets/Konsep/1. Sabuba Classic.png"
+                alt="Sabuba Classic Motor Custom 3 Roda"
+                className="w-full h-[400px] object-cover"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                <DataBadge type="ACTUAL" text="UNIT USLEEP SABUBA CLASSIC" />
+                <h4 className="font-extrabold text-lg mt-1">Sabuba Classic Custom Vehicle</h4>
+                <p className="text-xs text-slate-300">Desain kompak, rangka kokoh, stainless steel food grade, & siap jualan dalam waktu 5 menit.</p>
+              </div>
             </div>
           </div>
-
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 3: Market Analysis
+    // Slide 08: SABUBA HOUSE VISION
     // ----------------------------------------------------
     {
-      id: 'market-funnel',
-      title: 'Top-Down Market Analysis',
-      subtitle: 'Potensi Pasar Kuliner Sarapan & Fast Casual Food di Indonesia',
+      id: 'slide-08-sabuba-house-vision',
+      title: 'FROM STREET FOOD TO SABUBA HOUSE',
       content: (
-        <div className="space-y-8">
-          <p className="text-slate-600 text-sm sm:text-base max-w-3xl">
-            Pasar makanan sarapan & street food di Indonesia merupakan kebutuhan harian (daily essential) dengan tingkat repeat order sangat tinggi. Sabuba mengambil ceruk pasar fast casual street food modern yang efisien & higienis.
-          </p>
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex flex-wrap items-center gap-2">
+            <DataBadge type="CONCEPT" text="LONG-TERM BRAND ROADMAP" />
+            <DataBadge type="CONCEPT" text="FUTURE / CONCEPT VISUALIZATION" />
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-            
-            {/* Left Column: Stacked Cards */}
-            <div className="md:col-span-6 space-y-4 relative">
-              <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-200 z-0 hidden md:block"></div>
-              
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl relative z-10"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="px-3 py-1 bg-slate-100 rounded-full text-xs font-bold text-slate-500 uppercase tracking-wider border border-slate-200">
-                      TAM (Total Addressable Market)
-                    </span>
-                    <h3 className="text-4xl font-black text-slate-900 mt-3">Rp 120 Triliun</h3>
-                    <p className="text-sm text-slate-500 mt-1">Total konsumsi sarapan & street food harian di seluruh Indonesia</p>
-                  </div>
-                </div>
-              </motion.div>
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              The Motor Is The Entry Point. <br />
+              <span className="text-red-700">Sabuba House Is The Destination.</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              Evolusi wujud fisik outlet dari format street food menuju outlet modern permanen yang ramah keluarga.
+            </p>
+          </div>
 
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="p-6 rounded-[2rem] bg-gradient-to-br from-red-50 to-transparent border border-red-200/60 shadow-xl backdrop-blur-xl relative z-10 md:ml-12"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-bold uppercase tracking-wider border border-red-200">
-                      SAM (Serviceable Addressable Market)
-                    </span>
-                    <h3 className="text-3xl font-black text-red-900 mt-3">Rp 15 Triliun</h3>
-                    <p className="text-sm text-red-700/80 mt-1">Komuter & pekerja di area perkotaan Tier 1 & Tier 2 Jawa & Sumatra</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="p-6 rounded-[2rem] bg-gradient-to-br from-amber-50 to-transparent border border-amber-200/60 shadow-xl backdrop-blur-xl relative z-10 md:ml-24"
-              >
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold uppercase tracking-wider border border-amber-200">
-                      SOM (Serviceable Obtainable Market)
-                    </span>
-                    <h3 className="text-2xl font-black text-amber-900 mt-3">Rp 500 Miliar</h3>
-                    <p className="text-sm text-amber-700/80 mt-1">Target ekspansi 1,000 unit outlet Sabuba Classic dalam 3-5 tahun</p>
-                  </div>
-                </div>
-              </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <span className="text-[10px] font-black text-red-700 bg-red-50 px-2 py-0.5 rounded">PHASE 1</span>
+              <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Classic</h4>
+              <p className="text-xs text-slate-500">Motor 3 Roda / Street Food. Validasi unit awal.</p>
             </div>
-
-            {/* Right Column: Key Market Drivers */}
-            <div className="md:col-span-6 space-y-6">
-              <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 shadow-sm">
-                  <TrendingUp className="w-6 h-6 text-slate-700" />
-                </div>
-                <div>
-                  <h4 className="text-base font-extrabold text-slate-900">Frekuensi Repeat Order Tinggi</h4>
-                  <p className="text-sm text-slate-600 mt-1">
-                    Konsumsi rutin 4-6 kali per minggu oleh pekerja & keluarga karena menu sarapan yang praktis & mengenyangkan.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100 shadow-sm">
-                  <DollarSign className="w-6 h-6 text-red-600" />
-                </div>
-                <div>
-                  <h4 className="text-base font-extrabold text-slate-900">Efisiensi Tanpa Sewa Tempat</h4>
-                  <p className="text-sm text-slate-600 mt-1">
-                    Unit motor custom menekan biaya sewa tempat hingga 0%, menjaga net profit margin tetap tinggi.
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center shrink-0 border border-amber-100 shadow-sm">
-                  <Zap className="w-6 h-6 text-amber-600" />
-                </div>
-                <div>
-                  <h4 className="text-base font-extrabold text-slate-900">Speed of Service &lt; 2 Menit</h4>
-                  <p className="text-sm text-slate-600 mt-1">
-                    SOP terstandarisasi dengan central kitchen menyajikan porsi cepat saji tanpa membuat antrean menumpuk.
-                  </p>
-                </div>
-              </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded">PHASE 2</span>
+              <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Point</h4>
+              <p className="text-xs text-slate-500">Compact booth / ruko pick-up window.</p>
             </div>
+            <div className="p-4 rounded-2xl bg-red-900 text-white shadow-xl space-y-2 ring-2 ring-red-400">
+              <span className="text-[10px] font-black text-amber-300 bg-red-800 px-2 py-0.5 rounded">PHASE 3 — VISION</span>
+              <h4 className="font-extrabold text-white text-sm">Sabuba House</h4>
+              <p className="text-xs text-red-200">Modern family-friendly dine-in breakfast outlet.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">PHASE 4</span>
+              <h4 className="font-extrabold text-slate-900 text-sm">National Network</h4>
+              <p className="text-xs text-slate-500">Jaringan restoran nasional terintegrasi.</p>
+            </div>
+          </div>
 
+          <div className="relative rounded-3xl overflow-hidden border border-slate-300 shadow-xl h-44 flex items-center justify-between p-8 bg-slate-900 text-white">
+            <img src="/assets/Konsep/2. Konsep Restaurant.png" alt="Konsep Sabuba House" className="absolute inset-0 w-full h-full object-cover opacity-40" />
+            <div className="relative z-10 space-y-1">
+              <DataBadge type="CONCEPT" text="FUTURE CONCEPT RENDER" />
+              <h3 className="text-2xl font-black">Sabuba House Outlet Concept</h3>
+              <p className="text-xs text-slate-300">Sentuhan warm wood, AC dine-in area, pick-up window, & suasana sarapan keluarga modern.</p>
+            </div>
           </div>
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 4: FEASIBILITY STUDY
+    // Slide 09: WHAT SABUBA CAN BECOME
     // ----------------------------------------------------
     {
-      id: 'feasibility-study',
-      title: 'Feasibility Study (Sabuba Classic)',
-      subtitle: 'Analisa Keuangan & Proyeksi Laba/Rugi Kemitraan Sabuba Motor Custom',
+      id: 'slide-09-brand-expansion',
+      title: 'WHAT SABUBA CAN BECOME',
       content: (
-        <div className="space-y-6 overflow-y-auto max-h-[70vh] pr-2">
-          
-          {/* Header Banner */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-6 rounded-[2rem] bg-gradient-to-r from-red-900 to-red-800 text-white shadow-xl">
-            <div>
-              <div className="inline-block px-3 py-1 bg-white/20 text-white font-bold text-xs uppercase tracking-wider rounded-full mb-2">
-                FEASIBILITY STUDY (SABUBA CLASSIC)
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-black">
-                Analisa Keuangan Sabuba Classic (Motor Custom)
-              </h3>
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="FORECAST" text="MENU & CATEGORY EXPANSION ROADMAP" />
+          </div>
+
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              More Than Breakfast. <br />
+              <span className="text-red-700">A Modern Indonesian Food Brand.</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              Memulai dari bubur bakar claypot, lalu berkembang secara selektif ke makanan kenyamanan harian (comfort food) keluarga Indonesia.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
+              <span className="text-xs font-bold text-red-700 uppercase">Category Anchor</span>
+              <h4 className="font-extrabold text-slate-900 text-lg">Signature Breakfast</h4>
+              <ul className="text-xs text-slate-600 space-y-2">
+                <li>✓ Bubur Bakar Claypot (Ori, Laksa, Semur)</li>
+                <li>✓ Telur Kampung Half-Boiled</li>
+                <li>✓ Kopi Hitam & Teh Nusantara</li>
+              </ul>
             </div>
-            <div className="text-right bg-black/20 px-6 py-4 rounded-2xl border border-white/20 shrink-0">
-              <div className="text-white/80 font-bold text-xs tracking-wider">TOTAL MODAL AWAL / CAPEX</div>
-              <div className="text-2xl font-black text-amber-400 mt-1">Rp 100.000.000</div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
+              <span className="text-xs font-bold text-amber-700 uppercase">Side & Add-Ons</span>
+              <h4 className="font-extrabold text-slate-900 text-lg">Dim Sum & Wonton</h4>
+              <ul className="text-xs text-slate-600 space-y-2">
+                <li>✓ Wonton Kuah Dumpling Ayam</li>
+                <li>✓ Dim Sum Siomay Ayam</li>
+                <li>✓ Aneka Sate-satean Pendamping</li>
+              </ul>
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
+              <span className="text-xs font-bold text-purple-700 uppercase">Future Expansion</span>
+              <h4 className="font-extrabold text-slate-900 text-lg">All-Day Comfort Food</h4>
+              <ul className="text-xs text-slate-600 space-y-2">
+                <li>• Rice-based Claypot Meals</li>
+                <li>• Indonesian Comfort Soups</li>
+                <li>• Specialty Artisan Drinks</li>
+              </ul>
             </div>
           </div>
-
-          {/* Upper Info Box */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md backdrop-blur-xl text-sm">
-            <div><span className="text-slate-500 font-semibold">Brand:</span> <strong className="text-slate-900 font-extrabold block mt-1">Sabuba Indonesia</strong></div>
-            <div><span className="text-slate-500 font-semibold">Status Kepemilikan:</span> <strong className="text-slate-900 font-extrabold block mt-1">Partnership (Mitra Pasif)</strong></div>
-            <div><span className="text-slate-500 font-semibold">Paket Usaha:</span> <strong className="text-slate-900 font-extrabold block mt-1">Sabuba Classic (Motor)</strong></div>
-            <div><span className="text-slate-500 font-semibold">Biaya Kemitraan:</span> <strong className="text-red-700 font-extrabold block mt-1">Rp 100.000.000</strong></div>
-          </div>
-
-          {/* Feasibility Table */}
-          <div className="overflow-x-auto rounded-[2rem] border border-slate-200/60 shadow-xl bg-white/90 backdrop-blur-xl text-xs">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-b border-slate-200">
-                  <th className="p-4 border-r border-slate-200">ANALISIS PENDAPATAN</th>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <th key={i} className="p-4 text-center border-r border-slate-200 last:border-0 text-slate-800 font-black">
-                      {sc.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">Jumlah Motor Custom / Outlet</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center font-bold">1 Unit</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">TC / Day (Transaksi per Hari)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-900 font-black">{sc.tcDay} Porsi</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">TC / Month (30 Hari)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center font-bold">{sc.tcMonth.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">APC (Average per Check)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center font-bold">Rp {sc.apc.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">Sales / Hari</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-900 font-black">Rp {sc.salesDay.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-red-50 font-black text-red-900">
-                  <td className="p-4">TOTAL REVENUE (NET SALES / BULAN)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-red-700 text-sm">Rp {sc.salesMonth.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                <tr className="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider border-y border-slate-200">
-                  <td className="p-4 border-r border-slate-200">PROYEKSI LABA / RUGI BULANAN</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center border-r border-slate-200 last:border-0 font-black">SIMULASI</td>
-                  ))}
-                </tr>
-
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">HPP / Total Biaya Bahan Baku (~40-42%)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-500 font-bold">Rp {sc.hppAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-50 font-black text-slate-900">
-                  <td className="p-4">GROSS PROFIT (LABA KOTOR)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center">Rp {sc.grossProfitAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">Biaya Karyawan / Gaji Tim Ops Store</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-500 font-bold">Rp {sc.opsKaryawan.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">Biaya Rumah Tangga / Kebersihan</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-500 font-bold">Rp {sc.opsRumahTangga.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="hover:bg-slate-50">
-                  <td className="p-4">Biaya Listrik, Air & Bahan Bakar Motor</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-slate-500 font-bold">Rp {sc.opsListrikAirFuel.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-                <tr className="bg-slate-50 font-extrabold text-slate-900">
-                  <td className="p-4">TOTAL BIAYA OPERASIONAL STORE</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-red-900">Rp {sc.totalOpsAmount.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                <tr className="bg-amber-50 font-black text-amber-900">
-                  <td className="p-4">STORE NET PROFIT (KEUNTUNGAN BERSIH OUTLET)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-amber-700 text-sm">Rp {sc.ebitdaNetProfitStore.toLocaleString('id-ID')}</td>
-                  ))}
-                </tr>
-
-                <tr className="bg-gradient-to-r from-emerald-600 to-emerald-500 font-black text-white">
-                  <td className="p-4">HAK BAGI HASIL MITRA PASIF (50% DARI NET PROFIT)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-base">Rp {sc.mitraShare50.toLocaleString('id-ID')} <span className="text-xs font-normal">/ Bln</span></td>
-                  ))}
-                </tr>
-
-                <tr className="bg-slate-800 text-white font-bold">
-                  <td className="p-4">Estimasi Payback Period (Berdasarkan Net Profit Mitra)</td>
-                  {feasibilityData.scenarios.map((sc, i) => (
-                    <td key={i} className="p-4 text-center text-amber-400 font-black">~{sc.paybackMonths} Bulan</td>
-                  ))}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className="p-4 rounded-xl bg-white/90 border border-slate-200/60 shadow-sm text-xs text-slate-500 leading-relaxed font-semibold">
-            <strong className="text-slate-900 font-bold">Catatan & Disclaimer Proyeksi:</strong> Perhitungan di atas hanya merupakan proyeksi/simulasi matematis berdasarkan standar operasional. Hasil dapat berbeda-beda tergantung kondisi lokasi, tingkat keramaian, & faktor pasar masing-masing outlet.
-          </div>
-
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 5: REAL FINANCIAL STATEMENT
+    // Slide 10: SOCIAL PROOF
     // ----------------------------------------------------
     {
-      id: 'real-pos-data',
-      title: 'Laporan Laba Rugi Outlet',
-      subtitle: '(Sabuba Jl. A Yani Sidoarjo) — Sales 100% | COGS 40% | OPEX 15% | Net Profit 45%',
+      id: 'slide-10-social-proof',
+      title: 'SOCIAL PROOF',
       content: (
-        <div className="space-y-6 overflow-y-auto max-h-[72vh] pr-2">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            {/* Left Column: Official Financial Report Table */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="rounded-[2rem] border border-slate-200/60 overflow-hidden shadow-xl bg-white/90 backdrop-blur-xl text-sm">
-                <div className="bg-slate-100 text-slate-800 px-5 py-4 font-black text-xs uppercase tracking-wider flex justify-between items-center border-b border-slate-200">
-                  <span>LAPORAN LABA RUGI OUTLET (SABUBA JL. A YANI SIDOARJO)</span>
-                  <span className="text-slate-500">INCOME STATEMENT</span>
-                </div>
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="ACTUAL" text="AUTHENTIC VIRAL TIKTOK REVIEWS" />
+          </div>
 
-                <table className="w-full text-left divide-y divide-slate-100 font-medium text-slate-700">
-                  <tbody>
-                    <tr className="font-extrabold text-slate-900">
-                      <td className="p-4">1. PENJUALAN BERSIH (NET SALES REVENUE)</td>
-                      <td className="p-4 text-center text-slate-500">100.0%</td>
-                      <td className="p-4 text-right text-emerald-700 text-base">Rp 80.108.009</td>
-                    </tr>
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              People Are Already <span className="text-red-700">Talking About Sabuba.</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              Mendapatkan sambutan hangat dan ulasan antusias dari berbagai kuliner influencer & pelanggan di Sidoarjo.
+            </p>
+          </div>
 
-                    <tr className="hover:bg-slate-50">
-                      <td className="p-4 pl-8">2. Beban Pokok Penjualan (COGS / HPP)</td>
-                      <td className="p-4 text-center font-bold">40.0%</td>
-                      <td className="p-4 text-right font-bold text-red-600">Rp 32.043.204</td>
-                    </tr>
-
-                    <tr className="bg-slate-50 font-extrabold text-slate-900 border-t border-slate-100">
-                      <td className="p-4">3. LABA KOTOR (GROSS PROFIT)</td>
-                      <td className="p-4 text-center text-slate-600">60.0%</td>
-                      <td className="p-4 text-right text-base">Rp 48.064.805</td>
-                    </tr>
-
-                    <tr className="font-bold text-slate-800 bg-slate-100/50">
-                      <td colSpan="3" className="px-4 py-3 text-xs uppercase tracking-wider text-slate-600">
-                        4. BEBAN OPERASIONAL STORE (OPEX 15.0%)
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 text-xs">
-                      <td className="py-2 px-4 pl-10">• Gaji Tim Karyawan & Bonus Store</td>
-                      <td className="py-2 px-4 text-center font-bold">9.4%</td>
-                      <td className="py-2 px-4 text-right font-bold">Rp 7.500.000</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 text-xs">
-                      <td className="py-2 px-4 pl-10">• Biaya Utility (Listrik, Air & Bahan Bakar)</td>
-                      <td className="py-2 px-4 text-center font-bold">3.1%</td>
-                      <td className="py-2 px-4 text-right font-bold">Rp 2.500.000</td>
-                    </tr>
-                    <tr className="hover:bg-slate-50 text-xs">
-                      <td className="py-2 px-4 pl-10">• Biaya Pemeliharaan & Kebersihan Ops</td>
-                      <td className="py-2 px-4 text-center font-bold">2.5%</td>
-                      <td className="py-2 px-4 text-right font-bold">Rp 2.016.201</td>
-                    </tr>
-                    <tr className="bg-slate-50 font-extrabold text-slate-900 border-t border-slate-100">
-                      <td className="p-4">TOTAL BEBAN OPERASIONAL (TOTAL OPEX)</td>
-                      <td className="p-4 text-center text-amber-700">15.0%</td>
-                      <td className="p-4 text-right text-amber-700">Rp 12.016.201</td>
-                    </tr>
-
-                    <tr className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black border-t border-emerald-500">
-                      <td className="p-5">5. STORE NET PROFIT (LABA BERSIH OUTLET)</td>
-                      <td className="p-5 text-center text-emerald-100">45.0%</td>
-                      <td className="p-5 text-right text-white text-xl">Rp 36.048.604</td>
-                    </tr>
-                  </tbody>
-                </table>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
+                <span>@dilarang.duduk</span>
               </div>
+              <p className="text-xs text-slate-700 italic">"Bubur bakar claypot pertama di Sidoarjo yang rempahnya berasa bgt & smoky khas claypot!"</p>
+              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
             </div>
-
-            {/* Right Column: Animated Chart */}
-            <div className="lg:col-span-5 space-y-6">
-              
-              <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl space-y-5">
-                <div className="flex justify-between items-center text-xs font-black text-slate-800 uppercase tracking-wider">
-                  <span className="flex items-center gap-2">
-                    <BarChart3 className="w-4 h-4 text-red-600" />
-                    Visual Breakdown
-                  </span>
-                  <span className="text-slate-500">Proporsi Standard</span>
-                </div>
-
-                <div className="space-y-4 text-sm font-bold text-slate-700">
-                  {/* Sales */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-slate-900">Total Sales</span>
-                      <span className="text-slate-900">100% (Rp 80,1 Jt)</span>
-                    </div>
-                    <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: '100%' }}
-                        transition={{ duration: 0.8 }}
-                        className="h-full bg-slate-800 rounded-full"
-                      />
-                    </div>
-                  </div>
-
-                  {/* COGS */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span>Beban Bahan Baku (COGS)</span>
-                      <span className="text-red-600">40% (Rp 32,0 Jt)</span>
-                    </div>
-                    <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: '40%' }}
-                        transition={{ duration: 0.8, delay: 0.1 }}
-                        className="h-full bg-red-500 rounded-full"
-                      />
-                    </div>
-                  </div>
-
-                  {/* OPEX */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span>Beban Operasional (OPEX)</span>
-                      <span className="text-amber-600">15% (Rp 12,0 Jt)</span>
-                    </div>
-                    <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: '15%' }}
-                        transition={{ duration: 0.8, delay: 0.2 }}
-                        className="h-full bg-amber-500 rounded-full"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Profit */}
-                  <div>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-emerald-700">Laba Bersih Outlet (Net Profit)</span>
-                      <span className="text-emerald-700">45% (Rp 36,0 Jt)</span>
-                    </div>
-                    <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: '45%' }}
-                        transition={{ duration: 0.8, delay: 0.3 }}
-                        className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"
-                      />
-                    </div>
-                  </div>
-                </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
+                <span>@mmekuliner</span>
               </div>
-
-              {/* Historical */}
-              <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl space-y-4 text-sm">
-                <div className="font-bold text-slate-800 flex justify-between items-center text-xs uppercase tracking-wider">
-                  <span>Historis Kinerja (Jan-Aug 2026)</span>
-                </div>
-
-                <div className="space-y-2">
-                  {realPosData.map((d, idx) => {
-                    const omset = d.omset;
-                    const netProfit = omset * 0.45;
-
-                    return (
-                      <div key={idx} className="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-100 transition-colors flex items-center justify-between">
-                        <div>
-                          <div className="font-extrabold text-slate-900 text-sm">{d.period}</div>
-                          <div className="text-xs text-slate-500 font-bold">Penjualan: Rp {(omset / 1000000).toFixed(1)}M</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-extrabold text-emerald-700 text-sm">Net Profit: Rp {(netProfit / 1000000).toFixed(1)}M</div>
-                          <div className="text-xs text-emerald-600 font-bold">Margin Net: 45.0%</div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+              <p className="text-xs text-slate-700 italic">"Antrean sarapan pagi rame bgt! Wonton kuah & dim sum siomay-nya wajib dicoba."</p>
+              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
+                <span>@amaryroose</span>
               </div>
-
+              <p className="text-xs text-slate-700 italic">"Sensasi sarapan panas claypot yang ramah kantong tapi rasa resto premium!"</p>
+              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
+                <span>@aprilliachil</span>
+              </div>
+              <p className="text-xs text-slate-700 italic">"Pilihan sarapan sehat keluarga. Porsi pas & kuah laksanya gurih hangat di perut."</p>
+              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
             </div>
           </div>
         </div>
@@ -813,741 +722,542 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 6: MARKETING SUPPORT
+    // Slide 11: BEACHHEAD MARKET — SIDOARJO
     // ----------------------------------------------------
     {
-      id: 'marketing-support',
-      title: 'Marketing Support & Channel Sales',
-      subtitle: 'Dukungan Pemasaran Full dari Tim Pusat untuk Mendorong Traffic & Omset',
+      id: 'slide-11-beachhead-sidoarjo',
+      title: 'BEACHHEAD MARKET — SIDOARJO',
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
-          
-          {/* Left Column: Animated Big Menu Photo with Floating Effect & Shadow */}
-          <div className="lg:col-span-6 flex flex-col items-center justify-center py-2">
-            <div className="relative flex flex-col items-center justify-center w-full max-w-md">
-              
-              {/* Floating Menu Photo Card */}
-              <motion.div
-                animate={{
-                  y: [0, -14, 0],
-                  rotate: [0, 1.2, -1.2, 0],
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="relative w-full aspect-[4/3] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/90 group z-10 bg-slate-900"
-              >
-                <img
-                  src="/assets/sabuba-claypot-menu-hero.jpg"
-                  alt="Sabuba Claypot Bubur Bakar Signature"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-
-                {/* Soft Gradient & Badge Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent flex flex-col justify-end p-6">
-                  <div className="flex items-center gap-2">
-                    <span className="px-3 py-1 rounded-full bg-amber-400 text-red-950 font-black text-[11px] uppercase tracking-wider shadow-md">
-                      Claypot Signature Sabuba
-                    </span>
-                    <span className="px-2.5 py-1 rounded-full bg-red-800/90 text-white font-extrabold text-[10px] uppercase backdrop-blur-sm">
-                      100% Real Menu
-                    </span>
-                  </div>
-                  <h4 className="text-xl sm:text-2xl font-black text-white mt-1.5 drop-shadow-md">
-                    Sarapan Bubur Bakar Claypot
-                  </h4>
-                  <p className="text-xs text-slate-200 mt-0.5 max-w-sm drop-shadow-sm font-medium">
-                    Kombinasi sempurna rasa gurih khas claypot, topping melimpah, & penyajian hangat.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Realistic Floor Shadow underneath */}
-              <motion.div
-                animate={{
-                  scale: [1, 0.82, 1],
-                  opacity: [0.45, 0.22, 0.45],
-                }}
-                transition={{
-                  duration: 4.5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-3/4 h-6 bg-slate-950/40 rounded-[100%] blur-xl mt-4"
-              />
+          <div className="lg:col-span-5 space-y-5">
+            <DataBadge type="ACTUAL" text="SIDOARJO OPERATIONAL CLUSTER" />
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              Start Where We <span className="text-red-700">Know The Market.</span>
+            </h2>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              Sidoarjo dipilih sebagai titik awal ekspansi (beachhead) karena keberadaan basis operasional & Central Kitchen pertama Sabuba.
+            </p>
+            <div className="p-4 rounded-2xl bg-slate-900 text-white font-bold text-xs space-y-1">
+              <div className="text-amber-400 font-extrabold uppercase">Rute Ekspansi Regional:</div>
+              <div>Sidoarjo → Jawa Timur → Pulau Jawa → Seluruh Indonesia</div>
             </div>
           </div>
 
-          {/* Right Column: Points */}
-          <div className="lg:col-span-6 space-y-6">
-            <h3 className="text-2xl font-black text-slate-900">Dukungan Pemasaran dari Pusat Sabuba HQ:</h3>
-
-            <div className="p-5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 text-slate-700 flex items-center justify-center shrink-0">
-                <Megaphone className="w-6 h-6" />
-              </div>
+          <div className="lg:col-span-7 space-y-3">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-between">
               <div>
-                <h4 className="font-extrabold text-slate-900 text-base">Pendaftaran Online Delivery</h4>
-                <p className="text-slate-600 font-medium text-sm mt-1">Proses pendaftaran & registrasi merchant online (GoFood, GrabFood, ShopeeFood) dikelola penuh oleh pusat.</p>
+                <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Depan Warung Leko</h4>
+                <p className="text-xs text-slate-500">Jl. Ahmad Yani No.3D, Pucang, Sidoarjo</p>
               </div>
+              <DataBadge type="ACTUAL" text="PRIMARY OUTLET" />
             </div>
-
-            <div className="p-5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 text-slate-700 flex items-center justify-center shrink-0">
-                <TrendingUp className="w-6 h-6" />
-              </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-between">
               <div>
-                <h4 className="font-extrabold text-slate-900 text-base">Program Marketing & Promo Diskon</h4>
-                <p className="text-slate-600 font-medium text-sm mt-1">Setting kampanye promo diskon ongkir & voucher belanja dilakukan secara terpusat dan berkala.</p>
+                <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Kantin RSUD Sidoarjo</h4>
+                <p className="text-xs text-slate-500">Jl. Mojopahit No.667, Celep, Sidoarjo</p>
               </div>
+              <DataBadge type="ACTUAL" text="ACTIVE OUTLET" />
             </div>
-
-            <div className="p-5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-100 text-slate-700 flex items-center justify-center shrink-0">
-                <Users className="w-6 h-6" />
-              </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md flex items-center justify-between">
               <div>
-                <h4 className="font-extrabold text-slate-900 text-base">Support Desain Materi Branding</h4>
-                <p className="text-slate-600 font-medium text-sm mt-1">Disediakan desain materi promosi digital, konten sosial media, spanduk, & banner promo.</p>
+                <h4 className="font-extrabold text-slate-900 text-sm">Sabuba X Zeger Coffee</h4>
+                <p className="text-xs text-slate-500">Perum Kemiri Indah No.8, Kemiri, Sidoarjo</p>
               </div>
+              <DataBadge type="ACTUAL" text="ACTIVE OUTLET" />
             </div>
-          </div>
-
-        </div>
-      )
-    },
-    // ----------------------------------------------------
-    // Slide 7: TIKTOK SOCIAL PROOF (PART 1)
-    // ----------------------------------------------------
-    {
-      id: 'socialproof-part1',
-      title: 'Social Proof & Liputan TikTok (Part 1)',
-      subtitle: 'Antusiasme Pelanggan & Review Food Vlogger di TikTok',
-      content: (
-        <div className="space-y-3 h-full flex flex-col justify-between">
-          <p className="text-slate-600 text-xs sm:text-sm max-w-3xl font-medium">
-            Tingginya minat masyarakat terhadap Bubur Bakar Claypot Sabuba tercermin dari liputan viral para food vlogger ternama di TikTok!
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            
-            {/* TikTok 1: @dilarang.duduk */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@dilarang.duduk</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7680878284493688072"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @dilarang.duduk"
-                  />
-                </div>
-              </div>
-
-              <a
-                href="https://www.tiktok.com/@dilarang.duduk/video/7680878284493688072"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @dilarang.duduk</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
-            </div>
-
-            {/* TikTok 2: @mmekuliner */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@mmekuliner</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7632959962536283413"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @mmekuliner"
-                  />
-                </div>
-              </div>
-
-              <a
-                href="https://www.tiktok.com/@mmekuliner/video/7632959962536283413"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @mmekuliner</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
-            </div>
-
-            {/* TikTok 3: @aprilliachil 1 */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@aprilliachil</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7657353179687947541"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @aprilliachil 1"
-                  />
-                </div>
-              </div>
-
-              <a
-                href="https://www.tiktok.com/@aprilliachil/video/7657353179687947541"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @aprilliachil</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
-            </div>
-
           </div>
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 8: TIKTOK SOCIAL PROOF (PART 2)
+    // Slide 12: TAM / SAM / SOM
     // ----------------------------------------------------
     {
-      id: 'socialproof-part2',
-      title: 'Social Proof & Viral Review (Bagian 2)',
-      subtitle: 'Liputan Kuliner & Review Vlogger di TikTok',
+      id: 'slide-12-tam-sam-som',
+      title: 'TAM / SAM / SOM',
       content: (
-        <div className="space-y-3 h-full flex flex-col justify-between">
-          <p className="text-slate-600 text-xs sm:text-sm max-w-3xl font-medium">
-            Antusiasme penikmat sarapan pagi Sabuba terus merambah pengguna TikTok melalui pengalaman langsung para food vlogger!
-          </p>
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex flex-wrap items-center gap-2">
+            <DataBadge type="VERIFY" text="DATA NEEDED — VERIFY BEFORE PUBLICATION" />
+            <DataBadge type="ASSUMPTION" text="BOTTOM-UP MARKET SIZING MODEL" />
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-            
-            {/* TikTok 4: @amaryroose */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@amaryroose</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7646970069733362964"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @amaryroose"
-                  />
-                </div>
-              </div>
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              A Big Market. <span className="text-red-700">A Focused Entry.</span>
+            </h2>
+            <p className="text-slate-600 text-xs sm:text-sm font-medium">
+              *Catatan Transparansi: Angka TAM Rp120T dari proposal lama ditandai untuk verifikasi data eksternal. Kami menggunakan pendekatan bottom-up realistis untuk estimasi potensi pasar sarapan.
+            </p>
+          </div>
 
-              <a
-                href="https://www.tiktok.com/@amaryroose/video/7646970069733362964"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @amaryroose</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <span className="text-xs font-bold text-slate-500 uppercase">TAM (Total Market)</span>
+              <h4 className="font-black text-slate-900 text-xl">Nasional Sarapan</h4>
+              <p className="text-xs text-slate-600">Total belanja makan pagi & comfort food harian seluruh masyarakat Indonesia.</p>
+              <DataBadge type="VERIFY" text="VERIFY EX-DATA" />
             </div>
-
-            {/* TikTok 5: @aprilliachil (Part 2) */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@aprilliachil #2</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7628636632308075796"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @aprilliachil 2"
-                  />
-                </div>
-              </div>
-
-              <a
-                href="https://www.tiktok.com/@aprilliachil/video/7628636632308075796"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @aprilliachil</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
+              <span className="text-xs font-bold text-sky-700 uppercase">SAM (Serviceable Market)</span>
+              <h4 className="font-black text-slate-900 text-xl">Perkotaan Jawa Timur</h4>
+              <p className="text-xs text-slate-600">Populasi urban area Gerbangkertosusila & Jawa Timur yang mengonsumsi sarapan di luar rumah.</p>
+              <DataBadge type="ASSUMPTION" text="ESTIMASI BPS URBAN" />
             </div>
-
-            {/* TikTok 6: @aliyaeat */}
-            <div className="p-3 sm:p-4 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-xl backdrop-blur-xl flex flex-col justify-between group hover:shadow-2xl transition-all">
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-black text-slate-900">@aliyaeat</span>
-                  <span className="px-2 py-0.5 bg-red-100 text-red-700 font-extrabold text-[10px] rounded-full">TikTok Review</span>
-                </div>
-                
-                <div className="relative h-[250px] sm:h-[290px] w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-200 shadow-md">
-                  <iframe
-                    src="https://www.tiktok.com/embed/v2/7649362405088103701"
-                    className="w-full h-full border-0 rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    title="TikTok @aliyaeat"
-                  />
-                </div>
-              </div>
-
-              <a
-                href="https://www.tiktok.com/@aliyaeat/video/7649362405088103701"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all shadow-md"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Buka TikTok @aliyaeat</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
-              </a>
+            <div className="p-5 rounded-3xl bg-red-900 text-white shadow-xl space-y-3">
+              <span className="text-xs font-bold text-amber-300 uppercase">SOM (Target Sabuba)</span>
+              <h4 className="font-black text-amber-400 text-xl">Cluster Sidoarjo & Sekitar</h4>
+              <p className="text-xs text-red-100">Target penetrasi realistis: 20-50 unit Sabuba Classic di koridor utama Sidoarjo & Surabaya.</p>
+              <DataBadge type="TARGET" text="CLUSTER GOAL" />
             </div>
-
           </div>
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 8: ALL MENU CATALOGUE
+    // Slide 13: UNIT ECONOMICS & INTERACTIVE SIMULATOR
     // ----------------------------------------------------
     {
-      id: 'menu-showcase',
-      title: 'Katalog Menu Lengkap Sabuba',
-      subtitle: 'Seluruh Hidangan Sarapan Pagi, Dim Sum, Wonton, Topping & Minuman',
+      id: 'slide-13-unit-economics',
+      title: 'UNIT ECONOMICS & FINANCIAL MODEL',
       content: (
-        <div className="space-y-4 overflow-y-auto max-h-[68vh] pr-2">
-          <p className="text-slate-600 text-sm sm:text-base max-w-3xl font-medium">
-            Sabuba menyajikan menu sarapan bubur bakar claypot, wonton kuah, dim sum, ekstra topping, & minuman bernilai jual tinggi. Seluruh bahan diproduksi terpusat oleh Central Kitchen.
-          </p>
+        <div className="space-y-4 h-full flex flex-col justify-center">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <DataBadge type="TARGET" text="4 SCENARIO SIMULATOR" />
+              <DataBadge type="ASSUMPTION" text="HPP 40% | OPEX 15%" />
+            </div>
+            <DataBadge type="ACTUAL" text="BASELINE HISTORIS: AUG 2026 OMSET RP 80,1M (OUTLET A. YANI)" />
+          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-2">
-            {SABUBA_DATA.menuItems.map((item, idx) => (
-              <motion.div
-                key={item.id || idx}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(idx * 0.04, 0.4) }}
-                className="p-3.5 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md flex flex-col justify-between group overflow-hidden backdrop-blur-xl hover:shadow-xl transition-all"
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
+            One Unit. <span className="text-red-700">One Repeatable Model.</span>
+          </h2>
+
+          {/* Scenario Selector Tabs */}
+          <div className="flex items-center gap-2 bg-slate-200/70 p-1.5 rounded-2xl overflow-x-auto">
+            {financialScenarios.map((sc, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveScenarioIdx(idx)}
+                className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
+                  activeScenarioIdx === idx
+                    ? 'bg-red-700 text-white shadow-md scale-105'
+                    : 'text-slate-700 hover:bg-slate-300/60'
+                }`}
               >
-                <div>
-                  <div className="relative aspect-square rounded-2xl overflow-hidden mb-3 bg-slate-100 border border-slate-200">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    {item.isBestSeller && (
-                      <span className="absolute top-2 left-2 px-2.5 py-0.5 bg-red-700 text-white font-extrabold text-[10px] uppercase rounded-full shadow-md">
-                        Best Seller
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
-                    {item.subcategory || item.category}
-                  </div>
-
-                  <h4 className="font-extrabold text-xs text-slate-900 line-clamp-2 leading-snug">
-                    {item.name}
-                  </h4>
-                </div>
-
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between">
-                  <div className="text-sm font-black text-red-700">
-                    Rp {item.price.toLocaleString('id-ID')}
-                  </div>
-                  <span className="text-[10px] text-slate-500 font-bold bg-slate-100 px-2 py-0.5 rounded-full">
-                    100% Halal
-                  </span>
-                </div>
-              </motion.div>
+                {sc.name} ({sc.cupsDay} Cup/Hari)
+              </button>
             ))}
           </div>
+
+          {/* Active Scenario Card Breakdown */}
+          {(() => {
+            const sc = financialScenarios[activeScenarioIdx];
+            return (
+              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div className="md:col-span-5 space-y-4 border-r border-slate-100 pr-0 md:pr-6">
+                  <div>
+                    <span className="text-xs font-bold text-slate-500 uppercase">Skenario Penjualan</span>
+                    <h3 className="text-3xl font-black text-slate-900">{sc.cupsDay} Cup / Hari</h3>
+                    <p className="text-xs text-slate-500">Asumsi Rata-rata Harga Jual (APC): Rp 20.000 / porsi</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
+                      <div className="text-[10px] text-slate-500 font-bold uppercase">Omset / Bulan</div>
+                      <div className="text-lg font-black text-slate-900">{formatRupiah(sc.salesMonth)}</div>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200">
+                      <div className="text-[10px] text-emerald-700 font-bold uppercase">Payback Period</div>
+                      <div className="text-lg font-black text-emerald-800">{sc.paybackMonths}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="md:col-span-7 grid grid-cols-2 gap-4">
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div className="text-[10px] font-bold text-slate-500 uppercase">HPP / COGS (40%)</div>
+                    <div className="text-base font-extrabold text-slate-900">{formatRupiah(sc.cogsAmount)}</div>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div className="text-[10px] font-bold text-slate-500 uppercase">OPEX (Operasional ~15%)</div>
+                    <div className="text-base font-extrabold text-slate-900">{formatRupiah(sc.opexAmount)}</div>
+                  </div>
+                  <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-1 col-span-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-amber-400 uppercase">Net Profit Store (45%)</span>
+                      <DataBadge type="TARGET" text="STORE EBITDA" />
+                    </div>
+                    <div className="text-2xl font-black text-white">{formatRupiah(sc.storeNetProfit)} / bulan</div>
+                    <div className="text-xs text-amber-300 font-bold pt-1 border-t border-slate-800 flex justify-between">
+                      <span>Bagian Mitra (50% Bagi Hasil):</span>
+                      <strong className="text-white text-sm">{formatRupiah(sc.partnerShare50)} / bulan</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )
     },
 
     // ----------------------------------------------------
-    // Slide 9: ROADMAP
+    // Slide 14: PARTNERSHIP MODEL
     // ----------------------------------------------------
     {
-      id: 'models-roadmap',
-      title: 'Pilihan Model Kemitraan Sabuba',
-      subtitle: 'Sabuba Classic (Motor Custom 3 Roda) Beroperasi & Tersedia Sekarang! Model Lain Segera Hadir.',
+      id: 'slide-14-partnership-model',
+      title: 'THE PARTNERSHIP MODEL',
       content: (
-        <div className="space-y-6 overflow-y-auto max-h-[72vh] pr-2">
-          
-          <div className="p-8 rounded-[2.5rem] bg-gradient-to-br from-red-800 via-red-900 to-slate-900 text-white border border-white/20 shadow-2xl relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center backdrop-blur-xl">
-            
-            <div className="absolute -top-4 right-6 px-4 py-1.5 bg-amber-400 text-red-950 font-black text-[10px] uppercase rounded-full shadow-lg z-10 flex items-center gap-2">
-              <Flame className="w-4 h-4" />
-              <span>TERSEDIA SEKARANG</span>
-            </div>
-
-            <div className="lg:col-span-6 flex items-center justify-center">
-              <div className="w-full rounded-[2rem] overflow-hidden border border-white/20 shadow-2xl bg-white/90 p-2 group flex items-center justify-center">
-                <img
-                  src="/assets/Konsep/sabuba-classic-poster.jpg"
-                  alt="Sabuba Classic Custom 3-Wheel Motor Poster"
-                  className="w-full h-auto max-h-[400px] object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-500"
-                />
-              </div>
-            </div>
-
-            <div className="lg:col-span-6 space-y-4">
-              <div>
-                <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">Street Food Motor Custom 3 Roda</span>
-                <h3 className="text-4xl font-black text-white mt-1">Sabuba Classic</h3>
-                <div className="text-3xl font-black text-white mt-2">Rp 100.000.000</div>
-              </div>
-
-              <p className="text-sm text-red-100 leading-relaxed">
-                Unit motor tiga roda custom fleksibel & kompak. Bebas sewa lokasi, mobilitas tinggi, rangka besi hollow kuat, dilengkapi panel aluminium anti karat & kitchen setup lengkap.
-              </p>
-
-              <div className="flex flex-wrap gap-3 text-xs font-bold">
-                <span className="px-3 py-1.5 bg-white/10 rounded-xl border border-white/10 text-white">✓ Motor 3 Roda Custom (200cc-250cc)</span>
-                <span className="px-3 py-1.5 bg-white/10 rounded-xl border border-white/10 text-white">✓ Dimensi 2.40m x 1.10m x 1.80m</span>
-                <span className="px-3 py-1.5 bg-white/10 rounded-xl border border-white/10 text-white">✓ Bagi Hasil 50% : 50%</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
-            
-            <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md relative flex flex-col justify-between backdrop-blur-xl">
-              <div className="absolute -top-3 right-4 px-3 py-1 bg-slate-100 text-slate-600 font-bold text-[10px] uppercase rounded-full border border-slate-200">
-                SOON
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Semi-Permanent Hub</div>
-                <h4 className="text-xl font-extrabold text-slate-900 mt-1">Sabuba Container</h4>
-                <p className="text-sm text-slate-600 mt-2 font-medium leading-relaxed">
-                  Konsep container booth modern untuk SPBU, minimarket, & pelataran gedung.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md relative flex flex-col justify-between backdrop-blur-xl">
-              <div className="absolute -top-3 right-4 px-3 py-1 bg-slate-100 text-slate-600 font-bold text-[10px] uppercase rounded-full border border-slate-200">
-                SOON
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dine-in Fast Casual</div>
-                <h4 className="text-xl font-extrabold text-slate-900 mt-1">Sabuba Resto</h4>
-                <p className="text-sm text-slate-600 mt-2 font-medium leading-relaxed">
-                  Format outlet ruko dengan tempat duduk ber-AC & area outdoor modern.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-[2rem] bg-white/90 border border-slate-200/60 shadow-md relative flex flex-col justify-between backdrop-blur-xl">
-              <div className="absolute -top-3 right-4 px-3 py-1 bg-slate-100 text-slate-600 font-bold text-[10px] uppercase rounded-full border border-slate-200">
-                SOON
-              </div>
-              <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Island Kiosk Mall</div>
-                <h4 className="text-xl font-extrabold text-slate-900 mt-1">Sabuba Express</h4>
-                <p className="text-sm text-slate-600 mt-2 font-medium leading-relaxed">
-                  Format booth island eksklusif untuk food court mall & indoor area.
-                </p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )
-    },
-
-    // ----------------------------------------------------
-    // Slide 10: Call to Action
-    // ----------------------------------------------------
-    {
-      id: 'cta-investment',
-      title: 'Bergabung Menjadi Mitra Strategis Sabuba',
-      subtitle: 'Slot Kemitraan Terbatas untuk Pengembangan Outlet Sabuba Classic 2026',
-      content: (
-        <div className="flex flex-col h-full justify-center items-center space-y-8">
-          <div className="p-10 rounded-[3rem] bg-gradient-to-br from-red-800 via-red-900 to-slate-900 text-white shadow-2xl text-center space-y-6 border border-white/20 backdrop-blur-2xl max-w-4xl w-full">
-            <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs uppercase tracking-wider">
-              Peluang Kemitraan 2026
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-black text-white">
-              Mulai Kemitraan Pasif Sabuba Classic Hari Ini
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
+          <div className="lg:col-span-5 space-y-5">
+            <DataBadge type="ACTUAL" text="COMMERCIAL PARTNERSHIP OFFER" />
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              A Business System, <br />
+              <span className="text-red-700">Not Just A Package.</span>
             </h2>
-            <p className="text-red-100 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              Miliki unit usaha makanan cepat saji Sabuba Classic dengan skema Mitra Pasif 50:50. Seluruh operasional harian dikelola terpusat oleh tim profesional HQ.
+            <p className="text-slate-600 text-sm font-medium leading-relaxed">
+              Skema kemitraan pasif yang dirancang transparan, akuntabel, dan didukung penuh oleh tim operasional profesional HQ Sabuba.
             </p>
-
-            <div className="pt-4 flex flex-wrap justify-center gap-4 text-sm font-bold text-white">
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2.5 rounded-2xl border border-white/10 backdrop-blur-md">
-                <CheckCircle2 className="w-5 h-5 text-amber-400" /> Modal Investasi Rp 100 Juta
-              </span>
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2.5 rounded-2xl border border-white/10 backdrop-blur-md">
-                <CheckCircle2 className="w-5 h-5 text-amber-400" /> Bagi Hasil 50% Mitra Pasif
-              </span>
-              <span className="flex items-center gap-2 bg-white/10 px-4 py-2.5 rounded-2xl border border-white/10 backdrop-blur-md">
-                <CheckCircle2 className="w-5 h-5 text-amber-400" /> POS Cloud Transparan 24/7
-              </span>
+            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-semibold leading-relaxed">
+              ⚠️ <strong>Prinsip Transparansi:</strong> Sabuba tidak menggunakan klaim "guaranteed profit" atau "guaranteed ROI". Keuntungan didasarkan pada performa riil outlet & laporan POS Cloud transparan 24/7.
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 w-full max-w-2xl">
-            <a
-              href={`https://wa.me/${SABUBA_DATA.brand.whatsapp}?text=Halo%20Tim%20Sabuba,%20saya%20sudah%20membaca%20Proposal%20Kemitraan%20Rp%20100Jt%20(Mitra%20Pasif%2050:50).%20Saya%20tertarik%20untuk%20diskusi%20lebih%20lanjut.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-black text-base shadow-2xl transition-all flex items-center justify-center gap-2"
-            >
-              <span>Konsultasi via WhatsApp</span>
-              <ArrowRight className="w-5 h-5" />
-            </a>
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
+              <span className="text-xs font-bold text-red-700 uppercase">Modal Awal CAPEX</span>
+              <h4 className="text-2xl font-black text-slate-900">Rp 100.000.000</h4>
+              <p className="text-xs text-slate-500">Unit Sabuba Classic, peralatan kitchen lengkap, branding, & sistem POS.</p>
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
+              <span className="text-xs font-bold text-emerald-700 uppercase">Nisbah Bagi Hasil</span>
+              <h4 className="text-2xl font-black text-slate-900">50% : 50%</h4>
+              <p className="text-xs text-slate-500">Pembagian laba bersih toko antara Mitra Pasif & Pengelola HQ.</p>
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
+              <span className="text-xs font-bold text-sky-700 uppercase">Manajemen Operasional</span>
+              <h4 className="text-2xl font-black text-slate-900">100% HQ Managed</h4>
+              <p className="text-xs text-slate-500">Rekrutmen crew, suplai bahan, & operasional harian diurus tim HQ.</p>
+            </div>
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
+              <span className="text-xs font-bold text-purple-700 uppercase">Transparansi Penjualan</span>
+              <h4 className="text-2xl font-black text-slate-900">POS Cloud 24/7</h4>
+              <p className="text-xs text-slate-500">Akses langsung ke aplikasi kasir cloud untuk memantau omset real-time.</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
 
-            <button
-              onClick={() => window.print()}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white hover:bg-slate-100 text-slate-900 font-extrabold text-base border border-slate-200 shadow-md transition-all flex items-center justify-center gap-2"
-            >
-              <Download className="w-5 h-5 text-red-700" />
-              <span>Cetak PDF Proposal</span>
-            </button>
+    // ----------------------------------------------------
+    // Slide 15: HOW WE SCALE
+    // ----------------------------------------------------
+    {
+      id: 'slide-15-how-we-scale',
+      title: 'HOW WE SCALE (SCALING ENGINE)',
+      content: (
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="TARGET" text="8-STEP STRATEGIC SCALING ENGINE" />
+          </div>
+
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              One Proven Unit → <br />
+              <span className="text-red-700">Repeatable Clusters → Network.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 1</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Prove Unit Economics</h4>
+              <p className="text-xs text-slate-500">Validasi omset & profit di cluster Sidoarjo.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 2</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Standardize Operations</h4>
+              <p className="text-xs text-slate-500">Pembekuan SOP & resep Central Kitchen.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 3</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Strengthen Kitchen</h4>
+              <p className="text-xs text-slate-500">Peningkatan kapasitas produksi bumbu induk.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 4</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Build Cluster Density</h4>
+              <p className="text-xs text-slate-500">Penambahan 20+ unit di Jawa Timur.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 5</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Point Launch</h4>
+              <p className="text-xs text-slate-500">Uji coba booth & pick-up window modern.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 6</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Geographical Expansion</h4>
+              <p className="text-xs text-slate-500">Penetrasi kota-kota besar di Pulau Jawa.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
+              <div className="text-xs font-bold text-red-700">STEP 7</div>
+              <h4 className="font-extrabold text-slate-900 text-sm">Sabuba House Pilot</h4>
+              <p className="text-xs text-slate-500">Peluncuran flagship dine-in restaurant.</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-900 text-white shadow-xl space-y-2">
+              <div className="text-xs font-bold text-amber-400">STEP 8</div>
+              <h4 className="font-extrabold text-white text-sm">National Brand</h4>
+              <p className="text-xs text-slate-300">Top of mind sarapan keluarga Indonesia.</p>
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 16: THE ROADMAP
+    // ----------------------------------------------------
+    {
+      id: 'slide-16-roadmap',
+      title: 'THE ROADMAP',
+      content: (
+        <div className="space-y-6 h-full flex flex-col justify-center">
+          <div className="flex items-center gap-3">
+            <DataBadge type="TARGET" text="STRATEGIC EXPANSION TIMELINE" />
+          </div>
+
+          <div className="max-w-3xl space-y-2">
+            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
+              From Sidoarjo <span className="text-red-700">To Indonesia.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pt-4">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
+              <span className="text-2xl font-black text-red-700">2026</span>
+              <h4 className="font-extrabold text-slate-900">Validation Phase</h4>
+              <p className="text-xs text-slate-600">Validasi rasa, sistem SOP, & unit economics Sabuba Classic di Sidoarjo.</p>
+              <DataBadge type="ACTUAL" text="CURRENT PHASE" />
+            </div>
+
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
+              <span className="text-2xl font-black text-amber-600">2027</span>
+              <h4 className="font-extrabold text-slate-900">Regional Cluster</h4>
+              <p className="text-xs text-slate-600">Ekspansi jaringan Sabuba Classic & Sabuba Point di wilayah Jawa Timur.</p>
+              <DataBadge type="TARGET" text="TARGET 50+ UNITS" />
+            </div>
+
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
+              <span className="text-2xl font-black text-sky-600">2028</span>
+              <h4 className="font-extrabold text-slate-900">Sabuba House Pilot</h4>
+              <p className="text-xs text-slate-600">Peluncuran outlet dine-in Sabuba House pertama untuk pengalaman sarapan keluarga.</p>
+              <DataBadge type="CONCEPT" text="FLAGSHIP DINE-IN" />
+            </div>
+
+            <div className="p-6 rounded-3xl bg-slate-900 text-white shadow-2xl space-y-3 relative">
+              <span className="text-2xl font-black text-amber-400">2029+</span>
+              <h4 className="font-extrabold text-white">National Network</h4>
+              <p className="text-xs text-slate-300">Ekspansi ke seluruh kota besar di Indonesia sebagai brand sarapan nasional.</p>
+              <DataBadge type="TARGET" text="NATIONAL BRAND" />
+            </div>
+          </div>
+        </div>
+      )
+    },
+
+    // ----------------------------------------------------
+    // Slide 17: CLOSING & CTA
+    // ----------------------------------------------------
+    {
+      id: 'slide-17-closing',
+      title: 'CLOSING — FROM ONE BOWL TO A NATIONAL BRAND',
+      content: (
+        <div className="space-y-6 h-full flex flex-col justify-center text-center items-center max-w-4xl mx-auto">
+          <DataBadge type="ACTUAL" text="FINAL BRAND MESSAGE" />
+
+          <motion.h1
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight"
+          >
+            FROM ONE BOWL <br />
+            TO A <span className="text-red-700">NATIONAL INDONESIAN</span> FOOD BRAND.
+          </motion.h1>
+
+          <p className="text-slate-600 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
+            Sabuba dimulai dari satu kebutuhan sederhana: <strong>sarapan hangat untuk keluarga Indonesia.</strong> Hari ini kami membangun unit pertama. Besok kami membangun sistem. Dan berikutnya, kami membangun brand nasional.
+          </p>
+
+          <div className="p-6 rounded-3xl bg-slate-900 text-white w-full max-w-2xl space-y-4 shadow-2xl">
+            <h3 className="text-xl font-extrabold text-amber-400">Partner With Sabuba Today</h3>
+            <p className="text-xs text-slate-300">Bergabunglah sebagai mitra pasif awal dalam membangun brand kuliner sarapan Indonesia masa depan.</p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+              <a
+                href="https://wa.me/6281359180156?text=Halo%20HQ%20Sabuba,%20saya%20tertarik%20diskusi%20kemitraan%20Sabuba%20Classic"
+                target="_blank"
+                rel="noreferrer"
+                className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all"
+              >
+                <span>Konsultasi via WhatsApp</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+
+              <button
+                onClick={() => window.print()}
+                className="px-6 py-3 rounded-2xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all"
+              >
+                <Download className="w-4 h-4" />
+                <span>Download Executive PDF</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="text-xs text-slate-400 font-semibold pt-2">
+            Official Website: www.sabubabuburbakar.com | WhatsApp HQ: +62 813-5918-0156
           </div>
         </div>
       )
     }
   ];
 
-  const currentSlideObj = slides[currentSlide];
+  const currentSlideObj = slides[currentSlide] || slides[0];
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
-      setCurrentSlide(s => s + 1);
+      setCurrentSlide(prev => prev + 1);
     }
   };
 
   const prevSlide = () => {
     if (currentSlide > 0) {
-      setCurrentSlide(s => s - 1);
+      setCurrentSlide(prev => prev - 1);
     }
   };
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-2 sm:p-4 md:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/80 backdrop-blur-md">
         
-        {/* Fullscreen Apple Style Presentation Deck (Clean White Theme) */}
+        {/* Printable PDF Landscape Container */}
         <motion.div
-          id="proposal-pitch-deck"
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.96 }}
-          className={`w-full max-w-7xl bg-slate-50 text-slate-900 rounded-[2.5rem] border border-slate-200 shadow-2xl overflow-hidden flex flex-col justify-between relative ${
-            isFullscreen ? 'fixed inset-0 z-50 max-w-none rounded-none' : 'max-h-[92vh] h-full'
+          initial={{ scale: 0.95, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.95, opacity: 0 }}
+          className={`w-full bg-slate-50 text-slate-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 transition-all ${
+            isFullscreen ? 'h-screen w-screen rounded-none' : 'max-w-6xl h-[92vh]'
           }`}
         >
-          {/* Subtle Background Glows (Brand Colors) */}
-          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-red-600/10 rounded-full blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" />
 
           {/* Top Bar Header */}
-          <div className="p-4 sm:p-6 border-b border-slate-200 flex items-center justify-between bg-white/80 backdrop-blur-2xl shrink-0 z-10">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-black text-sm border border-red-100 shadow-sm overflow-hidden p-1 shrink-0">
-                <img src="/assets/sabuba-logo-3d.png" alt="Logo Sabuba 3D" className="w-full h-full object-contain" />
-              </div>
+          <div className="px-6 py-4 bg-white border-b border-slate-200 flex items-center justify-between z-20 shrink-0 shadow-xs">
+            <div className="flex items-center gap-3">
+              <SabubaLogo className="h-8 w-auto" />
+              <div className="h-4 w-px bg-slate-300 hidden sm:block" />
               <div>
-                <h3 className="font-extrabold text-sm sm:text-base text-slate-900 tracking-wide">
-                  Proposal Kemitraan
-                </h3>
-                <p className="text-[11px] sm:text-xs text-slate-500 font-bold mt-0.5">
-                  Slide {currentSlide + 1} dari {slides.length}: <span className="text-red-700">{currentSlideObj.title}</span>
+                <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">SABUBA Presentation System</h3>
+                <p className="text-[11px] text-slate-500 font-medium">
+                  Slide {currentSlide + 1} / {slides.length}: <span className="text-red-700 font-bold">{currentSlideObj.title}</span>
                 </p>
               </div>
             </div>
 
-            {/* Controls */}
+            {/* Action Buttons */}
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-3 rounded-2xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-600 transition-colors hidden sm:flex shadow-sm"
+                className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors hidden sm:flex"
                 title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
               >
-                {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
 
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2.5 rounded-2xl bg-red-700 hover:bg-red-800 text-white text-sm font-extrabold flex items-center gap-2 transition-colors shadow-md"
+                className="px-4 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white text-xs font-black flex items-center gap-2 transition-all shadow-md"
                 title="Download / Print PDF"
               >
                 <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Download PDF</span>
+                <span className="hidden sm:inline">Export PDF</span>
               </button>
 
               <button
                 onClick={onClose}
-                className="p-3 rounded-2xl bg-white hover:bg-red-50 border border-slate-200 text-slate-600 hover:text-red-600 transition-colors ml-2 shadow-sm"
-                aria-label="Tutup"
+                className="p-2.5 rounded-xl bg-slate-100 hover:bg-red-100 text-slate-700 hover:text-red-700 transition-colors ml-1"
+                aria-label="Tutup Modal"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          {/* Main Slide Content Area */}
-          <div className="p-6 sm:p-10 flex-1 overflow-y-auto min-h-[440px] flex flex-col z-10 relative">
-            
-            {/* Top Right Logo Attached No 1 on Every Slide */}
-            <div className="absolute top-6 right-6 sm:top-8 sm:right-10 z-20 flex items-center gap-2 p-1.5 sm:p-2 rounded-2xl bg-white/95 border border-slate-200/80 shadow-md backdrop-blur-xl pointer-events-none">
-              <img
-                src="/assets/sabuba-logo-3d.png"
-                alt="Logo Sabuba 3D"
-                className="w-10 h-10 sm:w-14 sm:h-14 object-contain"
-              />
-            </div>
-
-            <div className="mb-6 pr-16 sm:pr-24">
-              <div className="text-xs font-extrabold text-red-600 uppercase tracking-widest mb-2">
-                {currentSlideObj.subtitle}
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-                {currentSlideObj.title}
-              </h2>
-            </div>
-
-            <div className="flex-1 my-2">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, type: 'spring', bounce: 0 }}
-                  className="h-full"
-                >
-                  {currentSlideObj.content}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+          {/* Main Active Slide Content Area */}
+          <div className="p-6 sm:p-10 flex-1 overflow-y-auto flex flex-col justify-center relative bg-slate-50">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="h-full flex flex-col justify-center"
+              >
+                {currentSlideObj.content}
+              </motion.div>
+            </AnimatePresence>
           </div>
 
-          {/* Bottom Controls Bar */}
-          <div className="p-5 sm:p-6 border-t border-slate-200 bg-white/80 backdrop-blur-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shrink-0 text-sm z-10">
-            
+          {/* Bottom Bar Controls & Progress */}
+          <div className="px-6 py-4 bg-white border-t border-slate-200 flex items-center justify-between z-20 shrink-0">
+            {/* Prev Button */}
+            <button
+              onClick={prevSlide}
+              disabled={currentSlide === 0}
+              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+                currentSlide === 0
+                  ? 'opacity-40 cursor-not-allowed text-slate-400 bg-slate-100'
+                  : 'bg-slate-100 hover:bg-slate-200 text-slate-800 shadow-xs'
+              }`}
+            >
+              <ChevronLeft className="w-4 h-4" />
+              <span>Sebelumnya</span>
+            </button>
+
             {/* Slide Navigation Dots */}
-            <div className="flex items-center gap-6 overflow-x-auto max-w-full">
-              <div className="flex items-center gap-2">
-                {slides.map((s, idx) => (
-                  <button
-                    key={s.id}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      idx === currentSlide
-                        ? 'w-10 bg-red-600 shadow-md shadow-red-600/30'
-                        : 'w-2 bg-slate-300 hover:bg-slate-400'
-                    }`}
-                    title={`Slide ${idx + 1}: ${s.title}`}
-                  />
-                ))}
-              </div>
-
-              <div className="hidden md:flex items-center gap-2 text-slate-500 font-bold border-l border-slate-300 pl-6 text-xs">
-                <span className="text-slate-900">sabuba.flowstack.com</span>
-                <span>•</span>
-                <span>Proposal Kemitraan 2026</span>
-              </div>
+            <div className="hidden md:flex items-center gap-1.5 overflow-x-auto max-w-md px-2">
+              {slides.map((s, idx) => (
+                <button
+                  key={s.id}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${
+                    currentSlide === idx
+                      ? 'w-6 bg-red-700'
+                      : 'bg-slate-300 hover:bg-slate-400'
+                  }`}
+                  title={`Go to slide ${idx + 1}: ${s.title}`}
+                />
+              ))}
             </div>
 
-            {/* Prev / Next Controls */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={prevSlide}
-                disabled={currentSlide === 0}
-                className="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 disabled:opacity-50 disabled:pointer-events-none text-slate-800 font-bold flex items-center gap-2 transition-colors shadow-sm"
-              >
-                <ChevronLeft className="w-5 h-5" />
-                <span>Prev</span>
-              </button>
-
-              <div className="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 font-bold text-slate-500 text-sm shadow-sm">
-                <span className="text-slate-900">0{currentSlide + 1}</span> / {slides.length}
-              </div>
-
-              <button
-                onClick={nextSlide}
-                disabled={currentSlide === slides.length - 1}
-                className="px-5 py-2.5 rounded-2xl bg-slate-900 hover:bg-slate-800 disabled:opacity-50 disabled:pointer-events-none text-white font-extrabold flex items-center gap-2 transition-colors shadow-xl shadow-slate-900/20"
-              >
-                <span>Next</span>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
+            {/* Next Button */}
+            <button
+              onClick={nextSlide}
+              disabled={currentSlide === slides.length - 1}
+              className={`px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition-all ${
+                currentSlide === slides.length - 1
+                  ? 'opacity-40 cursor-not-allowed text-slate-400 bg-slate-100'
+                  : 'bg-red-700 hover:bg-red-800 text-white shadow-md'
+              }`}
+            >
+              <span>{currentSlide === slides.length - 1 ? 'Selesai' : 'Berikutnya'}</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
         </motion.div>
-      </div>
-
-      {/* Hidden Print Container for Generating Complete Multi-Page Proposal PDF */}
-      <div id="proposal-print-container" className="hidden print:block">
-        {slides.map((s, idx) => (
-          <div key={s.id} className="slide-print-page">
-            <div className="flex justify-between items-center pb-2 mb-2 border-b-2 border-red-700 shrink-0">
-              <div>
-                <span className="text-[10px] font-black text-red-700 uppercase tracking-widest">SABUBA CLASSIC — PROPOSAL KEMITRAAN 2026</span>
-                <h2 className="text-lg font-black text-slate-900 mt-0.5">{s.title}</h2>
-                <div className="text-[10px] text-slate-500 font-bold">{s.subtitle}</div>
-              </div>
-              <img src="/assets/sabuba-logo-3d.png" alt="Sabuba Logo" className="w-8 h-8 object-contain" />
-            </div>
-
-            <div className="flex-1 overflow-hidden my-1 text-slate-800 text-xs">
-              {s.content}
-            </div>
-
-            <div className="pt-2 border-t border-slate-200 flex justify-between items-center text-[9px] text-slate-400 font-bold shrink-0">
-              <span>sabuba.flowstack.com • Proposal Kemitraan Pasif 50:50</span>
-              <span>Halaman {idx + 1} dari {slides.length}</span>
-            </div>
-          </div>
-        ))}
       </div>
     </AnimatePresence>
   );
