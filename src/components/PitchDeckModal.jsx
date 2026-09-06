@@ -1,48 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  X, ChevronLeft, ChevronRight, Download, Share2, Sparkles, TrendingUp,
-  DollarSign, ShieldCheck, Cpu, Smartphone, BarChart3, PieChart, Layers,
+  X, ChevronLeft, ChevronRight, Download, Sparkles, TrendingUp,
+  DollarSign, ShieldCheck, BarChart3, PieChart, Layers,
   Award, Play, CheckCircle2, ArrowRight, RefreshCw, Maximize2,
   Minimize2, ExternalLink, Calendar, Building2, Zap, Flame, Star, Utensils,
   AlertTriangle, HelpCircle, FileText, Bike, Heart, Users, MapPin, Store,
-  Clock, Target, Shield, CheckCircle, Info
+  Clock, Target, Shield, CheckCircle, Info, Video, ChevronUp, ChevronDown
 } from 'lucide-react';
 import SabubaLogo from './SabubaLogo';
 import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
 
 // ----------------------------------------------------
-// Reusable Visual Classification Tag (Data Taxonomy)
+// Background Wave & Subtle Red Ornament Component
+// ----------------------------------------------------
+function BackgroundWave() {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+      {/* Subtle Top-Right Red Gradient Mesh */}
+      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-red-600/10 via-amber-500/5 to-transparent blur-3xl" />
+      
+      {/* Subtle Bottom-Left Soft Red Glow */}
+      <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full bg-gradient-to-tr from-red-800/10 via-red-600/5 to-transparent blur-3xl" />
+
+      {/* Elegant SVG Waves Line Background */}
+      <svg
+        className="absolute inset-0 w-full h-full opacity-[0.04]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1440 800"
+        fill="none"
+        preserveAspectRatio="none"
+      >
+        <path
+          d="M0,192L60,202.7C120,213,240,235,360,229.3C480,224,600,192,720,181.3C840,171,960,181,1080,197.3C1200,213,1320,235,1380,245.3L1440,256L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
+          fill="#991B1B"
+        />
+        <path
+          d="M0,450C300,520 600,380 900,480C1200,580 1350,420 1440,400V800H0V450Z"
+          fill="#991B1B"
+        />
+      </svg>
+    </div>
+  );
+}
+
+// ----------------------------------------------------
+// Unified Data Classification Badge (Clean Brand Colors)
 // ----------------------------------------------------
 function DataBadge({ type, text }) {
-  let badgeStyle = "bg-slate-100 text-slate-700 border-slate-300";
+  let badgeStyle = "bg-red-50 text-red-900 border-red-200";
   let label = text || type;
 
   switch (type) {
     case 'ACTUAL':
-      badgeStyle = "bg-emerald-500/10 text-emerald-700 border-emerald-300/60";
-      label = text || "ACTUAL POS DATA";
+      badgeStyle = "bg-red-800 text-white border-red-900 font-extrabold";
+      label = text || "DATA AKTUAL BPS & POS";
       break;
     case 'ASSUMPTION':
-      badgeStyle = "bg-sky-500/10 text-sky-700 border-sky-300/60";
-      label = text || "ASSUMPTION";
+      badgeStyle = "bg-white text-red-900 border-red-300 font-semibold shadow-2xs";
+      label = text || "ASUMSI FEASIBILITY";
       break;
     case 'TARGET':
-      badgeStyle = "bg-amber-500/10 text-amber-700 border-amber-300/60";
+      badgeStyle = "bg-amber-500/10 text-amber-900 border-amber-300 font-extrabold";
       label = text || "TARGET OPERASIONAL";
       break;
     case 'FORECAST':
-      badgeStyle = "bg-purple-500/10 text-purple-700 border-purple-300/60";
+      badgeStyle = "bg-red-50 text-red-800 border-red-300 font-bold";
       label = text || "PROYEKSI / FORECAST";
       break;
     case 'VERIFY':
     case 'DATA_NEEDED':
-      badgeStyle = "bg-rose-500/10 text-rose-700 border-rose-300/60 font-semibold";
+      badgeStyle = "bg-red-100 text-red-950 border-red-400 font-extrabold";
       label = text || "DATA NEEDED — VERIFY BEFORE PUBLICATION";
       break;
     case 'CONCEPT':
     case 'FUTURE':
-      badgeStyle = "bg-teal-500/10 text-teal-700 border-teal-300/60 font-semibold";
+      badgeStyle = "bg-slate-900 text-amber-400 border-slate-700 font-extrabold";
       label = text || "FUTURE / CONCEPT VISUALIZATION";
       break;
     default:
@@ -50,8 +83,8 @@ function DataBadge({ type, text }) {
   }
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md ${badgeStyle}`}>
-      <Info className="w-3 h-3 shrink-0" />
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] uppercase tracking-wider ${badgeStyle}`}>
+      <Info className="w-3.5 h-3.5 shrink-0" />
       <span>{label}</span>
     </span>
   );
@@ -61,64 +94,141 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [currentSlide, setCurrentSlide] = useState(defaultSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeScenarioIdx, setActiveScenarioIdx] = useState(1); // Default: 100 Cups (Sedang)
+  const [showHistoricalPos, setShowHistoricalPos] = useState(false);
 
-  // 4 Unit Economics Scenarios (Slide 13)
-  const financialScenarios = [
+  // Historical POS Data (Jan to Aug 2026 A. Yani Outlet)
+  const realPosData = [
+    { period: 'Jan 2026', omset: 32176000, profit: 16382000 },
+    { period: 'Feb-Mar 2026', omset: 37027000, profit: 19181000 },
+    { period: 'Apr 2026', omset: 51879000, profit: 28039500 },
+    { period: 'Mei 2026', omset: 71680000, profit: 38623500 },
+    { period: 'Jun 2026', omset: 66792000, profit: 36617000 },
+    { period: 'Agu 2026', omset: 80108009, profit: 40177509 },
+  ];
+
+  // Full Feasibility Study Data (Exact Zeger! On The Wheels Format)
+  const feasibilityScenarios = [
     {
-      name: 'Konservatif',
-      cupsDay: 50,
+      name: 'Rendah (50 Cup)',
+      tcDay: 50,
+      tcMonth: 1500,
       apc: 20000,
       salesDay: 1000000,
       salesMonth: 30000000,
-      cogsPercent: 40,
-      cogsAmount: 12000000,
-      grossProfit: 18000000,
-      opexAmount: 4500000,
-      storeNetProfit: 13500000,
-      partnerShare50: 6750000,
-      paybackMonths: '14.8 bln'
+      salesYear: 360000000,
+      hppPercent: 40,
+      hppAmount: 12000000,
+      grossProfitAmount: 18000000,
+      opsKaryawan: 3000000,
+      opsRumahTangga: 750000,
+      opsListrikAirFuel: 750000,
+      totalOpsAmount: 4500000,
+      ebitdaNetProfitStore: 13500000,
+      mitraShare50: 6750000,
+      paybackMonths: 14.8
     },
     {
-      name: 'Moderat (Target Baseline)',
-      cupsDay: 100,
+      name: 'Sedang (100 Cup)',
+      tcDay: 100,
+      tcMonth: 3000,
       apc: 20000,
       salesDay: 2000000,
       salesMonth: 60000000,
-      cogsPercent: 40,
-      cogsAmount: 24000000,
-      grossProfit: 36000000,
-      opexAmount: 9000000,
-      storeNetProfit: 27000000,
-      partnerShare50: 13500000,
-      paybackMonths: '7.4 bln'
+      salesYear: 720000000,
+      hppPercent: 40,
+      hppAmount: 24000000,
+      grossProfitAmount: 36000000,
+      opsKaryawan: 6000000,
+      opsRumahTangga: 1500000,
+      opsListrikAirFuel: 1500000,
+      totalOpsAmount: 9000000,
+      ebitdaNetProfitStore: 27000000,
+      mitraShare50: 13500000,
+      paybackMonths: 7.4
     },
     {
-      name: 'Optimis',
-      cupsDay: 150,
+      name: 'Ramai (150 Cup)',
+      tcDay: 150,
+      tcMonth: 4500,
       apc: 20000,
       salesDay: 3000000,
       salesMonth: 90000000,
-      cogsPercent: 40,
-      cogsAmount: 36000000,
-      grossProfit: 54000000,
-      opexAmount: 13500000,
-      storeNetProfit: 40500000,
-      partnerShare50: 20250000,
-      paybackMonths: '4.9 bln'
+      salesYear: 1080000000,
+      hppPercent: 40,
+      hppAmount: 36000000,
+      grossProfitAmount: 54000000,
+      opsKaryawan: 9000000,
+      opsRumahTangga: 2250000,
+      opsListrikAirFuel: 2250000,
+      totalOpsAmount: 13500000,
+      ebitdaNetProfitStore: 40500000,
+      mitraShare50: 20250000,
+      paybackMonths: 4.9
     },
     {
-      name: 'High Performance',
-      cupsDay: 200,
+      name: 'Ramai Sekali (200 Cup)',
+      tcDay: 200,
+      tcMonth: 6000,
       apc: 20000,
       salesDay: 4000000,
       salesMonth: 120000000,
-      cogsPercent: 40,
-      cogsAmount: 48000000,
-      grossProfit: 72000000,
-      opexAmount: 18000000,
-      storeNetProfit: 54000000,
-      partnerShare50: 27000000,
-      paybackMonths: '3.7 bln'
+      salesYear: 1440000000,
+      hppPercent: 40,
+      hppAmount: 48000000,
+      grossProfitAmount: 72000000,
+      opsKaryawan: 12000000,
+      opsRumahTangga: 3000000,
+      opsListrikAirFuel: 3000000,
+      totalOpsAmount: 18000000,
+      ebitdaNetProfitStore: 54000000,
+      mitraShare50: 27000000,
+      paybackMonths: 3.7
+    }
+  ];
+
+  // 6 Viral Video Social Proof Influencers
+  const socialProofVideos = [
+    {
+      handle: '@dilarang.duduk',
+      title: 'Bubur Bakar Claypot Sidoarjo',
+      quote: 'Bubur bakar claypot pertama di Sidoarjo yang rempahnya kerasa banget & smoky khas claypot!',
+      tag: 'VIRAL REVIEW #1',
+      image: 'https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800',
+    },
+    {
+      handle: '@mmekuliner',
+      title: 'Sarapan Rame Sidoarjo',
+      quote: 'Antrean pagi rame banget! Wonton kuah & dim sum siomay-nya juara pedes gurihnya.',
+      tag: 'VIRAL REVIEW #2',
+      image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800',
+    },
+    {
+      handle: '@amaryroose',
+      title: 'Sensasi Claypot Warmth',
+      quote: 'Sensasi sarapan panas claypot yang ramah kantong tapi rasa resto premium!',
+      tag: 'VIRAL REVIEW #3',
+      image: 'https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800',
+    },
+    {
+      handle: '@aprilliachil',
+      title: 'Sarapan Keluarga Favorit',
+      quote: 'Pilihan sarapan sehat keluarga. Porsi pas & kuah laksanya gurih hangat di perut.',
+      tag: 'VIRAL REVIEW #4',
+      image: 'https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800',
+    },
+    {
+      handle: '@sidoarjokuliner',
+      title: 'Langganan Warga Sidoarjo',
+      quote: 'Bubur bakar aroma claypot topping melimpah, langganan sarapan favorit warga!',
+      tag: 'VIRAL REVIEW #5',
+      image: 'https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800',
+    },
+    {
+      handle: '@surabayafoodies',
+      title: 'Inovasi Street Food 3 Roda',
+      quote: 'Inovasi sarapan bubur bakar 3 roda yang praktis, cepat & sangat lezat!',
+      tag: 'VIRAL REVIEW #6',
+      image: 'https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800',
     }
   ];
 
@@ -157,46 +267,42 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
           <div className="lg:col-span-6 space-y-6">
             <div className="flex flex-wrap items-center gap-2">
-              <DataBadge type="ACTUAL" text="HYBRID PROPOSAL 2026" />
-              <DataBadge type="ACTUAL" text="SABUBA CLASSIC ENTRY FORMAT" />
+              <DataBadge type="ACTUAL" text="PROPOSAL KEMITRAAN 2026" />
+              <DataBadge type="ACTUAL" text="FORMAT UTAMA: SABUBA CLASSIC" />
             </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight"
-            >
-              SABUBA <span className="text-red-700">Modern Indonesian</span> Breakfast & Comfort Food
-            </motion.h1>
+            <div className="space-y-3">
+              <h1 className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight">
+                SABUBA <br />
+                <span className="text-red-800">Modern Indonesian</span> <br />
+                Breakfast Brand
+              </h1>
+              <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-slate-600 text-lg leading-relaxed max-w-xl font-medium"
-            >
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed max-w-xl font-medium">
               Born from Bubur Bakar Claypot. Built for Indonesian families. Designed to scale across the nation.
-            </motion.p>
+            </p>
 
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300/70 text-amber-900 font-extrabold text-sm flex items-center gap-3">
-              <Flame className="w-5 h-5 text-amber-600 shrink-0" />
-              <span>CORE STRATEGY: <em>"The motor is the entry point, NOT the destination."</em></span>
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-950 font-bold text-sm flex items-center gap-3">
+              <Flame className="w-5 h-5 text-red-700 shrink-0" />
+              <span>POSITIONING: <em>"The motor is the entry point, NOT the destination."</em></span>
             </div>
 
             <div className="grid grid-cols-3 gap-3 pt-2">
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">CAPEX Usaha</div>
-                <div className="text-2xl font-black text-slate-900 mt-1">Rp 100 Jt</div>
-                <DataBadge type="ACTUAL" text="Rp 100M Fixed" />
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">Rp 100 Jt</div>
+                <DataBadge type="ACTUAL" text="Sabuba Classic" />
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">Bagi Hasil</div>
-                <div className="text-2xl font-black text-slate-900 mt-1">50% : 50%</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">50% : 50%</div>
                 <DataBadge type="ACTUAL" text="Mitra Pasif" />
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">Operasional</div>
-                <div className="text-2xl font-black text-slate-900 mt-1">100% HQ</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">100% HQ</div>
                 <DataBadge type="ACTUAL" text="Hands-Off" />
               </div>
             </div>
@@ -211,8 +317,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent flex flex-col justify-end p-6 text-white">
                 <DataBadge type="ACTUAL" text="HERO PRODUCT: BUBUR BAKAR CLAYPOT" />
-                <h3 className="text-2xl font-extrabold mt-2">Signature Warm Claypot Experience</h3>
-                <p className="text-xs text-slate-200 mt-1">Sensasi bubur panas beraroma khas claypot, topping kaya rasa, & pelayanan cepat di bawah 3 menit.</p>
+                <h3 className="text-2xl font-extrabold mt-2 text-white">Signature Warm Claypot Experience</h3>
+                <p className="text-xs text-slate-200 mt-1">Sensasi bubur panas beraroma khas claypot, topping kaya rasa, &amp; pelayanan cepat di bawah 3 menit.</p>
               </div>
             </div>
           </div>
@@ -235,34 +341,35 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <div className="max-w-3xl space-y-3">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               Sarapan Bukan Tren. <br />
-              <span className="text-red-700">Sarapan Adalah Kebiasaan Harian.</span>
+              <span className="text-red-800">Sarapan Adalah Kebiasaan Harian.</span>
             </h2>
-            <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium">
-              Setiap pagi, jutaan keluarga Indonesia, pekerja kantor, pelajar, dan komuter membutuhkan makanan hangat, praktis, lezat, bernutrisi, dan terjangkau yang siap saji.
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-medium">
+              Setiap pagi, jutaan keluarga Indonesia, pekerja kantor, pelajar, dan komuter membutuhkan makanan hangat, praktis, lezat, bernutrisi, dan terjangkau.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-red-50 text-red-700 flex items-center justify-center font-bold text-xl">01</div>
-              <h3 className="text-xl font-bold text-slate-900">Keluarga & Anak-Anak</h3>
-              <p className="text-sm text-slate-600">Sarapan bernutrisi, aman, 100% Halal, & disukai seluruh anggota keluarga.</p>
+              <div className="w-12 h-12 rounded-2xl bg-red-800 text-white flex items-center justify-center font-bold text-xl">01</div>
+              <h3 className="text-xl font-bold text-slate-900">Keluarga &amp; Anak-Anak</h3>
+              <p className="text-sm text-slate-600">Sarapan bernutrisi, 100% Halal, &amp; disukai seluruh anggota keluarga di pagi hari.</p>
             </div>
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xl">02</div>
+              <div className="w-12 h-12 rounded-2xl bg-red-800 text-white flex items-center justify-center font-bold text-xl">02</div>
               <h3 className="text-xl font-bold text-slate-900">Pekerja &amp; Komuter Pagi</h3>
-              <p className="text-sm text-slate-600">Pelayanan super cepat (&lt; 3 menit) untuk orang beraktivitas tinggi di jam 06:00 - 09:00 WIB.</p>
+              <p className="text-sm text-slate-600">Pelayanan super cepat (&lt; 3 menit) untuk mobilitas jam 06:00 - 09:00 WIB.</p>
             </div>
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl space-y-3 hover:border-red-300 transition-all">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xl">03</div>
+              <div className="w-12 h-12 rounded-2xl bg-red-800 text-white flex items-center justify-center font-bold text-xl">03</div>
               <h3 className="text-xl font-bold text-slate-900">Konsistensi Harian</h3>
-              <p className="text-sm text-slate-600">Bukan makanan musiman. Memiliki frekuensi pembelian ulang (repeat order) yang sangat tinggi.</p>
+              <p className="text-sm text-slate-600">Bukan makanan musiman. Memiliki frekuensi repeat order tinggi sepanjang tahun.</p>
             </div>
           </div>
 
-          <div className="p-5 rounded-2xl bg-slate-900 text-white flex items-center justify-between shadow-lg">
+          <div className="p-4 rounded-2xl bg-red-900 text-white flex items-center justify-between shadow-lg">
             <span className="font-extrabold text-sm sm:text-base">THE OPPORTUNITY STARTS EVERY SINGLE MORNING.</span>
-            <span className="text-xs bg-red-700 px-3 py-1.5 rounded-full font-bold">100% Habitual Market</span>
+            <span className="text-xs bg-red-800 border border-red-700 px-3 py-1.5 rounded-full font-bold">100% Habitual Market</span>
           </div>
         </div>
       )
@@ -280,34 +387,35 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <DataBadge type="VERIFY" text="INDUSTRY SCALABILITY BOTTLENECK" />
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               Indonesia Has Great Food. <br />
-              <span className="text-red-700">But Great Food Is Hard To Scale.</span>
+              <span className="text-red-800">But Great Food Is Hard To Scale.</span>
             </h2>
-            <p className="text-slate-600 text-base font-medium leading-relaxed">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-base font-medium leading-relaxed">
               Bisnis makanan tradisional Indonesia memiliki permintaan (demand) yang sangat besar, tetapi sering gagal berkembang saat membuka cabang baru.
             </p>
-            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-900 font-extrabold text-sm">
+            <div className="p-4 rounded-2xl bg-red-900 text-white font-extrabold text-sm shadow-md">
               "The problem is NOT demand. The problem is SCALABILITY."
             </div>
           </div>
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <AlertTriangle className="w-6 h-6 text-red-700" />
               <h4 className="font-extrabold text-slate-900 text-base">Ketergantungan Pada Lokasi</h4>
-              <p className="text-xs text-slate-600">Sewa ruko permanen yang mahal memperlambat ROI & mengunci fleksibilitas usaha.</p>
+              <p className="text-xs text-slate-600">Sewa ruko permanen yang mahal memperlambat ROI &amp; mengunci fleksibilitas tempat.</p>
             </div>
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
-              <h4 className="font-extrabold text-slate-900 text-base">Ketergantungan Koki & SDM</h4>
+              <AlertTriangle className="w-6 h-6 text-red-700" />
+              <h4 className="font-extrabold text-slate-900 text-base">Ketergantungan Koki &amp; SDM</h4>
               <p className="text-xs text-slate-600">Rasa berubah ketika koki berganti karena resep tidak terstandarisasi dengan ketat.</p>
             </div>
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <AlertTriangle className="w-6 h-6 text-red-700" />
               <h4 className="font-extrabold text-slate-900 text-base">Supply Chain Berkelanjutan</h4>
               <p className="text-xs text-slate-600">Kesulitan menjaga pasokan bahan baku segar dan berkualitas di banyak lokasi sekaligus.</p>
             </div>
             <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <AlertTriangle className="w-6 h-6 text-red-600" />
+              <AlertTriangle className="w-6 h-6 text-red-700" />
               <h4 className="font-extrabold text-slate-900 text-base">Operasional Rumit</h4>
               <p className="text-xs text-slate-600">Manajemen outlet manual membuat pemilik usaha kewalahan saat unit bertambah.</p>
             </div>
@@ -329,40 +437,41 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight max-w-3xl">
-            Turn a Daily Habit into a <span className="text-red-700">Scalable Food Brand.</span>
+            Turn a Daily Habit into a <span className="text-red-800">Scalable Food Brand.</span>
           </h2>
+          <div className="w-20 h-1.5 bg-red-700 rounded-full" />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-            <div className="p-6 rounded-3xl bg-slate-100 border border-slate-300 space-y-3 opacity-80">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3 opacity-90">
               <span className="text-xs font-bold text-slate-500 uppercase">Format Tradisional</span>
               <h3 className="text-lg font-bold text-slate-800">Traditional Street Food</h3>
-              <ul className="text-xs text-slate-600 space-y-2">
-                <li>• Murah & Merakyat</li>
+              <ul className="text-xs text-slate-600 space-y-2 font-medium">
+                <li>• Murah &amp; Merakyat</li>
                 <li>• Resep tidak terstandar</li>
-                <li>• Manajemen manual & acak</li>
+                <li>• Manajemen manual &amp; acak</li>
                 <li>• Sulit di-scale</li>
               </ul>
             </div>
 
-            <div className="p-6 rounded-3xl bg-red-700 text-white space-y-3 shadow-2xl ring-4 ring-red-100 transform scale-105 z-10">
+            <div className="p-6 rounded-3xl bg-red-900 text-white space-y-3 shadow-2xl ring-4 ring-red-100 transform scale-105 z-10">
               <span className="text-xs font-bold text-amber-300 uppercase">Posisi Sabuba</span>
-              <h3 className="text-xl font-black">SABUBA SYSTEM</h3>
+              <h3 className="text-xl font-black text-white">SABUBA SYSTEM</h3>
               <ul className="text-xs text-red-100 space-y-2 font-medium">
                 <li>✓ Signature Product Claypot</li>
                 <li>✓ Central Kitchen Production</li>
-                <li>✓ Standardized SOP & Fast Service</li>
+                <li>✓ Standardized SOP &amp; Fast Service</li>
                 <li>✓ Replicable Unit Economics</li>
               </ul>
             </div>
 
-            <div className="p-6 rounded-3xl bg-slate-100 border border-slate-300 space-y-3 opacity-80">
+            <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3 opacity-90">
               <span className="text-xs font-bold text-slate-500 uppercase">Format Korporat</span>
-              <h3 className="text-lg font-bold text-slate-800">Modern Chain F&B</h3>
-              <ul className="text-xs text-slate-600 space-y-2">
-                <li>• Standar & Sistem Baik</li>
+              <h3 className="text-lg font-bold text-slate-800">Modern Chain F&amp;B</h3>
+              <ul className="text-xs text-slate-600 space-y-2 font-medium">
+                <li>• Standar &amp; Sistem Baik</li>
                 <li>• CAPEX sangat tinggi (&gt;Rp 1M)</li>
                 <li>• Harga kurang terjangkau</li>
-                <li>• Lambat melakukan ekspansi</li>
+                <li>• Ekspansi lambat</li>
               </ul>
             </div>
           </div>
@@ -379,24 +488,25 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
           <div className="lg:col-span-5 space-y-5">
-            <DataBadge type="ACTUAL" text="PRODUCT CATALOGUE & MENU" />
+            <DataBadge type="ACTUAL" text="KATALOG MENU LENGKAP" />
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-              Bubur Bakar <span className="text-red-700">Claypot</span>
+              Bubur Bakar <span className="text-red-800">Claypot</span>
             </h2>
-            <p className="text-slate-600 text-base font-medium leading-relaxed">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-base font-medium leading-relaxed">
               Bukan sekadar bubur biasa. Sabuba menyajikan aroma harum panggang claypot hangat dengan pilihan kuah khas (Laksa, Semur, Ori, Kuning) serta aneka topping pilihan.
             </p>
             <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold">
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-950 text-xs font-bold">
                 🔥 Hot Claypot Served
               </div>
-              <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold">
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-950 text-xs font-bold">
                 ⏱️ &lt; 3 Min Turnaround
               </div>
-              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-900 text-xs font-bold">
-                🥟 Wonton & Dim Sum Add-ons
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-950 text-xs font-bold">
+                🥟 Wonton &amp; Dim Sum Add-ons
               </div>
-              <div className="p-3 rounded-2xl bg-sky-50 border border-sky-200 text-sky-900 text-xs font-bold">
+              <div className="p-3 rounded-2xl bg-red-50 border border-red-200 text-red-950 text-xs font-bold">
                 ☕ Kopi Hitam Nusantara
               </div>
             </div>
@@ -406,32 +516,32 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800" alt="Bubur Ori Mix" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Bubur (Ori) Mix</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 19.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 19.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800" alt="Bubur Kuah Laksa" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Bubur Kuah Laksa</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 19.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 19.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800" alt="Bubur Kuah Semur" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Kuah Semur + Telur</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 18.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 18.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800" alt="Wonton Kuah" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Wonton Kuah Ayam</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 13.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 13.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800" alt="Dim Sum Siomay" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Dim Sum Siomay (4pcs)</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 13.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 13.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
               <img src="https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800" alt="Kopi Nusantara" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Kopi Hitam Nusantara</div>
-              <div className="text-xs text-red-700 font-extrabold">Rp 8.000</div>
+              <div className="text-xs text-red-800 font-extrabold">Rp 8.000</div>
             </div>
           </div>
         </div>
@@ -447,47 +557,48 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="space-y-6 h-full flex flex-col justify-center">
           <div className="flex items-center gap-3">
-            <DataBadge type="ACTUAL" text="OPERATIONAL SYSTEM ARCHITECTURE" />
+            <DataBadge type="ACTUAL" text="ARSITEKTUR SISTEM OPERASIONAL" />
           </div>
 
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               We Don't Just Replicate Outlets. <br />
-              <span className="text-red-700">We Replicate A System.</span>
+              <span className="text-red-800">We Replicate A System.</span>
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base font-medium">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-sm sm:text-base font-medium">
               Kunci keberhasilan scale-up Sabuba adalah standarisasi seluruh rantai pasok dan operasional dari hilir ke hulu.
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-6 gap-3 pt-2">
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">1</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">1</div>
               <div className="font-extrabold text-xs text-slate-900">Central Kitchen</div>
-              <div className="text-[10px] text-slate-500">Pembuatan bumbu & kuah terpusat.</div>
+              <div className="text-[10px] text-slate-500">Pembuatan bumbu &amp; kuah terpusat.</div>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">2</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">2</div>
               <div className="font-extrabold text-xs text-slate-900">Supply Chain</div>
               <div className="text-[10px] text-slate-500">Distribusi vacuum terstandar.</div>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">3</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">3</div>
               <div className="font-extrabold text-xs text-slate-900">Unit Sabuba</div>
               <div className="text-[10px] text-slate-500">Penyajian cepat di lokasi.</div>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">4</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">4</div>
               <div className="font-extrabold text-xs text-slate-900">SOP Pelatihan</div>
               <div className="text-[10px] text-slate-500">Crew terlatih tanpa koki khusus.</div>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">5</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">5</div>
               <div className="font-extrabold text-xs text-slate-900">POS Cloud</div>
               <div className="text-[10px] text-slate-500">Data penjualan real-time 24/7.</div>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md text-center space-y-2">
-              <div className="w-8 h-8 rounded-full bg-red-100 text-red-700 mx-auto flex items-center justify-center font-bold text-xs">6</div>
+              <div className="w-8 h-8 rounded-full bg-red-800 text-white mx-auto flex items-center justify-center font-bold text-xs">6</div>
               <div className="font-extrabold text-xs text-slate-900">Customer</div>
               <div className="text-[10px] text-slate-500">Pengalaman rasa konsisten.</div>
             </div>
@@ -506,31 +617,32 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
           <div className="lg:col-span-6 space-y-5">
             <div className="flex flex-wrap items-center gap-2">
-              <DataBadge type="ACTUAL" text="CURRENT COMMERCIAL FORMAT" />
+              <DataBadge type="ACTUAL" text="FORMAT USAHA AKTIF" />
               <DataBadge type="ACTUAL" text="SABUBA CLASSIC (3-WHEEL MOTOR)" />
             </div>
 
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               Motor Custom 3 Roda <br />
-              <span className="text-red-700">Entry Format Teruji.</span>
+              <span className="text-red-800">Entry Format Teruji.</span>
             </h2>
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
 
-            <ul className="space-y-3 text-sm text-slate-600 font-medium">
+            <ul className="space-y-3 text-sm text-slate-700 font-medium">
               <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 100 Juta lengkap dengan kitchen setup & sistem POS.</span>
+                <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
+                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 100 Juta lengkap dengan kitchen setup &amp; sistem POS.</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
                 <span><strong className="text-slate-900">Mobilitas Tinggi:</strong> Fleksibel jemput bola di titik traffic sarapan pagi (perkantoran, sekolah, perumahan).</span>
               </li>
               <li className="flex items-start gap-3">
-                <CheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                <span><strong className="text-slate-900">Validasi Pasar Cepat:</strong> Menguji potensi titik lokasi baru tanpa risiko biaya sewa tempat jangka panjang.</span>
+                <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
+                <span><strong className="text-slate-900">Validasi Pasar Cepat:</strong> Menguji potensi titik lokasi baru tanpa risiko sewa tempat jangka panjang.</span>
               </li>
             </ul>
 
-            <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-300 text-amber-900 font-bold text-xs">
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-950 font-bold text-xs">
               <strong>Catatan Strategis:</strong> Motor adalah kendaraan awal untuk penguasaan titik ceruk sarapan pagi, bukan tujuan akhir bentuk fisik brand.
             </div>
           </div>
@@ -540,12 +652,12 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               <img
                 src="/assets/Konsep/1. Sabuba Classic.png"
                 alt="Sabuba Classic Motor Custom 3 Roda"
-                className="w-full h-[400px] object-cover"
+                className="w-full h-[380px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
-                <DataBadge type="ACTUAL" text="UNIT USLEEP SABUBA CLASSIC" />
-                <h4 className="font-extrabold text-lg mt-1">Sabuba Classic Custom Vehicle</h4>
-                <p className="text-xs text-slate-300">Desain kompak, rangka kokoh, stainless steel food grade, & siap jualan dalam waktu 5 menit.</p>
+                <DataBadge type="ACTUAL" text="UNIT ATAS KEMITRAAN SABUBA CLASSIC" />
+                <h4 className="font-extrabold text-lg mt-1 text-white">Sabuba Classic Custom Vehicle</h4>
+                <p className="text-xs text-slate-300">Desain kompak, rangka kokoh, stainless steel food grade, &amp; siap jualan dalam waktu 5 menit.</p>
               </div>
             </div>
           </div>
@@ -569,31 +681,32 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               The Motor Is The Entry Point. <br />
-              <span className="text-red-700">Sabuba House Is The Destination.</span>
+              <span className="text-red-800">Sabuba House Is The Destination.</span>
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base font-medium">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-sm sm:text-base font-medium">
               Evolusi wujud fisik outlet dari format street food menuju outlet modern permanen yang ramah keluarga.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <span className="text-[10px] font-black text-red-700 bg-red-50 px-2 py-0.5 rounded">PHASE 1</span>
+              <span className="text-[10px] font-black text-red-800 bg-red-50 px-2 py-0.5 rounded">PHASE 1</span>
               <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Classic</h4>
               <p className="text-xs text-slate-500">Motor 3 Roda / Street Food. Validasi unit awal.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <span className="text-[10px] font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded">PHASE 2</span>
+              <span className="text-[10px] font-black text-red-800 bg-red-50 px-2 py-0.5 rounded">PHASE 2</span>
               <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Point</h4>
               <p className="text-xs text-slate-500">Compact booth / ruko pick-up window.</p>
             </div>
             <div className="p-4 rounded-2xl bg-red-900 text-white shadow-xl space-y-2 ring-2 ring-red-400">
               <span className="text-[10px] font-black text-amber-300 bg-red-800 px-2 py-0.5 rounded">PHASE 3 — VISION</span>
               <h4 className="font-extrabold text-white text-sm">Sabuba House</h4>
-              <p className="text-xs text-red-200">Modern family-friendly dine-in breakfast outlet.</p>
+              <p className="text-xs text-red-100">Modern family-friendly dine-in breakfast outlet.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <span className="text-[10px] font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">PHASE 4</span>
+              <span className="text-[10px] font-black text-red-800 bg-red-50 px-2 py-0.5 rounded">PHASE 4</span>
               <h4 className="font-extrabold text-slate-900 text-sm">National Network</h4>
               <p className="text-xs text-slate-500">Jaringan restoran nasional terintegrasi.</p>
             </div>
@@ -603,8 +716,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             <img src="/assets/Konsep/2. Konsep Restaurant.png" alt="Konsep Sabuba House" className="absolute inset-0 w-full h-full object-cover opacity-40" />
             <div className="relative z-10 space-y-1">
               <DataBadge type="CONCEPT" text="FUTURE CONCEPT RENDER" />
-              <h3 className="text-2xl font-black">Sabuba House Outlet Concept</h3>
-              <p className="text-xs text-slate-300">Sentuhan warm wood, AC dine-in area, pick-up window, & suasana sarapan keluarga modern.</p>
+              <h3 className="text-2xl font-black text-white">Sabuba House Outlet Concept</h3>
+              <p className="text-xs text-slate-300">Sentuhan warm wood, AC dine-in area, pick-up window, &amp; suasana sarapan keluarga modern.</p>
             </div>
           </div>
         </div>
@@ -620,42 +733,43 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="space-y-6 h-full flex flex-col justify-center">
           <div className="flex items-center gap-3">
-            <DataBadge type="FORECAST" text="MENU & CATEGORY EXPANSION ROADMAP" />
+            <DataBadge type="FORECAST" text="MENU &amp; CATEGORY EXPANSION ROADMAP" />
           </div>
 
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               More Than Breakfast. <br />
-              <span className="text-red-700">A Modern Indonesian Food Brand.</span>
+              <span className="text-red-800">A Modern Indonesian Food Brand.</span>
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base font-medium">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-sm sm:text-base font-medium">
               Memulai dari bubur bakar claypot, lalu berkembang secara selektif ke makanan kenyamanan harian (comfort food) keluarga Indonesia.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
-              <span className="text-xs font-bold text-red-700 uppercase">Category Anchor</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Category Anchor</span>
               <h4 className="font-extrabold text-slate-900 text-lg">Signature Breakfast</h4>
-              <ul className="text-xs text-slate-600 space-y-2">
+              <ul className="text-xs text-slate-600 space-y-2 font-medium">
                 <li>✓ Bubur Bakar Claypot (Ori, Laksa, Semur)</li>
                 <li>✓ Telur Kampung Half-Boiled</li>
-                <li>✓ Kopi Hitam & Teh Nusantara</li>
+                <li>✓ Kopi Hitam &amp; Teh Nusantara</li>
               </ul>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
-              <span className="text-xs font-bold text-amber-700 uppercase">Side & Add-Ons</span>
-              <h4 className="font-extrabold text-slate-900 text-lg">Dim Sum & Wonton</h4>
-              <ul className="text-xs text-slate-600 space-y-2">
+              <span className="text-xs font-bold text-red-800 uppercase">Side &amp; Add-Ons</span>
+              <h4 className="font-extrabold text-slate-900 text-lg">Dim Sum &amp; Wonton</h4>
+              <ul className="text-xs text-slate-600 space-y-2 font-medium">
                 <li>✓ Wonton Kuah Dumpling Ayam</li>
                 <li>✓ Dim Sum Siomay Ayam</li>
                 <li>✓ Aneka Sate-satean Pendamping</li>
               </ul>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
-              <span className="text-xs font-bold text-purple-700 uppercase">Future Expansion</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Future Expansion</span>
               <h4 className="font-extrabold text-slate-900 text-lg">All-Day Comfort Food</h4>
-              <ul className="text-xs text-slate-600 space-y-2">
+              <ul className="text-xs text-slate-600 space-y-2 font-medium">
                 <li>• Rice-based Claypot Meals</li>
                 <li>• Indonesian Comfort Soups</li>
                 <li>• Specialty Artisan Drinks</li>
@@ -667,55 +781,52 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 10: SOCIAL PROOF
+    // Slide 10: SOCIAL PROOF (6 VIRAL VIDEO REVIEWS)
     // ----------------------------------------------------
     {
       id: 'slide-10-social-proof',
-      title: 'SOCIAL PROOF',
+      title: 'SOCIAL PROOF (6 VIRAL VIDEO REVIEWS)',
       content: (
-        <div className="space-y-6 h-full flex flex-col justify-center">
-          <div className="flex items-center gap-3">
-            <DataBadge type="ACTUAL" text="AUTHENTIC VIRAL TIKTOK REVIEWS" />
+        <div className="space-y-4 h-full flex flex-col justify-center">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <DataBadge type="ACTUAL" text="6 VIRAL TIKTOK VIDEO REVIEWS" />
+            </div>
+            <span className="text-xs font-bold text-red-800">Authentic Foodie Coverage</span>
           </div>
 
-          <div className="max-w-3xl space-y-2">
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-              People Are Already <span className="text-red-700">Talking About Sabuba.</span>
+          <div className="max-w-3xl space-y-1">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
+              People Are Already <span className="text-red-800">Talking About Sabuba.</span>
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base font-medium">
-              Mendapatkan sambutan hangat dan ulasan antusias dari berbagai kuliner influencer & pelanggan di Sidoarjo.
-            </p>
+            <div className="w-16 h-1 bg-red-700 rounded-full" />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
-                <span>@dilarang.duduk</span>
+          {/* 6 Video Cards Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+            {socialProofVideos.map((vid, idx) => (
+              <div key={idx} className="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2 hover:border-red-300 transition-all flex flex-col justify-between">
+                <div className="relative rounded-xl overflow-hidden group h-24">
+                  <img src={vid.image} alt={vid.handle} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                  <div className="absolute inset-0 bg-slate-950/40 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-red-800 text-white flex items-center justify-center shadow-lg">
+                      <Play className="w-4 h-4 fill-white ml-0.5" />
+                    </div>
+                  </div>
+                  <span className="absolute top-2 left-2 px-2 py-0.5 rounded bg-slate-900/80 text-[9px] font-bold text-white">
+                    {vid.tag}
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <div className="font-extrabold text-xs text-red-800 flex items-center gap-1">
+                    <Video className="w-3 h-3" />
+                    <span>{vid.handle}</span>
+                  </div>
+                  <p className="text-[11px] text-slate-700 italic line-clamp-2">"{vid.quote}"</p>
+                </div>
               </div>
-              <p className="text-xs text-slate-700 italic">"Bubur bakar claypot pertama di Sidoarjo yang rempahnya berasa bgt & smoky khas claypot!"</p>
-              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
-            </div>
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
-                <span>@mmekuliner</span>
-              </div>
-              <p className="text-xs text-slate-700 italic">"Antrean sarapan pagi rame bgt! Wonton kuah & dim sum siomay-nya wajib dicoba."</p>
-              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
-            </div>
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
-                <span>@amaryroose</span>
-              </div>
-              <p className="text-xs text-slate-700 italic">"Sensasi sarapan panas claypot yang ramah kantong tapi rasa resto premium!"</p>
-              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
-            </div>
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-red-700">
-                <span>@aprilliachil</span>
-              </div>
-              <p className="text-xs text-slate-700 italic">"Pilihan sarapan sehat keluarga. Porsi pas & kuah laksanya gurih hangat di perut."</p>
-              <DataBadge type="ACTUAL" text="VIRAL TIKTOK REVIEW" />
-            </div>
+            ))}
           </div>
         </div>
       )
@@ -730,15 +841,16 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
           <div className="lg:col-span-5 space-y-5">
-            <DataBadge type="ACTUAL" text="SIDOARJO OPERATIONAL CLUSTER" />
+            <DataBadge type="ACTUAL" text="KLASTER OPERASIONAL SIDOARJO" />
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-              Start Where We <span className="text-red-700">Know The Market.</span>
+              Start Where We <span className="text-red-800">Know The Market.</span>
             </h2>
-            <p className="text-slate-600 text-sm sm:text-base font-medium">
-              Sidoarjo dipilih sebagai titik awal ekspansi (beachhead) karena keberadaan basis operasional & Central Kitchen pertama Sabuba.
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-sm sm:text-base font-medium">
+              Sidoarjo dipilih sebagai titik awal ekspansi (beachhead) karena keberadaan basis operasional &amp; Central Kitchen pertama Sabuba.
             </p>
-            <div className="p-4 rounded-2xl bg-slate-900 text-white font-bold text-xs space-y-1">
-              <div className="text-amber-400 font-extrabold uppercase">Rute Ekspansi Regional:</div>
+            <div className="p-4 rounded-2xl bg-red-900 text-white font-bold text-xs space-y-1">
+              <div className="text-amber-300 font-extrabold uppercase">Rute Ekspansi Regional:</div>
               <div>Sidoarjo → Jawa Timur → Pulau Jawa → Seluruh Indonesia</div>
             </div>
           </div>
@@ -771,45 +883,69 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 12: TAM / SAM / SOM
+    // Slide 12: TAM / SAM / SOM (BPS WATERFALL DATA)
     // ----------------------------------------------------
     {
-      id: 'slide-12-tam-sam-som',
-      title: 'TAM / SAM / SOM',
+      id: 'slide-12-tam-sam-som-bps',
+      title: 'TAM / SAM / SOM (PROYEKSI DATA BPS)',
       content: (
-        <div className="space-y-6 h-full flex flex-col justify-center">
+        <div className="space-y-5 h-full flex flex-col justify-center">
           <div className="flex flex-wrap items-center gap-2">
-            <DataBadge type="VERIFY" text="DATA NEEDED — VERIFY BEFORE PUBLICATION" />
-            <DataBadge type="ASSUMPTION" text="BOTTOM-UP MARKET SIZING MODEL" />
+            <DataBadge type="ACTUAL" text="DATA MAKRO BPS RI &amp; BPS SIDOARJO" />
+            <DataBadge type="ASSUMPTION" text="TOP-DOWN WATERFALL MODEL" />
           </div>
 
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-              A Big Market. <span className="text-red-700">A Focused Entry.</span>
+              A Big Market. <span className="text-red-800">A Focused Entry.</span>
             </h2>
-            <p className="text-slate-600 text-xs sm:text-sm font-medium">
-              *Catatan Transparansi: Angka TAM Rp120T dari proposal lama ditandai untuk verifikasi data eksternal. Kami menggunakan pendekatan bottom-up realistis untuk estimasi potensi pasar sarapan.
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-xs sm:text-sm font-medium">
+              Data resmi BPS menurunkan estimasi potensi pasar secara sistematis dari tingkat Nasional, Regional Jawa Timur, hingga penetrasi lokal Kabupaten Sidoarjo.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <span className="text-xs font-bold text-slate-500 uppercase">TAM (Total Market)</span>
-              <h4 className="font-black text-slate-900 text-xl">Nasional Sarapan</h4>
-              <p className="text-xs text-slate-600">Total belanja makan pagi & comfort food harian seluruh masyarakat Indonesia.</p>
-              <DataBadge type="VERIFY" text="VERIFY EX-DATA" />
+            {/* TAM - Nasional BPS */}
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-red-800 uppercase">TAM (Nasional BPS)</span>
+                <span className="text-[10px] bg-red-50 text-red-800 px-2 py-0.5 rounded font-bold">BPS RI 2023</span>
+              </div>
+              <h4 className="font-black text-slate-900 text-2xl">Rp 120+ Triliun</h4>
+              <ul className="text-xs text-slate-600 space-y-1.5 font-medium">
+                <li>• Total Populasi Indonesia: <strong>278,7 Juta Jiwa</strong></li>
+                <li>• Pengeluaran Makanan Jadi: Rp 425.000+/bln/jiwa</li>
+                <li>• Pasar konsumsi makanan siap saji &amp; sarapan pagi harian nasional.</li>
+              </ul>
             </div>
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-md space-y-3">
-              <span className="text-xs font-bold text-sky-700 uppercase">SAM (Serviceable Market)</span>
-              <h4 className="font-black text-slate-900 text-xl">Perkotaan Jawa Timur</h4>
-              <p className="text-xs text-slate-600">Populasi urban area Gerbangkertosusila & Jawa Timur yang mengonsumsi sarapan di luar rumah.</p>
-              <DataBadge type="ASSUMPTION" text="ESTIMASI BPS URBAN" />
+
+            {/* SAM - Jawa Timur BPS */}
+            <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-red-800 uppercase">SAM (Jawa Timur BPS)</span>
+                <span className="text-[10px] bg-red-50 text-red-800 px-2 py-0.5 rounded font-bold">BPS JATIM</span>
+              </div>
+              <h4 className="font-black text-slate-900 text-2xl">Rp 8,4 Triliun</h4>
+              <ul className="text-xs text-slate-600 space-y-1.5 font-medium">
+                <li>• Populasi Jawa Timur: <strong>41,4 Juta Jiwa</strong></li>
+                <li>• Urban Gerbangkertosusila: 12,8 Juta</li>
+                <li>• Partisipasi Sarapan Luar Rumah: ~42% warga perkotaan.</li>
+              </ul>
             </div>
+
+            {/* SOM - Sidoarjo Beachhead */}
             <div className="p-5 rounded-3xl bg-red-900 text-white shadow-xl space-y-3">
-              <span className="text-xs font-bold text-amber-300 uppercase">SOM (Target Sabuba)</span>
-              <h4 className="font-black text-amber-400 text-xl">Cluster Sidoarjo & Sekitar</h4>
-              <p className="text-xs text-red-100">Target penetrasi realistis: 20-50 unit Sabuba Classic di koridor utama Sidoarjo & Surabaya.</p>
-              <DataBadge type="TARGET" text="CLUSTER GOAL" />
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-amber-300 uppercase">SOM (Klaster Sidoarjo)</span>
+                <span className="text-[10px] bg-red-800 text-amber-300 px-2 py-0.5 rounded font-bold">TARGET 20 UNIT</span>
+              </div>
+              <h4 className="font-black text-amber-400 text-2xl">Rp 21,6 Miliar/thn</h4>
+              <ul className="text-xs text-red-100 space-y-1.5 font-medium">
+                <li>• Populasi Kab. Sidoarjo: <strong>2.082.800 Jiwa</strong> (BPS 2023)</li>
+                <li>• Angkatan Kerja Pagi: ~1.15 Juta</li>
+                <li>• Target SOM: 20 Unit Sabuba Classic × 150 Cup/hari × Rp 20.000 APC.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -817,89 +953,164 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     },
 
     // ----------------------------------------------------
-    // Slide 13: UNIT ECONOMICS & INTERACTIVE SIMULATOR
+    // Slide 13: FULL FEASIBILITY STUDY & HISTORICAL POS TABLE
     // ----------------------------------------------------
     {
-      id: 'slide-13-unit-economics',
-      title: 'UNIT ECONOMICS & FINANCIAL MODEL',
+      id: 'slide-13-full-feasibility-study',
+      title: 'UNIT ECONOMICS & FULL FEASIBILITY STUDY',
       content: (
         <div className="space-y-4 h-full flex flex-col justify-center">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
-              <DataBadge type="TARGET" text="4 SCENARIO SIMULATOR" />
-              <DataBadge type="ASSUMPTION" text="HPP 40% | OPEX 15%" />
+              <DataBadge type="ACTUAL" text="STUDI KELAYAKAN RESMI (4 SKENARIO)" />
+              <DataBadge type="ASSUMPTION" text="CAPEX RP 100M | HPP 40% | OPEX ~15%" />
             </div>
-            <DataBadge type="ACTUAL" text="BASELINE HISTORIS: AUG 2026 OMSET RP 80,1M (OUTLET A. YANI)" />
+            <button
+              onClick={() => setShowHistoricalPos(!showHistoricalPos)}
+              className="text-xs font-bold text-red-800 hover:text-red-950 underline flex items-center gap-1"
+            >
+              {showHistoricalPos ? 'Lihat Tabel Feasibility Study' : 'Lihat Data Historis POS 2026 (A. Yani)'}
+              {showHistoricalPos ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
-            One Unit. <span className="text-red-700">One Repeatable Model.</span>
-          </h2>
-
-          {/* Scenario Selector Tabs */}
-          <div className="flex items-center gap-2 bg-slate-200/70 p-1.5 rounded-2xl overflow-x-auto">
-            {financialScenarios.map((sc, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveScenarioIdx(idx)}
-                className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
-                  activeScenarioIdx === idx
-                    ? 'bg-red-700 text-white shadow-md scale-105'
-                    : 'text-slate-700 hover:bg-slate-300/60'
-                }`}
-              >
-                {sc.name} ({sc.cupsDay} Cup/Hari)
-              </button>
-            ))}
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900">
+              One Unit. <span className="text-red-800">One Repeatable Model.</span>
+            </h2>
+            
+            {/* Scenario Tabs */}
+            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+              {feasibilityScenarios.map((sc, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => { setActiveScenarioIdx(idx); setShowHistoricalPos(false); }}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all ${
+                    activeScenarioIdx === idx && !showHistoricalPos
+                      ? 'bg-red-800 text-white shadow-sm'
+                      : 'text-slate-700 hover:bg-slate-200'
+                  }`}
+                >
+                  {sc.name}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Active Scenario Card Breakdown */}
-          {(() => {
-            const sc = financialScenarios[activeScenarioIdx];
-            return (
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <div className="md:col-span-5 space-y-4 border-r border-slate-100 pr-0 md:pr-6">
-                  <div>
-                    <span className="text-xs font-bold text-slate-500 uppercase">Skenario Penjualan</span>
-                    <h3 className="text-3xl font-black text-slate-900">{sc.cupsDay} Cup / Hari</h3>
-                    <p className="text-xs text-slate-500">Asumsi Rata-rata Harga Jual (APC): Rp 20.000 / porsi</p>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200">
-                      <div className="text-[10px] text-slate-500 font-bold uppercase">Omset / Bulan</div>
-                      <div className="text-lg font-black text-slate-900">{formatRupiah(sc.salesMonth)}</div>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-emerald-50 border border-emerald-200">
-                      <div className="text-[10px] text-emerald-700 font-bold uppercase">Payback Period</div>
-                      <div className="text-lg font-black text-emerald-800">{sc.paybackMonths}</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="md:col-span-7 grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-                    <div className="text-[10px] font-bold text-slate-500 uppercase">HPP / COGS (40%)</div>
-                    <div className="text-base font-extrabold text-slate-900">{formatRupiah(sc.cogsAmount)}</div>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-                    <div className="text-[10px] font-bold text-slate-500 uppercase">OPEX (Operasional ~15%)</div>
-                    <div className="text-base font-extrabold text-slate-900">{formatRupiah(sc.opexAmount)}</div>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-slate-900 text-white space-y-1 col-span-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-amber-400 uppercase">Net Profit Store (45%)</span>
-                      <DataBadge type="TARGET" text="STORE EBITDA" />
-                    </div>
-                    <div className="text-2xl font-black text-white">{formatRupiah(sc.storeNetProfit)} / bulan</div>
-                    <div className="text-xs text-amber-300 font-bold pt-1 border-t border-slate-800 flex justify-between">
-                      <span>Bagian Mitra (50% Bagi Hasil):</span>
-                      <strong className="text-white text-sm">{formatRupiah(sc.partnerShare50)} / bulan</strong>
-                    </div>
-                  </div>
-                </div>
+          {!showHistoricalPos ? (
+            /* Full Feasibility Study Breakdown Table */
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xl overflow-x-auto">
+              {(() => {
+                const sc = feasibilityScenarios[activeScenarioIdx];
+                return (
+                  <table className="w-full text-left border-collapse text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50 text-slate-700 uppercase font-black">
+                        <th className="py-2.5 px-3">Komponen Keuangan</th>
+                        <th className="py-2.5 px-3 text-right">Per Hari</th>
+                        <th className="py-2.5 px-3 text-right">Per Bulan (30 H)</th>
+                        <th className="py-2.5 px-3 text-right">Per Tahun</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+                      <tr>
+                        <td className="py-2 px-3 font-bold text-slate-900">Target Transaksi (Cups Sold @ Rp 20.000)</td>
+                        <td className="py-2 px-3 text-right font-black text-red-800">{sc.tcDay} Cup</td>
+                        <td className="py-2 px-3 text-right font-black text-red-800">{sc.tcMonth.toLocaleString()} Cup</td>
+                        <td className="py-2 px-3 text-right font-black text-red-800">{(sc.tcMonth * 12).toLocaleString()} Cup</td>
+                      </tr>
+                      <tr className="bg-slate-50/50">
+                        <td className="py-2 px-3 font-bold text-slate-900">Gross Sales / Total Omset</td>
+                        <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.salesDay)}</td>
+                        <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.salesMonth)}</td>
+                        <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.salesYear)}</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 px-3 text-slate-600">HPP / COGS (Bahan Baku 40%)</td>
+                        <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.salesDay * 0.4)}</td>
+                        <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.hppAmount)}</td>
+                        <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.hppAmount * 12)}</td>
+                      </tr>
+                      <tr className="font-bold text-slate-900 bg-red-50/40">
+                        <td className="py-2 px-3">Laba Kotor (Gross Profit 60%)</td>
+                        <td className="py-2 px-3 text-right">{formatRupiah(sc.salesDay * 0.6)}</td>
+                        <td className="py-2 px-3 text-right">{formatRupiah(sc.grossProfitAmount)}</td>
+                        <td className="py-2 px-3 text-right">{formatRupiah(sc.grossProfitAmount * 12)}</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1.5 px-3 text-slate-500 pl-6">• Gaji Karyawan Operasional (HQ)</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsKaryawan / 30)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsKaryawan)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsKaryawan * 12)}</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1.5 px-3 text-slate-500 pl-6">• Perlengkapan &amp; Ops Rumah Tangga</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsRumahTangga / 30)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsRumahTangga)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsRumahTangga * 12)}</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1.5 px-3 text-slate-500 pl-6">• Listrik, Air, Fuel &amp; Gas</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsListrikAirFuel / 30)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsListrikAirFuel)}</td>
+                        <td className="py-1.5 px-3 text-right text-slate-500">{formatRupiah(sc.opsListrikAirFuel * 12)}</td>
+                      </tr>
+                      <tr className="bg-slate-50">
+                        <td className="py-2 px-3 font-bold text-slate-800">Total OPEX (Operasional ~15%)</td>
+                        <td className="py-2 px-3 text-right font-bold">{formatRupiah(sc.totalOpsAmount / 30)}</td>
+                        <td className="py-2 px-3 text-right font-bold">{formatRupiah(sc.totalOpsAmount)}</td>
+                        <td className="py-2 px-3 text-right font-bold">{formatRupiah(sc.totalOpsAmount * 12)}</td>
+                      </tr>
+                      <tr className="bg-red-900 text-white font-black">
+                        <td className="py-2.5 px-3">EBITDA Store Net Profit (45%)</td>
+                        <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore / 30)}</td>
+                        <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore)}</td>
+                        <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore * 12)}</td>
+                      </tr>
+                      <tr className="bg-amber-500/20 text-amber-950 font-black">
+                        <td className="py-2.5 px-3">Bagi Hasil Mitra Pasif (50%)</td>
+                        <td className="py-2.5 px-3 text-right">{formatRupiah(sc.mitraShare50 / 30)}</td>
+                        <td className="py-2.5 px-3 text-right text-red-900">{formatRupiah(sc.mitraShare50)} / bln</td>
+                        <td className="py-2.5 px-3 text-right text-red-900">{formatRupiah(sc.mitraShare50 * 12)} / thn</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                );
+              })()}
+            </div>
+          ) : (
+            /* Historical Real POS Sales Table */
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-xl space-y-3">
+              <div className="flex items-center justify-between">
+                <DataBadge type="ACTUAL" text="HISTORIS KINERJA REAL OUTLET A. YANI SIDOARJO (JAN - AGU 2026)" />
+                <span className="text-xs font-bold text-slate-500">POS Cloud Sync Verified</span>
               </div>
-            );
-          })()}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="border-b border-slate-200 bg-slate-50 text-slate-700 uppercase font-black">
+                      <th className="py-2.5 px-3">Periode</th>
+                      <th className="py-2.5 px-3 text-right">Gross Sales (Omset)</th>
+                      <th className="py-2.5 px-3 text-right">EBITDA Net Profit</th>
+                      <th className="py-2.5 px-3 text-right">Profit Margin</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 font-medium text-slate-800">
+                    {realPosData.map((row, i) => (
+                      <tr key={i} className={i === realPosData.length - 1 ? 'bg-red-50 font-bold' : ''}>
+                        <td className="py-2 px-3 font-bold">{row.period}</td>
+                        <td className="py-2 px-3 text-right">{formatRupiah(row.omset)}</td>
+                        <td className="py-2 px-3 text-right text-red-800 font-black">{formatRupiah(row.profit)}</td>
+                        <td className="py-2 px-3 text-right font-bold text-emerald-800">
+                          {((row.profit / row.omset) * 100).toFixed(1)}%
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       )
     },
@@ -913,37 +1124,38 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
           <div className="lg:col-span-5 space-y-5">
-            <DataBadge type="ACTUAL" text="COMMERCIAL PARTNERSHIP OFFER" />
+            <DataBadge type="ACTUAL" text="PENAWARAN KEMITRAAN RESMI" />
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               A Business System, <br />
-              <span className="text-red-700">Not Just A Package.</span>
+              <span className="text-red-800">Not Just A Package.</span>
             </h2>
-            <p className="text-slate-600 text-sm font-medium leading-relaxed">
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
+            <p className="text-slate-700 text-sm font-medium leading-relaxed">
               Skema kemitraan pasif yang dirancang transparan, akuntabel, dan didukung penuh oleh tim operasional profesional HQ Sabuba.
             </p>
-            <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs font-semibold leading-relaxed">
-              ⚠️ <strong>Prinsip Transparansi:</strong> Sabuba tidak menggunakan klaim "guaranteed profit" atau "guaranteed ROI". Keuntungan didasarkan pada performa riil outlet & laporan POS Cloud transparan 24/7.
+            <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-950 text-xs font-semibold leading-relaxed">
+              ⚠️ <strong>Prinsip Transparansi:</strong> Sabuba tidak menggunakan klaim "guaranteed profit" atau "guaranteed ROI". Keuntungan didasarkan pada performa riil outlet &amp; laporan POS Cloud transparan 24/7.
             </div>
           </div>
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
-              <span className="text-xs font-bold text-red-700 uppercase">Modal Awal CAPEX</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Modal Awal CAPEX</span>
               <h4 className="text-2xl font-black text-slate-900">Rp 100.000.000</h4>
-              <p className="text-xs text-slate-500">Unit Sabuba Classic, peralatan kitchen lengkap, branding, & sistem POS.</p>
+              <p className="text-xs text-slate-500">Unit Sabuba Classic, peralatan kitchen lengkap, branding, &amp; sistem POS.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
-              <span className="text-xs font-bold text-emerald-700 uppercase">Nisbah Bagi Hasil</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Nisbah Bagi Hasil</span>
               <h4 className="text-2xl font-black text-slate-900">50% : 50%</h4>
-              <p className="text-xs text-slate-500">Pembagian laba bersih toko antara Mitra Pasif & Pengelola HQ.</p>
+              <p className="text-xs text-slate-500">Pembagian laba bersih toko antara Mitra Pasif &amp; Pengelola HQ.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
-              <span className="text-xs font-bold text-sky-700 uppercase">Manajemen Operasional</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Manajemen Operasional</span>
               <h4 className="text-2xl font-black text-slate-900">100% HQ Managed</h4>
-              <p className="text-xs text-slate-500">Rekrutmen crew, suplai bahan, & operasional harian diurus tim HQ.</p>
+              <p className="text-xs text-slate-500">Rekrutmen crew, suplai bahan, &amp; operasional harian diurus tim HQ.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
-              <span className="text-xs font-bold text-purple-700 uppercase">Transparansi Penjualan</span>
+              <span className="text-xs font-bold text-red-800 uppercase">Transparansi Penjualan</span>
               <h4 className="text-2xl font-black text-slate-900">POS Cloud 24/7</h4>
               <p className="text-xs text-slate-500">Akses langsung ke aplikasi kasir cloud untuk memantau omset real-time.</p>
             </div>
@@ -967,50 +1179,51 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
               One Proven Unit → <br />
-              <span className="text-red-700">Repeatable Clusters → Network.</span>
+              <span className="text-red-800">Repeatable Clusters → Network.</span>
             </h2>
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 1</div>
+              <div className="text-xs font-bold text-red-800">STEP 1</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Prove Unit Economics</h4>
-              <p className="text-xs text-slate-500">Validasi omset & profit di cluster Sidoarjo.</p>
+              <p className="text-xs text-slate-500">Validasi omset &amp; profit di cluster Sidoarjo.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 2</div>
+              <div className="text-xs font-bold text-red-800">STEP 2</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Standardize Operations</h4>
-              <p className="text-xs text-slate-500">Pembekuan SOP & resep Central Kitchen.</p>
+              <p className="text-xs text-slate-500">Pembekuan SOP &amp; resep Central Kitchen.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 3</div>
+              <div className="text-xs font-bold text-red-800">STEP 3</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Strengthen Kitchen</h4>
               <p className="text-xs text-slate-500">Peningkatan kapasitas produksi bumbu induk.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 4</div>
+              <div className="text-xs font-bold text-red-800">STEP 4</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Build Cluster Density</h4>
               <p className="text-xs text-slate-500">Penambahan 20+ unit di Jawa Timur.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 5</div>
+              <div className="text-xs font-bold text-red-800">STEP 5</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Sabuba Point Launch</h4>
-              <p className="text-xs text-slate-500">Uji coba booth & pick-up window modern.</p>
+              <p className="text-xs text-slate-500">Uji coba booth &amp; pick-up window modern.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 6</div>
+              <div className="text-xs font-bold text-red-800">STEP 6</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Geographical Expansion</h4>
               <p className="text-xs text-slate-500">Penetrasi kota-kota besar di Pulau Jawa.</p>
             </div>
             <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <div className="text-xs font-bold text-red-700">STEP 7</div>
+              <div className="text-xs font-bold text-red-800">STEP 7</div>
               <h4 className="font-extrabold text-slate-900 text-sm">Sabuba House Pilot</h4>
               <p className="text-xs text-slate-500">Peluncuran flagship dine-in restaurant.</p>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900 text-white shadow-xl space-y-2">
-              <div className="text-xs font-bold text-amber-400">STEP 8</div>
+            <div className="p-4 rounded-2xl bg-red-900 text-white shadow-xl space-y-2">
+              <div className="text-xs font-bold text-amber-300">STEP 8</div>
               <h4 className="font-extrabold text-white text-sm">National Brand</h4>
-              <p className="text-xs text-slate-300">Top of mind sarapan keluarga Indonesia.</p>
+              <p className="text-xs text-slate-200">Top of mind sarapan keluarga Indonesia.</p>
             </div>
           </div>
         </div>
@@ -1026,41 +1239,42 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       content: (
         <div className="space-y-6 h-full flex flex-col justify-center">
           <div className="flex items-center gap-3">
-            <DataBadge type="TARGET" text="STRATEGIC EXPANSION TIMELINE" />
+            <DataBadge type="TARGET" text="TIMELINE EKSPANSI STRATEGIS" />
           </div>
 
           <div className="max-w-3xl space-y-2">
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight">
-              From Sidoarjo <span className="text-red-700">To Indonesia.</span>
+              From Sidoarjo <span className="text-red-800">To Indonesia.</span>
             </h2>
+            <div className="w-20 h-1.5 bg-red-700 rounded-full" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 pt-4">
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
-              <span className="text-2xl font-black text-red-700">2026</span>
+              <span className="text-2xl font-black text-red-800">2026</span>
               <h4 className="font-extrabold text-slate-900">Validation Phase</h4>
-              <p className="text-xs text-slate-600">Validasi rasa, sistem SOP, & unit economics Sabuba Classic di Sidoarjo.</p>
+              <p className="text-xs text-slate-600">Validasi rasa, sistem SOP, &amp; unit economics Sabuba Classic di Sidoarjo.</p>
               <DataBadge type="ACTUAL" text="CURRENT PHASE" />
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
-              <span className="text-2xl font-black text-amber-600">2027</span>
+              <span className="text-2xl font-black text-red-800">2027</span>
               <h4 className="font-extrabold text-slate-900">Regional Cluster</h4>
-              <p className="text-xs text-slate-600">Ekspansi jaringan Sabuba Classic & Sabuba Point di wilayah Jawa Timur.</p>
+              <p className="text-xs text-slate-600">Ekspansi jaringan Sabuba Classic &amp; Sabuba Point di wilayah Jawa Timur.</p>
               <DataBadge type="TARGET" text="TARGET 50+ UNITS" />
             </div>
 
             <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-3 relative">
-              <span className="text-2xl font-black text-sky-600">2028</span>
+              <span className="text-2xl font-black text-red-800">2028</span>
               <h4 className="font-extrabold text-slate-900">Sabuba House Pilot</h4>
               <p className="text-xs text-slate-600">Peluncuran outlet dine-in Sabuba House pertama untuk pengalaman sarapan keluarga.</p>
               <DataBadge type="CONCEPT" text="FLAGSHIP DINE-IN" />
             </div>
 
-            <div className="p-6 rounded-3xl bg-slate-900 text-white shadow-2xl space-y-3 relative">
-              <span className="text-2xl font-black text-amber-400">2029+</span>
+            <div className="p-6 rounded-3xl bg-red-900 text-white shadow-2xl space-y-3 relative">
+              <span className="text-2xl font-black text-amber-300">2029+</span>
               <h4 className="font-extrabold text-white">National Network</h4>
-              <p className="text-xs text-slate-300">Ekspansi ke seluruh kota besar di Indonesia sebagai brand sarapan nasional.</p>
+              <p className="text-xs text-slate-200">Ekspansi ke seluruh kota besar di Indonesia sebagai brand sarapan nasional.</p>
               <DataBadge type="TARGET" text="NATIONAL BRAND" />
             </div>
           </div>
@@ -1076,7 +1290,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       title: 'CLOSING — FROM ONE BOWL TO A NATIONAL BRAND',
       content: (
         <div className="space-y-6 h-full flex flex-col justify-center text-center items-center max-w-4xl mx-auto">
-          <DataBadge type="ACTUAL" text="FINAL BRAND MESSAGE" />
+          <DataBadge type="ACTUAL" text="PESAN UTAMA BRAND" />
 
           <motion.h1
             initial={{ scale: 0.9, opacity: 0 }}
@@ -1084,39 +1298,40 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             className="text-4xl sm:text-6xl font-black text-slate-900 leading-tight tracking-tight"
           >
             FROM ONE BOWL <br />
-            TO A <span className="text-red-700">NATIONAL INDONESIAN</span> FOOD BRAND.
+            TO A <span className="text-red-800">NATIONAL INDONESIAN</span> FOOD BRAND.
           </motion.h1>
+          <div className="w-24 h-1.5 bg-red-700 rounded-full mx-auto" />
 
-          <p className="text-slate-600 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
+          <p className="text-slate-700 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
             Sabuba dimulai dari satu kebutuhan sederhana: <strong>sarapan hangat untuk keluarga Indonesia.</strong> Hari ini kami membangun unit pertama. Besok kami membangun sistem. Dan berikutnya, kami membangun brand nasional.
           </p>
 
-          <div className="p-6 rounded-3xl bg-slate-900 text-white w-full max-w-2xl space-y-4 shadow-2xl">
-            <h3 className="text-xl font-extrabold text-amber-400">Partner With Sabuba Today</h3>
-            <p className="text-xs text-slate-300">Bergabunglah sebagai mitra pasif awal dalam membangun brand kuliner sarapan Indonesia masa depan.</p>
+          <div className="p-6 rounded-3xl bg-red-950 text-white w-full max-w-2xl space-y-4 shadow-2xl border border-red-900">
+            <h3 className="text-xl font-extrabold text-amber-300">Partner With Sabuba Today</h3>
+            <p className="text-xs text-slate-200 font-medium">Bergabunglah sebagai mitra pasif awal dalam membangun brand kuliner sarapan Indonesia masa depan.</p>
             
             <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
               <a
                 href="https://wa.me/6281359180156?text=Halo%20HQ%20Sabuba,%20saya%20tertarik%20diskusi%20kemitraan%20Sabuba%20Classic"
                 target="_blank"
                 rel="noreferrer"
-                className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all"
+                className="px-6 py-3 rounded-2xl bg-white hover:bg-slate-100 text-red-950 font-black text-sm flex items-center gap-2 shadow-lg transition-all"
               >
                 <span>Konsultasi via WhatsApp</span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-red-800" />
               </a>
 
               <button
                 onClick={() => window.print()}
-                className="px-6 py-3 rounded-2xl bg-red-700 hover:bg-red-800 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all"
+                className="px-6 py-3 rounded-2xl bg-red-800 hover:bg-red-700 text-white font-extrabold text-sm flex items-center gap-2 shadow-lg transition-all border border-red-700"
               >
                 <Download className="w-4 h-4" />
-                <span>Download Executive PDF</span>
+                <span>Export PDF Proposal</span>
               </button>
             </div>
           </div>
 
-          <div className="text-xs text-slate-400 font-semibold pt-2">
+          <div className="text-xs text-slate-500 font-semibold pt-2">
             Official Website: www.sabubabuburbakar.com | WhatsApp HQ: +62 813-5918-0156
           </div>
         </div>
@@ -1142,30 +1357,33 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     <AnimatePresence>
       <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/80 backdrop-blur-md">
         
-        {/* Printable PDF Landscape Container */}
+        {/* Main Deck Container (Clean White Canvas) */}
         <motion.div
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
-          className={`w-full bg-slate-50 text-slate-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 transition-all ${
+          className={`w-full bg-white text-slate-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 transition-all relative ${
             isFullscreen ? 'h-screen w-screen rounded-none' : 'max-w-6xl h-[92vh]'
           }`}
         >
 
+          {/* Background Wave & Red Gradient Ornaments */}
+          <BackgroundWave />
+
           {/* Top Bar Header */}
-          <div className="px-6 py-4 bg-white border-b border-slate-200 flex items-center justify-between z-20 shrink-0 shadow-xs">
+          <div className="px-6 py-4 bg-white/90 border-b border-slate-200 flex items-center justify-between z-20 shrink-0 shadow-xs backdrop-blur-md">
             <div className="flex items-center gap-3">
               <SabubaLogo className="h-8 w-auto" />
               <div className="h-4 w-px bg-slate-300 hidden sm:block" />
               <div>
-                <h3 className="font-extrabold text-sm text-slate-900 tracking-tight">SABUBA Presentation System</h3>
+                <h3 className="font-black text-sm text-slate-900 tracking-tight">SABUBA Presentation System</h3>
                 <p className="text-[11px] text-slate-500 font-medium">
-                  Slide {currentSlide + 1} / {slides.length}: <span className="text-red-700 font-bold">{currentSlideObj.title}</span>
+                  Slide {currentSlide + 1} / {slides.length}: <span className="text-red-800 font-bold">{currentSlideObj.title}</span>
                 </p>
               </div>
             </div>
 
-            {/* Action Buttons */}
+            {/* Header Action Buttons */}
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
@@ -1177,7 +1395,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
               <button
                 onClick={() => window.print()}
-                className="px-4 py-2 rounded-xl bg-red-700 hover:bg-red-800 text-white text-xs font-black flex items-center gap-2 transition-all shadow-md"
+                className="px-4 py-2 rounded-xl bg-red-800 hover:bg-red-900 text-white text-xs font-black flex items-center gap-2 transition-all shadow-md"
                 title="Download / Print PDF"
               >
                 <Download className="w-4 h-4" />
@@ -1195,7 +1413,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           {/* Main Active Slide Content Area */}
-          <div className="p-6 sm:p-10 flex-1 overflow-y-auto flex flex-col justify-center relative bg-slate-50">
+          <div className="p-6 sm:p-10 flex-1 overflow-y-auto flex flex-col justify-center relative z-10">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -1211,7 +1429,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           {/* Bottom Bar Controls & Progress */}
-          <div className="px-6 py-4 bg-white border-t border-slate-200 flex items-center justify-between z-20 shrink-0">
+          <div className="px-6 py-4 bg-white/90 border-t border-slate-200 flex items-center justify-between z-20 shrink-0 backdrop-blur-md">
             {/* Prev Button */}
             <button
               onClick={prevSlide}
@@ -1234,7 +1452,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                   onClick={() => setCurrentSlide(idx)}
                   className={`w-2.5 h-2.5 rounded-full transition-all ${
                     currentSlide === idx
-                      ? 'w-6 bg-red-700'
+                      ? 'w-6 bg-red-800'
                       : 'bg-slate-300 hover:bg-slate-400'
                   }`}
                   title={`Go to slide ${idx + 1}: ${s.title}`}
@@ -1249,7 +1467,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               className={`px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition-all ${
                 currentSlide === slides.length - 1
                   ? 'opacity-40 cursor-not-allowed text-slate-400 bg-slate-100'
-                  : 'bg-red-700 hover:bg-red-800 text-white shadow-md'
+                  : 'bg-red-800 hover:bg-red-900 text-white shadow-md'
               }`}
             >
               <span>{currentSlide === slides.length - 1 ? 'Selesai' : 'Berikutnya'}</span>
