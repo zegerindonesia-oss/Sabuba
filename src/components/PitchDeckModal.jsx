@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X, ChevronLeft, ChevronRight, Download, Sparkles, TrendingUp,
@@ -9,7 +9,7 @@ import {
   Clock, Target, Shield, CheckCircle, Info, Video, ChevronUp, ChevronDown
 } from 'lucide-react';
 import SabubaLogo from './SabubaLogo';
-import { SABUBA_DATA, formatRupiah } from '../data/sabubaData';
+import { SABUBA_DATA, SIGNATURE_ITEMS, formatRupiah } from '../data/sabubaData';
 
 // ----------------------------------------------------
 // Background Wave & Subtle Red Ornament Component
@@ -91,57 +91,289 @@ function DataBadge({ type, text }) {
 }
 
 // ----------------------------------------------------
-// Playable TikTok Embed Card Component
+// Signature Menu Photo List for Vertical 3D Carousel
+// ----------------------------------------------------
+const VERTICAL_CAROUSEL_ITEMS = [
+  { id: '1', name: 'Bubur (Ori) Ayam', image: 'https://drive.google.com/thumbnail?id=1OSEnCsfJq29y118BY349wViNXxmfaQCK&sz=w800' },
+  { id: '2', name: 'Bubur (Ori) Mix', image: 'https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800' },
+  { id: '3', name: 'Bubur (Kuah Kuning) Sapi', image: 'https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800' },
+  { id: '4', name: 'Bubur (Kuah Laksa) Sapi', image: 'https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800' },
+  { id: '5', name: 'Bubur (Kuah Semur) Sapi', image: 'https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800' },
+  { id: '6', name: 'Wonton Kuah Dumpling', image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800' },
+  { id: '7', name: 'Bubur (Ori) Sapi', image: 'https://drive.google.com/thumbnail?id=161beYaRXQXQljnMuq9whYCQqgv7NwNZH&sz=w800' },
+];
+
+// ----------------------------------------------------
+// Vertical Apple 3D Carousel Component (Pure Full-Photo, No Text/Price)
+// ----------------------------------------------------
+function VerticalApple3DCarousel({ items = VERTICAL_CAROUSEL_ITEMS }) {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const lastScrollTime = useRef(0);
+  const totalItems = items.length;
+
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % totalItems);
+    }, 3800);
+    return () => clearInterval(timer);
+  }, [totalItems, isHovered]);
+
+  const handlePrev = () => {
+    setCurrentIdx((prev) => (prev === 0 ? totalItems - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIdx((prev) => (prev + 1) % totalItems);
+  };
+
+  const handleWheel = (e) => {
+    e.stopPropagation();
+    const now = Date.now();
+    if (now - lastScrollTime.current < 260) return;
+    if (e.deltaY > 15) {
+      handleNext();
+      lastScrollTime.current = now;
+    } else if (e.deltaY < -15) {
+      handlePrev();
+      lastScrollTime.current = now;
+    }
+  };
+
+  return (
+    <div
+      className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] h-[400px] sm:h-[460px] flex items-center justify-center select-none"
+      style={{ perspective: '1200px' }}
+      onWheel={handleWheel}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* 3D Stack Container */}
+      <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+        {items.map((item, i) => {
+          let diff = i - currentIdx;
+          while (diff < -Math.floor(totalItems / 2)) diff += totalItems;
+          while (diff > Math.floor(totalItems / 2)) diff -= totalItems;
+
+          const isCenter = diff === 0;
+          const isTop = diff === -1;
+          const isBottom = diff === 1;
+          const isFarTop = diff === -2;
+          const isFarBottom = diff === 2;
+          const isHidden = Math.abs(diff) > 2;
+
+          if (isHidden) return null;
+
+          let yPos = '0%';
+          let scaleVal = 1;
+          let rotateXVal = 0;
+          let opacityVal = 1;
+          let zIndexVal = 30;
+          let brightness = 1;
+
+          if (isCenter) {
+            yPos = '0%';
+            scaleVal = 1;
+            rotateXVal = 0;
+            opacityVal = 1;
+            zIndexVal = 30;
+            brightness = 1;
+          } else if (isTop) {
+            yPos = '-38%';
+            scaleVal = 0.85;
+            rotateXVal = -20;
+            opacityVal = 0.82;
+            zIndexVal = 20;
+            brightness = 0.88;
+          } else if (isBottom) {
+            yPos = '38%';
+            scaleVal = 0.85;
+            rotateXVal = 20;
+            opacityVal = 0.82;
+            zIndexVal = 20;
+            brightness = 0.88;
+          } else if (isFarTop) {
+            yPos = '-68%';
+            scaleVal = 0.70;
+            rotateXVal = -32;
+            opacityVal = 0.45;
+            zIndexVal = 10;
+            brightness = 0.72;
+          } else if (isFarBottom) {
+            yPos = '68%';
+            scaleVal = 0.70;
+            rotateXVal = 32;
+            opacityVal = 0.45;
+            zIndexVal = 10;
+            brightness = 0.72;
+          }
+
+          return (
+            <motion.div
+              key={item.id || i}
+              onClick={() => {
+                if (diff !== 0) setCurrentIdx(i);
+              }}
+              initial={false}
+              animate={{
+                y: yPos,
+                scale: scaleVal,
+                rotateX: rotateXVal,
+                opacity: opacityVal,
+                filter: `brightness(${brightness})`,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 220,
+                damping: 24,
+              }}
+              style={{ zIndex: zIndexVal }}
+              className={`absolute rounded-[2.3rem] overflow-hidden cursor-pointer shadow-[0_25px_60px_-15px_rgba(153,27,27,0.38)] border border-white/40 transition-shadow duration-300 group ${
+                isCenter
+                  ? 'w-[270px] sm:w-[320px] lg:w-[340px] h-[310px] sm:h-[350px] lg:h-[370px] ring-2 ring-red-600/30'
+                  : 'w-[230px] sm:w-[270px] lg:w-[290px] h-[250px] sm:h-[290px] lg:h-[310px]'
+              }`}
+            >
+              {/* Full Photo Edge-to-Edge without any text or price */}
+              <div className="relative w-full h-full bg-slate-900">
+                <img
+                  src={item.image}
+                  alt={item.name || 'Menu Sabuba'}
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                />
+                
+                {/* Apple Glaze / Subtle Specular Gradient Highlight */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/15 pointer-events-none" />
+                
+                {/* Center Card Inner Glass Rim */}
+                {isCenter && (
+                  <div className="absolute inset-0 rounded-[2.3rem] ring-1 ring-inset ring-white/50 pointer-events-none" />
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Floating Vertical Apple-Style Controls on Right */}
+      <div className="absolute -right-2 sm:-right-5 flex flex-col items-center gap-2 z-40">
+        <button
+          onClick={handlePrev}
+          aria-label="Scroll Ke Atas"
+          className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
+          title="Geser Ke Atas"
+        >
+          <ChevronUp className="w-4 h-4" />
+        </button>
+
+        {/* Vertical Progress Indicators */}
+        <div className="flex flex-col gap-1.5 py-1.5 px-1.5 rounded-full bg-black/20 backdrop-blur-md shadow-xs">
+          {items.slice(0, 7).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIdx(idx)}
+              className={`rounded-full transition-all ${
+                currentIdx === idx
+                  ? 'w-2 h-4 bg-white shadow-xs'
+                  : 'w-2 h-2 bg-white/40 hover:bg-white/70'
+              }`}
+              title={`Foto ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={handleNext}
+          aria-label="Scroll Ke Bawah"
+          className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
+          title="Geser Ke Bawah"
+        >
+          <ChevronDown className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ----------------------------------------------------
+// Full-Frame 9:16 TikTok Video Card (Zero-Scroll Layout)
 // ----------------------------------------------------
 function TikTokCard({ video }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="p-4 rounded-3xl bg-white border border-slate-200 shadow-lg flex flex-col justify-between hover:border-red-400 hover:shadow-xl transition-all duration-300 group">
-      <div className="relative rounded-2xl overflow-hidden bg-slate-950 aspect-[9/16] w-full h-[320px] sm:h-[360px] shadow-inner">
-        {isPlaying ? (
+    <div className="relative h-full max-h-[460px] sm:max-h-[490px] lg:max-h-[510px] w-full max-w-[270px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden bg-slate-950 border border-slate-700/60 shadow-2xl group flex flex-col justify-between transition-all duration-300 hover:border-red-500 hover:shadow-[0_20px_40px_-15px_rgba(153,27,27,0.35)]">
+      {isPlaying ? (
+        <div className="relative w-full h-full bg-black">
           <iframe
             src={`https://www.tiktok.com/embed/v2/${video.videoId}`}
-            className="w-full h-full rounded-2xl border-0"
+            className="w-full h-full rounded-3xl border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             title={video.handle}
           />
-        ) : (
-          <div className="relative w-full h-full cursor-pointer" onClick={() => setIsPlaying(true)}>
-            <img src={video.image} alt={video.handle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent flex flex-col items-center justify-center gap-3 p-4 text-center">
-              <div className="w-14 h-14 rounded-full bg-red-800 text-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform group-hover:scale-110 transition-all duration-300">
-                <Play className="w-7 h-7 fill-white ml-1" />
-              </div>
-              <span className="text-xs font-extrabold text-white bg-slate-900/90 px-3 py-1 rounded-full backdrop-blur-md border border-white/20 shadow-md">
-                ▶ Klik Untuk Play Video
-              </span>
-            </div>
-            <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-red-800 text-[10px] font-black uppercase text-white shadow-md tracking-wider">
+          <button
+            onClick={() => setIsPlaying(false)}
+            className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 hover:bg-black text-white text-xs z-30 transition-all backdrop-blur-xs"
+            title="Tutup Player"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      ) : (
+        <div className="relative w-full h-full cursor-pointer overflow-hidden flex flex-col justify-between" onClick={() => setIsPlaying(true)}>
+          {/* Full Cover Photo */}
+          <img
+            src={video.image}
+            alt={video.handle}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+
+          {/* Cinematic Dark Gradient for TikTok Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-black/40 pointer-events-none" />
+
+          {/* Top Pill / Tag */}
+          <div className="relative top-3 px-3 flex items-center justify-between z-10">
+            <span className="px-2.5 py-1 rounded-full bg-red-800/90 text-[10px] font-black uppercase text-white shadow-md tracking-wider backdrop-blur-sm">
               {video.tag}
             </span>
+            <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
           </div>
-        )}
-      </div>
 
-      <div className="space-y-2 pt-3">
-        <div className="flex items-center justify-between">
-          <div className="font-black text-sm text-red-900 flex items-center gap-1.5">
-            <Video className="w-4 h-4 text-red-800" />
-            <span>{video.handle}</span>
+          {/* Center Play Button */}
+          <div className="relative my-auto flex flex-col items-center justify-center gap-2 z-10">
+            <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-red-800 text-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform group-hover:scale-110 transition-all duration-300 backdrop-blur-sm">
+              <Play className="w-7 sm:w-8 h-7 sm:h-8 fill-white ml-1" />
+            </div>
+            <span className="text-[10px] sm:text-[11px] font-extrabold text-white bg-black/60 px-3 py-1 rounded-full backdrop-blur-md border border-white/20 shadow-md">
+              Putar Video TikTok
+            </span>
           </div>
-          <a
-            href={video.url}
-            target="_blank"
-            rel="noreferrer"
-            className="text-xs text-slate-500 hover:text-red-800 flex items-center gap-1 font-bold transition-colors"
-          >
-            <span>Buka TikTok</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
+
+          {/* Bottom Native TikTok Style Glass Overlay */}
+          <div className="relative p-3.5 bg-gradient-to-t from-black via-black/80 to-transparent space-y-1 z-10 text-left">
+            <div className="flex items-center justify-between">
+              <div className="font-extrabold text-xs sm:text-sm text-white flex items-center gap-1.5">
+                <Video className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                <span className="truncate">{video.handle}</span>
+              </div>
+              <a
+                href={video.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-[10px] text-slate-200 hover:text-white bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded-full flex items-center gap-1 font-bold transition-all backdrop-blur-xs shrink-0"
+              >
+                <span>Buka</span>
+                <ExternalLink className="w-2.5 h-2.5" />
+              </a>
+            </div>
+            <p className="text-[11px] text-slate-200 line-clamp-2 leading-tight font-normal">
+              "{video.quote}"
+            </p>
+          </div>
         </div>
-        <p className="text-xs text-slate-700 italic line-clamp-2 leading-relaxed font-medium">"{video.quote}"</p>
-      </div>
+      )}
     </div>
   );
 }
@@ -405,22 +637,9 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
             </div>
           </div>
 
-          {/* Frameless & Background-Free Product Image (Image 2) */}
-          <div className="lg:col-span-6 relative flex flex-col items-center justify-center">
-            <div className="relative w-full flex items-center justify-center">
-              <motion.img
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                src="/assets/bubur-ori-mix-hero.jpg"
-                alt="Bubur Ori Ayam & Sapi Claypot Sabuba"
-                className="w-full max-w-lg lg:max-w-xl h-auto max-h-[460px] object-contain rounded-3xl drop-shadow-[0_25px_35px_rgba(153,27,27,0.25)] hover:scale-[1.02] transition-transform duration-500"
-              />
-              <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-red-900/90 text-white text-xs font-black px-4 py-2 rounded-full shadow-lg backdrop-blur-md uppercase tracking-wider flex items-center gap-1.5 border border-red-700/50">
-                <Flame className="w-4 h-4 text-amber-400 fill-amber-400" />
-                <span>Bubur Ori Ayam & Sapi</span>
-              </div>
-            </div>
+          {/* 3D Vertical Apple-Style Menu Photo Carousel */}
+          <div className="lg:col-span-6 relative flex flex-col items-center justify-center py-2">
+            <VerticalApple3DCarousel />
           </div>
         </div>
       )
@@ -893,23 +1112,22 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       id: 'slide-10-social-proof-part-1',
       title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 1)',
       content: (
-        <div className="space-y-4 h-full flex flex-col justify-center">
-          <div className="flex items-center justify-between">
+        <div className="h-full flex flex-col justify-between overflow-hidden">
+          {/* Header */}
+          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-1">
             <div className="flex items-center gap-3">
               <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 1)" />
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900">
+                People Are Already <span className="text-red-800">Talking About Sabuba.</span>
+              </h2>
             </div>
-            <span className="text-xs font-bold text-red-800">Klik Card / Play Untuk Memutar Video</span>
+            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+              ▶ Klik Card / Play Untuk Memutar Video
+            </span>
           </div>
 
-          <div className="max-w-3xl space-y-1">
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
-              People Are Already <span className="text-red-800">Talking About Sabuba.</span>
-            </h2>
-            <div className="w-16 h-1 bg-red-700 rounded-full" />
-          </div>
-
-          {/* First 3 Playable TikTok Videos (Large Grid) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          {/* 3 Playable TikTok Videos (Full 9:16 Frame, Zero Page Scroll) */}
+          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 items-center justify-center py-1">
             {tiktokVideos.slice(0, 3).map((vid, idx) => (
               <TikTokCard key={idx} video={vid} />
             ))}
@@ -925,23 +1143,22 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       id: 'slide-11-social-proof-part-2',
       title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 2)',
       content: (
-        <div className="space-y-4 h-full flex flex-col justify-center">
-          <div className="flex items-center justify-between">
+        <div className="h-full flex flex-col justify-between overflow-hidden">
+          {/* Header */}
+          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-1">
             <div className="flex items-center gap-3">
               <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 2)" />
+              <h2 className="text-lg sm:text-2xl font-black text-slate-900">
+                Antusiasme &amp; Liputan <span className="text-red-800">Sarapan Sabuba.</span>
+              </h2>
             </div>
-            <span className="text-xs font-bold text-red-800">Klik Card / Play Untuk Memutar Video</span>
+            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+              ▶ Klik Card / Play Untuk Memutar Video
+            </span>
           </div>
 
-          <div className="max-w-3xl space-y-1">
-            <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
-              Antusiasme &amp; Liputan <span className="text-red-800">Sarapan Sabuba.</span>
-            </h2>
-            <div className="w-16 h-1 bg-red-700 rounded-full" />
-          </div>
-
-          {/* Next 3 Playable TikTok Videos (Large Grid) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          {/* Next 3 Playable TikTok Videos (Full 9:16 Frame, Zero Page Scroll) */}
+          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 items-center justify-center py-1">
             {tiktokVideos.slice(3, 6).map((vid, idx) => (
               <TikTokCard key={idx} video={vid} />
             ))}
@@ -1469,20 +1686,9 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       title: 'CLOSING — FROM ONE BOWL TO A NATIONAL BRAND',
       content: (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center max-w-6xl mx-auto">
-          {/* Left Column: Frameless & Background-Free Product Image (Image 2) */}
-          <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
-            <motion.img
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              src="/assets/bubur-ori-mix-hero.jpg"
-              alt="Bubur Ori Ayam & Sapi Claypot Sabuba"
-              className="w-full max-w-md h-auto max-h-[420px] object-contain rounded-3xl drop-shadow-[0_25px_35px_rgba(153,27,27,0.25)] hover:scale-[1.02] transition-transform duration-500"
-            />
-            <div className="mt-3 bg-red-800 text-white text-xs font-black px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span>Signature Hero Product Sabuba</span>
-            </div>
+          {/* Left Column: 3D Vertical Apple-Style Menu Photo Carousel */}
+          <div className="lg:col-span-5 relative flex flex-col items-center justify-center py-2">
+            <VerticalApple3DCarousel />
           </div>
 
           {/* Right Column: Text & CTA */}
