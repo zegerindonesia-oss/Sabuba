@@ -141,134 +141,153 @@ function VerticalApple3DCarousel({ items = VERTICAL_CAROUSEL_ITEMS }) {
     }
   };
 
+  // Build card state for visible cards
+  const cards = items.map((item, i) => {
+    let diff = i - currentIdx;
+    while (diff < -Math.floor(totalItems / 2)) diff += totalItems;
+    while (diff > Math.floor(totalItems / 2)) diff -= totalItems;
+
+    const isCenter = diff === 0;
+    const isTop = diff === -1;
+    const isBottom = diff === 1;
+    const isFarTop = diff === -2;
+    const isFarBottom = diff === 2;
+    const isHidden = Math.abs(diff) > 2;
+
+    if (isHidden) return null;
+
+    let yPos = '0%';
+    let scaleVal = 1;
+    let rotateXVal = 0;
+    let opacityVal = 1;
+    let zIndexVal = 50; // Center is strictly the highest
+    let brightness = 1;
+
+    if (isCenter) {
+      yPos = '0%';
+      scaleVal = 1;
+      rotateXVal = 0;
+      opacityVal = 1;
+      zIndexVal = 50; // FOREMOST LAYER - NEVER CLIPPED
+      brightness = 1;
+    } else if (isTop) {
+      yPos = '-54%';
+      scaleVal = 0.82;
+      rotateXVal = -14;
+      opacityVal = 0.75;
+      zIndexVal = 20; // Clearly behind center
+      brightness = 0.85;
+    } else if (isBottom) {
+      yPos = '54%';
+      scaleVal = 0.82;
+      rotateXVal = 14;
+      opacityVal = 0.75;
+      zIndexVal = 20; // Clearly behind center
+      brightness = 0.85;
+    } else if (isFarTop) {
+      yPos = '-88%';
+      scaleVal = 0.66;
+      rotateXVal = -24;
+      opacityVal = 0.35;
+      zIndexVal = 10;
+      brightness = 0.7;
+    } else if (isFarBottom) {
+      yPos = '88%';
+      scaleVal = 0.66;
+      rotateXVal = 24;
+      opacityVal = 0.35;
+      zIndexVal = 10;
+      brightness = 0.7;
+    }
+
+    return {
+      item,
+      i,
+      diff,
+      isCenter,
+      yPos,
+      scaleVal,
+      rotateXVal,
+      opacityVal,
+      zIndexVal,
+      brightness,
+    };
+  }).filter(Boolean);
+
+  // CRITICAL: Sort by zIndexVal ascending so DOM paints Far -> Top/Bottom -> Center LAST!
+  // This guarantees the Center active card is always on the foremost layer and never cut off!
+  const sortedCards = [...cards].sort((a, b) => a.zIndexVal - b.zIndexVal);
+
   return (
     <div
-      className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] h-[400px] sm:h-[460px] flex items-center justify-center select-none"
+      className="relative w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[380px] h-[360px] sm:h-[430px] lg:h-[460px] flex items-center justify-center select-none"
       style={{ perspective: '1200px' }}
       onWheel={handleWheel}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* 3D Stack Container */}
-      <div className="relative w-full h-full flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
-        {items.map((item, i) => {
-          let diff = i - currentIdx;
-          while (diff < -Math.floor(totalItems / 2)) diff += totalItems;
-          while (diff > Math.floor(totalItems / 2)) diff -= totalItems;
-
-          const isCenter = diff === 0;
-          const isTop = diff === -1;
-          const isBottom = diff === 1;
-          const isFarTop = diff === -2;
-          const isFarBottom = diff === 2;
-          const isHidden = Math.abs(diff) > 2;
-
-          if (isHidden) return null;
-
-          let yPos = '0%';
-          let scaleVal = 1;
-          let rotateXVal = 0;
-          let opacityVal = 1;
-          let zIndexVal = 30;
-          let brightness = 1;
-
-          if (isCenter) {
-            yPos = '0%';
-            scaleVal = 1;
-            rotateXVal = 0;
-            opacityVal = 1;
-            zIndexVal = 30;
-            brightness = 1;
-          } else if (isTop) {
-            yPos = '-38%';
-            scaleVal = 0.85;
-            rotateXVal = -20;
-            opacityVal = 0.82;
-            zIndexVal = 20;
-            brightness = 0.88;
-          } else if (isBottom) {
-            yPos = '38%';
-            scaleVal = 0.85;
-            rotateXVal = 20;
-            opacityVal = 0.82;
-            zIndexVal = 20;
-            brightness = 0.88;
-          } else if (isFarTop) {
-            yPos = '-68%';
-            scaleVal = 0.70;
-            rotateXVal = -32;
-            opacityVal = 0.45;
-            zIndexVal = 10;
-            brightness = 0.72;
-          } else if (isFarBottom) {
-            yPos = '68%';
-            scaleVal = 0.70;
-            rotateXVal = 32;
-            opacityVal = 0.45;
-            zIndexVal = 10;
-            brightness = 0.72;
-          }
-
-          return (
-            <motion.div
-              key={item.id || i}
-              onClick={() => {
-                if (diff !== 0) setCurrentIdx(i);
-              }}
-              initial={false}
-              animate={{
-                y: yPos,
-                scale: scaleVal,
-                rotateX: rotateXVal,
-                opacity: opacityVal,
-                filter: `brightness(${brightness})`,
-              }}
-              transition={{
-                type: 'spring',
-                stiffness: 220,
-                damping: 24,
-              }}
-              style={{ zIndex: zIndexVal }}
-              className={`absolute rounded-[2.3rem] overflow-hidden cursor-pointer shadow-[0_25px_60px_-15px_rgba(153,27,27,0.38)] border border-white/40 transition-shadow duration-300 group ${
-                isCenter
-                  ? 'w-[270px] sm:w-[320px] lg:w-[340px] h-[310px] sm:h-[350px] lg:h-[370px] ring-2 ring-red-600/30'
-                  : 'w-[230px] sm:w-[270px] lg:w-[290px] h-[250px] sm:h-[290px] lg:h-[310px]'
-              }`}
-            >
-              {/* Full Photo Edge-to-Edge without any text or price */}
-              <div className="relative w-full h-full bg-slate-900">
-                <img
-                  src={item.image}
-                  alt={item.name || 'Menu Sabuba'}
-                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Apple Glaze / Subtle Specular Gradient Highlight */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/15 pointer-events-none" />
-                
-                {/* Center Card Inner Glass Rim */}
-                {isCenter && (
-                  <div className="absolute inset-0 rounded-[2.3rem] ring-1 ring-inset ring-white/50 pointer-events-none" />
-                )}
-              </div>
-            </motion.div>
-          );
-        })}
+      {/* Cards container - standard layering without 3D depth-buffer collision */}
+      <div className="relative w-full h-full flex items-center justify-center">
+        {sortedCards.map(({ item, i, diff, isCenter, yPos, scaleVal, rotateXVal, opacityVal, zIndexVal, brightness }) => (
+          <motion.div
+            key={item.id || i}
+            onClick={() => {
+              if (diff !== 0) setCurrentIdx(i);
+            }}
+            initial={false}
+            animate={{
+              y: yPos,
+              scale: scaleVal,
+              rotateX: rotateXVal,
+              opacity: opacityVal,
+              zIndex: zIndexVal,
+              filter: `brightness(${brightness})`,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 240,
+              damping: 26,
+            }}
+            style={{ zIndex: zIndexVal }}
+            className={`absolute rounded-[2.2rem] overflow-hidden cursor-pointer transition-shadow duration-300 group ${
+              isCenter
+                ? 'w-[250px] sm:w-[300px] lg:w-[330px] h-[290px] sm:h-[340px] lg:h-[360px] shadow-[0_30px_70px_-15px_rgba(153,27,27,0.45)] border-2 border-white/70 ring-2 ring-red-600/40'
+                : 'w-[210px] sm:w-[250px] lg:w-[280px] h-[230px] sm:h-[280px] lg:h-[300px] shadow-[0_15px_30px_-10px_rgba(0,0,0,0.3)] border border-white/30'
+            }`}
+          >
+            {/* Full Photo Edge-to-Edge */}
+            <div className="relative w-full h-full bg-slate-900">
+              <img
+                src={item.image}
+                alt={item.name || 'Menu Sabuba'}
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+              
+              {/* Apple Specular Glaze Highlight */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-white/20 pointer-events-none" />
+              
+              {/* Center Card Inner Glass Rim */}
+              {isCenter && (
+                <div className="absolute inset-0 rounded-[2.2rem] ring-1 ring-inset ring-white/60 pointer-events-none" />
+              )}
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Floating Vertical Apple-Style Controls on Right */}
-      <div className="absolute -right-2 sm:-right-5 flex flex-col items-center gap-2 z-40">
+      <div className="absolute -right-2 sm:-right-5 flex flex-col items-center gap-2 z-50">
         <button
           onClick={handlePrev}
           aria-label="Scroll Ke Atas"
-          className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
+          className="w-8 h-8 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
           title="Geser Ke Atas"
         >
           <ChevronUp className="w-4 h-4" />
         </button>
 
         {/* Vertical Progress Indicators */}
-        <div className="flex flex-col gap-1.5 py-1.5 px-1.5 rounded-full bg-black/20 backdrop-blur-md shadow-xs">
+        <div className="flex flex-col gap-1.5 py-1.5 px-1.5 rounded-full bg-black/30 backdrop-blur-md shadow-xs">
           {items.slice(0, 7).map((_, idx) => (
             <button
               key={idx}
@@ -276,7 +295,7 @@ function VerticalApple3DCarousel({ items = VERTICAL_CAROUSEL_ITEMS }) {
               className={`rounded-full transition-all ${
                 currentIdx === idx
                   ? 'w-2 h-4 bg-white shadow-xs'
-                  : 'w-2 h-2 bg-white/40 hover:bg-white/70'
+                  : 'w-2 h-2 bg-white/50 hover:bg-white/80'
               }`}
               title={`Foto ${idx + 1}`}
             />
@@ -286,7 +305,7 @@ function VerticalApple3DCarousel({ items = VERTICAL_CAROUSEL_ITEMS }) {
         <button
           onClick={handleNext}
           aria-label="Scroll Ke Bawah"
-          className="w-8 h-8 rounded-full bg-white/90 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
+          className="w-8 h-8 rounded-full bg-white/95 hover:bg-white text-slate-800 hover:text-red-800 shadow-md border border-slate-200/90 flex items-center justify-center transition-all hover:scale-110 active:scale-95 backdrop-blur-xs"
           title="Geser Ke Bawah"
         >
           <ChevronDown className="w-4 h-4" />
@@ -297,13 +316,13 @@ function VerticalApple3DCarousel({ items = VERTICAL_CAROUSEL_ITEMS }) {
 }
 
 // ----------------------------------------------------
-// Full-Frame 9:16 TikTok Video Card (Zero-Scroll Layout)
+// Enlarged Full-Frame 9:16 TikTok Video Card Component
 // ----------------------------------------------------
 function TikTokCard({ video }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="relative h-full max-h-[460px] sm:max-h-[490px] lg:max-h-[510px] w-full max-w-[270px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden bg-slate-950 border border-slate-700/60 shadow-2xl group flex flex-col justify-between transition-all duration-300 hover:border-red-500 hover:shadow-[0_20px_40px_-15px_rgba(153,27,27,0.35)]">
+    <div className="relative h-[480px] sm:h-[530px] lg:h-[570px] w-full max-w-[280px] sm:max-w-[310px] lg:max-w-[330px] mx-auto aspect-[9/16] rounded-3xl overflow-hidden bg-slate-950 border-2 border-slate-700/60 shadow-2xl group flex flex-col justify-between transition-all duration-300 hover:border-red-500 hover:shadow-[0_25px_50px_-12px_rgba(153,27,27,0.4)]">
       {isPlaying ? (
         <div className="relative w-full h-full bg-black">
           <iframe
@@ -311,13 +330,14 @@ function TikTokCard({ video }) {
             className="w-full h-full rounded-3xl border-0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             title={video.handle}
+            scrolling="no"
           />
           <button
             onClick={() => setIsPlaying(false)}
-            className="absolute top-2 right-2 p-1.5 rounded-full bg-black/70 hover:bg-black text-white text-xs z-30 transition-all backdrop-blur-xs"
+            className="absolute top-2.5 right-2.5 p-2 rounded-full bg-black/80 hover:bg-black text-white text-xs z-30 transition-all backdrop-blur-md shadow-lg"
             title="Tutup Player"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
       ) : (
@@ -330,28 +350,28 @@ function TikTokCard({ video }) {
           />
 
           {/* Cinematic Dark Gradient for TikTok Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-black/40 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-black/50 pointer-events-none" />
 
           {/* Top Pill / Tag */}
-          <div className="relative top-3 px-3 flex items-center justify-between z-10">
-            <span className="px-2.5 py-1 rounded-full bg-red-800/90 text-[10px] font-black uppercase text-white shadow-md tracking-wider backdrop-blur-sm">
+          <div className="relative top-3 px-3.5 flex items-center justify-between z-10">
+            <span className="px-3 py-1 rounded-full bg-red-800/90 text-[10px] sm:text-[11px] font-black uppercase text-white shadow-md tracking-wider backdrop-blur-md border border-red-600/40">
               {video.tag}
             </span>
-            <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />
           </div>
 
           {/* Center Play Button */}
           <div className="relative my-auto flex flex-col items-center justify-center gap-2 z-10">
-            <div className="w-14 sm:w-16 h-14 sm:h-16 rounded-full bg-red-800 text-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform group-hover:scale-110 transition-all duration-300 backdrop-blur-sm">
-              <Play className="w-7 sm:w-8 h-7 sm:h-8 fill-white ml-1" />
+            <div className="w-16 sm:w-18 h-16 sm:h-18 rounded-full bg-red-800/95 text-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform group-hover:scale-110 transition-all duration-300 backdrop-blur-md">
+              <Play className="w-8 sm:w-9 h-8 sm:h-9 fill-white ml-1" />
             </div>
-            <span className="text-[10px] sm:text-[11px] font-extrabold text-white bg-black/60 px-3 py-1 rounded-full backdrop-blur-md border border-white/20 shadow-md">
+            <span className="text-[11px] sm:text-xs font-extrabold text-white bg-black/70 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/20 shadow-lg">
               Putar Video TikTok
             </span>
           </div>
 
           {/* Bottom Native TikTok Style Glass Overlay */}
-          <div className="relative p-3.5 bg-gradient-to-t from-black via-black/80 to-transparent space-y-1 z-10 text-left">
+          <div className="relative p-3.5 sm:p-4 bg-gradient-to-t from-black via-black/85 to-transparent space-y-1.5 z-10 text-left">
             <div className="flex items-center justify-between">
               <div className="font-extrabold text-xs sm:text-sm text-white flex items-center gap-1.5">
                 <Video className="w-3.5 h-3.5 text-red-400 shrink-0" />
@@ -362,13 +382,13 @@ function TikTokCard({ video }) {
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="text-[10px] text-slate-200 hover:text-white bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded-full flex items-center gap-1 font-bold transition-all backdrop-blur-xs shrink-0"
+                className="text-[10px] sm:text-[11px] text-slate-200 hover:text-white bg-white/20 hover:bg-white/30 px-2.5 py-0.5 rounded-full flex items-center gap-1 font-bold transition-all backdrop-blur-xs shrink-0"
               >
                 <span>Buka</span>
                 <ExternalLink className="w-2.5 h-2.5" />
               </a>
             </div>
-            <p className="text-[11px] text-slate-200 line-clamp-2 leading-tight font-normal">
+            <p className="text-xs text-slate-200 line-clamp-2 leading-snug font-normal">
               "{video.quote}"
             </p>
           </div>
@@ -378,10 +398,61 @@ function TikTokCard({ video }) {
   );
 }
 
+// ----------------------------------------------------
+// Responsive Social Proof Videos View (Mobile Tabs + Desktop 3-Columns)
+// ----------------------------------------------------
+function SocialProofVideosView({ videos }) {
+  const [activeMobileIdx, setActiveMobileIdx] = useState(0);
+
+  return (
+    <div className="w-full flex-1 flex flex-col justify-center">
+      {/* Mobile Tab Switcher (Visible ONLY on Mobile < 768px) */}
+      <div className="flex md:hidden items-center justify-center gap-2 mb-3 shrink-0">
+        {videos.map((vid, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveMobileIdx(idx)}
+            className={`px-3 py-1.5 rounded-full text-xs font-black transition-all flex items-center gap-1.5 ${
+              activeMobileIdx === idx
+                ? 'bg-red-800 text-white shadow-md'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+            }`}
+          >
+            <Video className="w-3 h-3 text-current" />
+            <span>Review {idx + 1}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* Mobile: Show Active Video Full Frame */}
+      <div className="flex md:hidden justify-center items-center py-1">
+        <TikTokCard video={videos[activeMobileIdx]} />
+      </div>
+
+      {/* Desktop (md & up): Show All 3 Enlarged Videos Side-by-Side */}
+      <div className="hidden md:grid md:grid-cols-3 gap-4 lg:gap-6 items-center justify-center py-2">
+        {videos.map((vid, idx) => (
+          <TikTokCard key={idx} video={vid} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
   const [currentSlide, setCurrentSlide] = useState(defaultSlide);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeScenarioIdx, setActiveScenarioIdx] = useState(1); // Default: 100 Pack (Sedang)
+
+  // Direct download of the official proposal presentation PDF (Declared early to avoid TDZ ReferenceError)
+  const handleDownloadProposal = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/Proposal-Kemitraan-Sabuba-2026.pdf';
+    link.download = 'Proposal-Kemitraan-Sabuba-2026.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   // Full Feasibility Study Data (Feasibility Study - Pack Terminology)
   const feasibilityScenarios = [
@@ -1112,26 +1183,22 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       id: 'slide-10-social-proof-part-1',
       title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 1)',
       content: (
-        <div className="h-full flex flex-col justify-between overflow-hidden">
+        <div className="h-full flex flex-col justify-start sm:justify-between">
           {/* Header */}
-          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-1">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-2">
+            <div className="flex items-center gap-2 sm:gap-3">
               <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 1)" />
-              <h2 className="text-lg sm:text-2xl font-black text-slate-900">
+              <h2 className="text-base sm:text-xl lg:text-2xl font-black text-slate-900">
                 People Are Already <span className="text-red-800">Talking About Sabuba.</span>
               </h2>
             </div>
-            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full hidden sm:inline">
               ▶ Klik Card / Play Untuk Memutar Video
             </span>
           </div>
 
-          {/* 3 Playable TikTok Videos (Full 9:16 Frame, Zero Page Scroll) */}
-          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 items-center justify-center py-1">
-            {tiktokVideos.slice(0, 3).map((vid, idx) => (
-              <TikTokCard key={idx} video={vid} />
-            ))}
-          </div>
+          {/* Enlarged Full 9:16 Video Frames (Mobile Tabs + Desktop 3-Columns) */}
+          <SocialProofVideosView videos={tiktokVideos.slice(0, 3)} />
         </div>
       )
     },
@@ -1143,26 +1210,22 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       id: 'slide-11-social-proof-part-2',
       title: 'SOCIAL PROOF & VIRAL REVIEWS (PART 2)',
       content: (
-        <div className="h-full flex flex-col justify-between overflow-hidden">
+        <div className="h-full flex flex-col justify-start sm:justify-between">
           {/* Header */}
-          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-1">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-2 shrink-0 mb-2">
+            <div className="flex items-center gap-2 sm:gap-3">
               <DataBadge type="ACTUAL" text="3 VIRAL PLAYABLE TIKTOK REVIEWS (BAGIAN 2)" />
-              <h2 className="text-lg sm:text-2xl font-black text-slate-900">
+              <h2 className="text-base sm:text-xl lg:text-2xl font-black text-slate-900">
                 Antusiasme &amp; Liputan <span className="text-red-800">Sarapan Sabuba.</span>
               </h2>
             </div>
-            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-bold text-red-800 bg-red-50 border border-red-200 px-3 py-1 rounded-full hidden sm:inline">
               ▶ Klik Card / Play Untuk Memutar Video
             </span>
           </div>
 
-          {/* Next 3 Playable TikTok Videos (Full 9:16 Frame, Zero Page Scroll) */}
-          <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 items-center justify-center py-1">
-            {tiktokVideos.slice(3, 6).map((vid, idx) => (
-              <TikTokCard key={idx} video={vid} />
-            ))}
-          </div>
+          {/* Enlarged Full 9:16 Video Frames (Mobile Tabs + Desktop 3-Columns) */}
+          <SocialProofVideosView videos={tiktokVideos.slice(3, 6)} />
         </div>
       )
     },
@@ -1721,11 +1784,11 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                 </a>
 
                 <button
-                  onClick={() => window.print()}
-                  className="px-5 py-2.5 rounded-xl bg-red-800 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all border border-red-700"
+                  onClick={handleDownloadProposal}
+                  className="px-5 py-2.5 rounded-xl bg-red-800 hover:bg-red-700 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 shadow-lg transition-all border border-red-700 active:scale-95"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Export PDF Proposal</span>
+                  <span>Download Proposal PDF</span>
                 </button>
               </div>
             </div>
@@ -1755,15 +1818,15 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-slate-950/80 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-4 lg:p-6 bg-slate-950/80 backdrop-blur-md">
         
-        {/* Main Deck Container (Clean White Canvas) */}
+        {/* Main Deck Container (Clean White Canvas with Full Mobile Responsiveness) */}
         <motion.div
-          initial={{ scale: 0.95, opacity: 0 }}
+          initial={{ scale: 0.96, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          className={`w-full bg-white text-slate-900 rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-slate-200 transition-all relative ${
-            isFullscreen ? 'h-screen w-screen rounded-none' : 'max-w-6xl h-[92vh]'
+          exit={{ scale: 0.96, opacity: 0 }}
+          className={`w-full bg-white text-slate-900 shadow-2xl flex flex-col overflow-hidden border border-slate-200 transition-all relative ${
+            isFullscreen ? 'h-screen w-screen rounded-none' : 'max-w-6xl w-full h-[98dvh] sm:h-[92vh] rounded-2xl sm:rounded-3xl'
           }`}
         >
 
@@ -1771,49 +1834,51 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           <BackgroundWave />
 
           {/* Top Bar Header */}
-          <div className="px-6 py-4 bg-white/90 border-b border-slate-200 flex items-center justify-between z-20 shrink-0 shadow-xs backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <SabubaLogo className="h-8 w-auto" />
+          <div className="px-3 py-2.5 sm:px-6 sm:py-3.5 bg-white/95 border-b border-slate-200 flex items-center justify-between z-20 shrink-0 shadow-xs backdrop-blur-md">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <SabubaLogo className="h-7 sm:h-8 w-auto" />
               <div className="h-4 w-px bg-slate-300 hidden sm:block" />
               <div>
-                <h3 className="font-black text-sm text-slate-900 tracking-tight">SABUBA Presentation System</h3>
-                <p className="text-[11px] text-slate-500 font-medium">
-                  Slide {currentSlide + 1} / {slides.length}: <span className="text-red-800 font-bold">{currentSlideObj.title}</span>
+                <h3 className="font-black text-xs sm:text-sm text-slate-900 tracking-tight">SABUBA Proposal</h3>
+                <p className="text-[10px] sm:text-[11px] text-slate-500 font-medium">
+                  Slide {currentSlide + 1}/{slides.length}: <span className="text-red-800 font-bold truncate max-w-[140px] sm:max-w-xs inline-block align-bottom">{currentSlideObj.title}</span>
                 </p>
               </div>
             </div>
 
             {/* Header Action Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
-                className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors hidden sm:flex"
+                className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors hidden md:flex"
                 title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
               >
                 {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
               </button>
 
+              {/* Direct Proposal PDF Download Button */}
               <button
-                onClick={() => window.print()}
-                className="px-4 py-2 rounded-xl bg-red-800 hover:bg-red-900 text-white text-xs font-black flex items-center gap-2 transition-all shadow-md"
-                title="Download / Print PDF"
+                onClick={handleDownloadProposal}
+                className="px-3 sm:px-4 py-2 rounded-xl bg-red-800 hover:bg-red-900 text-white text-xs font-black flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+                title="Unduh Proposal PDF Lengkap"
               >
-                <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Export PDF</span>
+                <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+                <span className="hidden sm:inline">Download PDF</span>
+                <span className="sm:hidden text-[10px]">PDF</span>
               </button>
 
               <button
                 onClick={onClose}
-                className="p-2.5 rounded-xl bg-slate-100 hover:bg-red-100 text-slate-700 hover:text-red-700 transition-colors ml-1"
+                className="p-2 rounded-xl bg-slate-100 hover:bg-red-100 text-slate-700 hover:text-red-700 transition-colors ml-0.5"
                 aria-label="Tutup Modal"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
           </div>
 
-          {/* Main Active Slide Content Area */}
-          <div className="p-6 sm:p-10 flex-1 overflow-y-auto flex flex-col justify-center relative z-10">
+          {/* Main Active Slide Content Area (Mobile Scrollable) */}
+          <div className="p-3.5 sm:p-6 lg:p-10 flex-1 overflow-y-auto relative z-10 flex flex-col justify-start sm:justify-center">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentSlide}
@@ -1821,7 +1886,7 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="h-full flex flex-col justify-center"
+                className="h-full flex flex-col justify-start sm:justify-center"
               >
                 {currentSlideObj.content}
               </motion.div>
@@ -1829,30 +1894,30 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
           </div>
 
           {/* Bottom Bar Controls & Progress */}
-          <div className="px-6 py-4 bg-white/90 border-t border-slate-200 flex items-center justify-between z-20 shrink-0 backdrop-blur-md">
+          <div className="px-3 py-2.5 sm:px-6 sm:py-3.5 bg-white/95 border-t border-slate-200 flex items-center justify-between z-20 shrink-0 backdrop-blur-md">
             {/* Prev Button */}
             <button
               onClick={prevSlide}
               disabled={currentSlide === 0}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
+              className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all ${
                 currentSlide === 0
                   ? 'opacity-40 cursor-not-allowed text-slate-400 bg-slate-100'
                   : 'bg-slate-100 hover:bg-slate-200 text-slate-800 shadow-xs'
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>Sebelumnya</span>
+              <span className="hidden sm:inline">Sebelumnya</span>
             </button>
 
-            {/* Slide Navigation Dots */}
+            {/* Slide Navigation Dots (Desktop) or Counter Pill (Mobile) */}
             <div className="hidden md:flex items-center gap-1.5 overflow-x-auto max-w-md px-2">
               {slides.map((s, idx) => (
                 <button
                   key={s.id}
                   onClick={() => setCurrentSlide(idx)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  className={`w-2 h-2 rounded-full transition-all ${
                     currentSlide === idx
-                      ? 'w-6 bg-red-800'
+                      ? 'w-5 bg-red-800'
                       : 'bg-slate-300 hover:bg-slate-400'
                   }`}
                   title={`Go to slide ${idx + 1}: ${s.title}`}
@@ -1860,11 +1925,16 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
               ))}
             </div>
 
+            {/* Mobile Slide Counter */}
+            <div className="md:hidden text-[11px] font-extrabold text-slate-600 bg-slate-100 px-3 py-1 rounded-full">
+              Slide {currentSlide + 1} / {slides.length}
+            </div>
+
             {/* Next Button */}
             <button
               onClick={nextSlide}
               disabled={currentSlide === slides.length - 1}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black flex items-center gap-2 transition-all ${
+              className={`px-4 sm:px-5 py-2 rounded-xl text-xs font-black flex items-center gap-1.5 transition-all ${
                 currentSlide === slides.length - 1
                   ? 'opacity-40 cursor-not-allowed text-slate-400 bg-slate-100'
                   : 'bg-red-800 hover:bg-red-900 text-white shadow-md'
