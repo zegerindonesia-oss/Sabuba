@@ -1873,6 +1873,8 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     handleDownloadProposal
   });
 
+  const currentSlideObj = slides[currentSlide] || slides[0];
+
   useEffect(() => {
     setCurrentSlide(defaultSlide);
   }, [defaultSlide, isOpen]);
