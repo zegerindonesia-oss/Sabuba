@@ -626,27 +626,6 @@ export function getSabubaSlides({
     }
   ];
 
-  useEffect(() => {
-    setCurrentSlide(defaultSlide);
-  }, [defaultSlide, isOpen]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!isOpen) return;
-      if (e.key === 'ArrowRight' || e.key === 'Space') {
-        nextSlide();
-      } else if (e.key === 'ArrowLeft') {
-        prevSlide();
-      } else if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, currentSlide]);
-
-  if (!isOpen) return null;
-
   // ----------------------------------------------------
   // STORYBOARD MASTER SLIDES (Master Hybrid Structure)
   // ----------------------------------------------------
@@ -1894,6 +1873,10 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     handleDownloadProposal
   });
 
+  useEffect(() => {
+    setCurrentSlide(defaultSlide);
+  }, [defaultSlide, isOpen]);
+
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {
       setCurrentSlide(prev => prev + 1);
@@ -1905,6 +1888,23 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
       setCurrentSlide(prev => prev - 1);
     }
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!isOpen) return;
+      if (e.key === 'ArrowRight' || e.key === 'Space') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        prevSlide();
+      } else if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, currentSlide]);
+
+  if (!isOpen) return null;
 
   return (
     <AnimatePresence>
