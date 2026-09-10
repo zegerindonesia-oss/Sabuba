@@ -439,20 +439,14 @@ function SocialProofVideosView({ videos }) {
   );
 }
 
-export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
-  const [currentSlide, setCurrentSlide] = useState(defaultSlide);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [activeScenarioIdx, setActiveScenarioIdx] = useState(1); // Default: 100 Pack (Sedang)
-
-  // Direct download of the official proposal presentation PDF (Declared early to avoid TDZ ReferenceError)
-  const handleDownloadProposal = () => {
-    const link = document.createElement('a');
-    link.href = '/assets/Proposal-Kemitraan-Sabuba-2026.pdf';
-    link.download = 'Proposal-Kemitraan-Sabuba-2026.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+// ----------------------------------------------------
+// Master Slides Generator Function (Used by Modal & Print View)
+// ----------------------------------------------------
+export function getSabubaSlides({
+  activeScenarioIdx = 1,
+  setActiveScenarioIdx = () => {},
+  handleDownloadProposal = () => {}
+} = {}) {
 
   // Full Feasibility Study Data (Feasibility Study - Pack Terminology)
   const feasibilityScenarios = [
@@ -1802,7 +1796,103 @@ export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
     }
   ];
 
-  const currentSlideObj = slides[currentSlide] || slides[0];
+  return slides;
+}
+
+// ----------------------------------------------------
+// Pitch Deck Print View (Renders All 19 Slides in 16:9 Landscape Pages)
+// ----------------------------------------------------
+export function PitchDeckPrintView() {
+  const slides = getSabubaSlides({ activeScenarioIdx: 1 });
+
+  return (
+    <div className="bg-slate-900 min-h-screen py-10 print:py-0 print:bg-white flex flex-col items-center gap-10 print:gap-0">
+      <style>{`
+        @page {
+          size: 1920px 1080px;
+          margin: 0;
+        }
+        @media print {
+          html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: white !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          .slide-print-card {
+            width: 1920px !important;
+            height: 1080px !important;
+            page-break-after: always !important;
+            break-after: page !important;
+            border: none !important;
+            box-shadow: none !important;
+          }
+        }
+      `}</style>
+      {slides.map((s, idx) => (
+        <div
+          key={s.id}
+          className="slide-print-card w-[1920px] h-[1080px] bg-white text-slate-900 relative overflow-hidden flex flex-col justify-between p-16 shadow-2xl border border-slate-200 shrink-0"
+        >
+          <BackgroundWave />
+
+          {/* Top Slide Header */}
+          <div className="flex items-center justify-between z-20 pb-4 border-b border-slate-200 mb-6 shrink-0">
+            <div className="flex items-center gap-4">
+              <SabubaLogo className="h-10 w-auto" />
+              <div className="h-5 w-px bg-slate-300" />
+              <div>
+                <h3 className="font-black text-base text-slate-900 tracking-tight">SABUBA Proposal Kemitraan 2026</h3>
+                <p className="text-xs text-slate-500 font-medium">
+                  Slide {idx + 1} / {slides.length}: <span className="text-red-800 font-bold">{s.title}</span>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-black text-red-900 bg-red-50 border border-red-200 px-4 py-1.5 rounded-full">
+                BUBUR BAKAR • WONTON • LAKSA
+              </span>
+            </div>
+          </div>
+
+          {/* Slide Content */}
+          <div className="flex-1 flex flex-col justify-center relative z-10">
+            {s.content}
+          </div>
+
+          {/* Bottom Slide Footer */}
+          <div className="flex items-center justify-between z-20 pt-4 border-t border-slate-200 mt-6 text-xs text-slate-500 font-semibold shrink-0">
+            <span>PT Sabuba Kuliner Indonesia — Official Partnership Proposal 2026</span>
+            <span>www.sabubabuburbakar.com | WhatsApp HQ: +62 813-5918-0156</span>
+            <span className="font-bold text-red-900">Halaman {idx + 1} dari {slides.length}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export default function PitchDeckModal({ isOpen, onClose, defaultSlide = 0 }) {
+  const [currentSlide, setCurrentSlide] = useState(defaultSlide);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [activeScenarioIdx, setActiveScenarioIdx] = useState(1); // Default: 100 Pack (Sedang)
+
+  // Direct download of the official proposal presentation PDF
+  const handleDownloadProposal = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/Proposal-Kemitraan-Sabuba-2026.pdf';
+    link.download = 'Proposal-Kemitraan-Sabuba-2026.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const slides = getSabubaSlides({
+    activeScenarioIdx,
+    setActiveScenarioIdx,
+    handleDownloadProposal
+  });
 
   const nextSlide = () => {
     if (currentSlide < slides.length - 1) {

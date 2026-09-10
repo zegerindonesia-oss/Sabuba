@@ -7,9 +7,10 @@ import MenuShowcase from './components/MenuShowcase';
 import CustomizerModal from './components/CustomizerModal';
 import CartDrawer from './components/CartDrawer';
 import FloatingCartBar from './components/FloatingCartBar';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import CheckoutModal from './components/CheckoutModal';
 import ReceiptModal from './components/ReceiptModal';
-import PitchDeckModal from './components/PitchDeckModal';
+import PitchDeckModal, { PitchDeckPrintView } from './components/PitchDeckModal';
 import ConceptGallery from './components/ConceptGallery';
 import FranchiseSection from './components/FranchiseSection';
 import Outlets from './components/Outlets';
@@ -17,6 +18,15 @@ import Footer from './components/Footer';
 import { syncSheetImagesWithAppData } from './data/sabubaData';
 
 export default function App() {
+  const isPrintMode = typeof window !== 'undefined' && (
+    window.location.search.includes('print=deck') || 
+    window.location.pathname === '/deck-print'
+  );
+
+  if (isPrintMode) {
+    return <PitchDeckPrintView />;
+  }
+
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -190,6 +200,9 @@ export default function App() {
         totalPrice={totalCartPrice}
         onClick={() => setIsCartOpen(true)}
       />
+
+      {/* Floating WhatsApp Quick Contact Button */}
+      <FloatingWhatsApp hasCartItems={totalCartItemsCount > 0} />
 
       <CheckoutModal
         isOpen={isCheckoutOpen}
