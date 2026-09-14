@@ -11,7 +11,7 @@ export default function Footer() {
           
           {/* Brand Info */}
           <div className="md:col-span-4 space-y-4">
-            <SabubaLogo className="h-10" variant="dark" />
+            <SabubaLogo className="h-14" variant="dark" />
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
               {SABUBA_DATA.brand.tagline}. Diolah dari bahan berkualitas segar, 100% Halal, dan disajikan hangat dalam claypot khas.
             </p>

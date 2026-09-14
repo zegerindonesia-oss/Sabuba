@@ -50,8 +50,8 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpe
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Brand Logo */}
-          <a href="#hero" className="flex items-center gap-2.5 group focus:outline-none">
-            <SabubaLogo className="h-9 sm:h-10" variant="dark" />
+          <a href="#hero" className="flex items-center gap-2.5 group focus:outline-none py-0.5">
+            <SabubaLogo className="h-10 sm:h-12" variant="dark" />
           </a>
 
           {/* Operating Status & Proposal Pitch Deck Trigger */}
@@ -160,7 +160,7 @@ export default function Navbar({ totalItems, setIsCartOpen, onSearchClick, onOpe
             >
               <div>
                 <div className="flex items-center justify-between pb-5 border-b border-slate-100">
-                  <SabubaLogo className="h-8" variant="dark" />
+                  <SabubaLogo className="h-10" variant="dark" />
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="p-2 rounded-full bg-slate-100 text-slate-600 hover:text-slate-900"
