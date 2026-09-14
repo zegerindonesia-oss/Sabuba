@@ -38,7 +38,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Ori) Ayam",
-      price: 15000,
+      price: 12000,
       image: "https://drive.google.com/thumbnail?id=1OSEnCsfJq29y118BY349wViNXxmfaQCK&sz=w800",
       description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, daging ayam, jagung, sayur, keripik.",
@@ -51,7 +51,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Ori) Sapi",
-      price: 18000,
+      price: 15000,
       image: "https://drive.google.com/thumbnail?id=161beYaRXQXQljnMuq9whYCQqgv7NwNZH&sz=w800",
       description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, daging sapi, jagung, sayur, keripik.",
@@ -64,7 +64,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Ori) Mix (Ayam+Sapi)",
-      price: 19000,
+      price: 18000,
       image: "https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800",
       description: "Sajian nikmat bubur bakar dengan topping jagung, sayur, keripik dan lauk utama ayam dan sapi.",
       ingredients: "Bubur, daging ayam, daging sapi, jagung, sayur, keripik.",
@@ -77,7 +77,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Laksa) Ayam",
-      price: 16000,
+      price: 14000,
       image: "https://drive.google.com/thumbnail?id=1D1DbaCtrDo4BPQZHbHzWS7Upb_-Ep4yh&sz=w800",
       description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, kuah laksa, daging ayam, jagung, sayur, keripik.",
@@ -90,7 +90,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Laksa) Sapi",
-      price: 19000,
+      price: 16000,
       image: "https://drive.google.com/thumbnail?id=1HQt19A09XLGoibnMcb94reFBJ89IHc58&sz=w800",
       description: "Sajian nikmat bubur bakar kuah laksa dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, kuah laksa, daging sapi, jagung, sayur, keripik.",
@@ -116,7 +116,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Kuning) Ayam",
-      price: 16000,
+      price: 14000,
       image: "https://drive.google.com/thumbnail?id=1s6zr7OG5KkVZ6GHEWdumAWBR9IDW2fe_&sz=w800",
       description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama ayam.",
       ingredients: "Bubur, kuah kuning, daging ayam, jagung, sayur, keripik.",
@@ -129,7 +129,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Kuning) Sapi",
-      price: 19000,
+      price: 16000,
       image: "https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800",
       description: "Sajian nikmat bubur bakar kuah kuning dengan topping jagung, sayur, keripik dan lauk utama sapi.",
       ingredients: "Bubur, kuah kuning, daging sapi, jagung, sayur, keripik.",
@@ -155,7 +155,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Semur) Ayam + Telur (Utuh)",
-      price: 18000,
+      price: 16000,
       image: "https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800",
       description: "Sajian nikmat bubur bakar kuah semur dengan topping jagung, sayur, keripik dan lauk utama ayam dan telur utuh.",
       ingredients: "Bubur, kuah semur, daging ayam, telur utuh, jagung, sayur, keripik.",
@@ -168,7 +168,7 @@ export const SABUBA_DATA = {
       category: "bubur",
       subcategory: "BUBUR",
       name: "Bubur (Kuah Semur) Sapi + Telur (Utuh)",
-      price: 19000,
+      price: 18000,
       image: "https://drive.google.com/thumbnail?id=155Q5GPAxlR7gTE1JDGMR4SGSykxZZ-I3&sz=w800",
       description: "Sajian nikmat bubur bakar kuah semur dengan topping jagung, sayur, keripik dan lauk utama sapi dan telur utuh.",
       ingredients: "Bubur, kuah semur, daging sapi, telur utuh, jagung, sayur, keripik.",
@@ -219,7 +219,7 @@ export const SABUBA_DATA = {
       category: "topping",
       subcategory: "DAGING",
       name: "Daging Ayam",
-      price: 5000,
+      price: 3000,
       image: "https://drive.google.com/thumbnail?id=1AB9c-cg62YxMliJSGA1s70YzJkbHS_VO&sz=w800",
       description: "Tambahan topping daging ayam.",
       ingredients: "Daging ayam, bumbu.",
@@ -267,7 +267,7 @@ export const SABUBA_DATA = {
       category: "minuman",
       subcategory: "TEH",
       name: "Teh",
-      price: 5000,
+      price: 4000,
       image: "https://drive.google.com/thumbnail?id=1AUNiHe7vaGUh31WmyK-pSGSpI1TLuaDn&sz=w800",
       description: "Minuman teh hangat menyegarkan.",
       ingredients: "Daun teh, air hangat, gula (opsional).",
@@ -279,7 +279,7 @@ export const SABUBA_DATA = {
       category: "minuman",
       subcategory: "KOPI",
       name: "Kopi Hitam Nusantara",
-      price: 8000,
+      price: 5000,
       image: "https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800",
       description: "Kopi tubruk hitam khas nusantara.",
       ingredients: "Biji kopi pilihan, air panas.",
@@ -301,7 +301,7 @@ export const SABUBA_DATA = {
   ],
   extraToppings: [
     { id: "top-telur-kampung", name: "Telur Kampung (Rebus)", price: 5000 },
-    { id: "top-daging-ayam", name: "Daging Ayam", price: 5000 },
+    { id: "top-daging-ayam", name: "Daging Ayam", price: 3000 },
     { id: "top-daging-sapi", name: "Daging Sapi", price: 5000 },
     { id: "top-sate-satean", name: "Sate Satean", price: 3000 },
     { id: "top-krupuk", name: "Kerupuk Bawang", price: 3000 }
@@ -475,25 +475,57 @@ export const syncSheetImagesWithAppData = async (onUpdate) => {
       rows.push(currentRow);
     }
 
-    const photoMap = {};
+    const dataMap = {};
     for (let i = 1; i < rows.length; i++) {
       const r = rows[i];
-      if (r.length > 9 && r[4] && r[9]) {
+      if (r.length > 4 && r[4]) {
         const cleanName = String(r[4]).trim().toLowerCase().replace(/\s+/g, ' ');
-        photoMap[cleanName] = formatImageUrl(r[9]);
+        const rawPrice = r[7] ? String(r[7]).replace(/[^0-9]/g, '') : '';
+        const priceNum = rawPrice ? parseInt(rawPrice, 10) : null;
+        const photoUrl = (r.length > 9 && r[9]) ? formatImageUrl(r[9]) : null;
+        const isBestSeller = r[3] ? r[3].toUpperCase().includes('BEST SELLER') : false;
+
+        dataMap[cleanName] = {
+          price: priceNum,
+          photo: photoUrl,
+          isBestSeller
+        };
       }
     }
 
     let updatedCount = 0;
     SABUBA_DATA.menuItems.forEach(item => {
       const key = String(item.name).trim().toLowerCase().replace(/\s+/g, ' ');
-      const matchedPhoto = photoMap[key] || 
-        (item.id === 'top-krupuk' ? (photoMap['kerupuk bawang'] || photoMap['krupuk'] || photoMap['kerupuk']) : null);
-      if (matchedPhoto && matchedPhoto !== item.image) {
-        item.image = matchedPhoto;
-        updatedCount++;
+      const matchedData = dataMap[key] || 
+        (item.id === 'top-krupuk' ? (dataMap['kerupuk bawang'] || dataMap['krupuk'] || dataMap['kerupuk']) : null);
+      
+      if (matchedData) {
+        if (matchedData.price && item.price !== matchedData.price) {
+          item.price = matchedData.price;
+          updatedCount++;
+        }
+        if (matchedData.photo && matchedData.photo !== item.image) {
+          item.image = matchedData.photo;
+          updatedCount++;
+        }
+        if (matchedData.isBestSeller && !item.isBestSeller) {
+          item.isBestSeller = true;
+          updatedCount++;
+        }
       }
     });
+
+    if (SABUBA_DATA.extraToppings) {
+      SABUBA_DATA.extraToppings.forEach(top => {
+        const key = String(top.name).trim().toLowerCase().replace(/\s+/g, ' ');
+        const matchedData = dataMap[key] || 
+          (top.id === 'top-krupuk' ? (dataMap['kerupuk bawang'] || dataMap['krupuk'] || dataMap['kerupuk']) : null);
+        if (matchedData && matchedData.price && top.price !== matchedData.price) {
+          top.price = matchedData.price;
+          updatedCount++;
+        }
+      });
+    }
 
     if (updatedCount > 0 && typeof onUpdate === 'function') {
       onUpdate();
@@ -502,5 +534,7 @@ export const syncSheetImagesWithAppData = async (onUpdate) => {
     console.warn("Sheet live sync warning:", err);
   }
 };
+
+export const syncSheetMenuWithAppData = syncSheetImagesWithAppData;
 
 
