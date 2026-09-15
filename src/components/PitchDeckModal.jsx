@@ -16,7 +16,7 @@ import { SABUBA_DATA, SIGNATURE_ITEMS, formatRupiah } from '../data/sabubaData';
 // ----------------------------------------------------
 function BackgroundWave() {
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 print:hidden">
       {/* Subtle Top-Right Red Gradient Mesh */}
       <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-gradient-to-br from-red-600/10 via-amber-500/5 to-transparent blur-3xl" />
       
@@ -445,7 +445,8 @@ function SocialProofVideosView({ videos }) {
 export function getSabubaSlides({
   activeScenarioIdx = 1,
   setActiveScenarioIdx = () => {},
-  handleDownloadProposal = () => {}
+  handleDownloadProposal = () => {},
+  isPrint = false
 } = {}) {
 
   // Full Feasibility Study Data (Feasibility Study - Pack Terminology)
@@ -577,7 +578,7 @@ export function getSabubaSlides({
       title: 'Review Sensasi Claypot Panas',
       quote: 'Sensasi sarapan panas claypot yang ramah kantong tapi rasa resto premium!',
       tag: 'VIRAL REVIEW #1',
-      image: 'https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800',
+      image: '/assets/menu/bubur-laksa.jpg',
     },
     {
       videoId: '7630859047729630482',
@@ -586,7 +587,7 @@ export function getSabubaSlides({
       title: 'Kuliner Sarapan Hits',
       quote: 'Rekomendasi sarapan enak & murah di Sidoarjo, bubur bakarnya lembut & wangi!',
       tag: 'VIRAL REVIEW #2',
-      image: 'https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800',
+      image: '/assets/menu/bubur-ori-mix.jpg',
     },
     {
       videoId: '7628636632308075796',
@@ -595,7 +596,7 @@ export function getSabubaSlides({
       title: 'Sarapan Keluarga Favorit',
       quote: 'Pilihan sarapan sehat keluarga. Porsi pas & kuah laksanya gurih hangat di perut.',
       tag: 'VIRAL REVIEW #3',
-      image: 'https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800',
+      image: '/assets/menu/bubur-semur.jpg',
     },
     {
       videoId: '7657353179687947541',
@@ -604,7 +605,7 @@ export function getSabubaSlides({
       title: 'Bubur Bakar Kuah Semur',
       quote: 'Kuah semurnya meresap banget sampai ke dalam bubur panasnya. Wajib coba!',
       tag: 'VIRAL REVIEW #4',
-      image: 'https://drive.google.com/thumbnail?id=16KK3fHQZ8cZlWU2MMhId3wGKYFfp0572&sz=w800',
+      image: '/assets/menu/review-semur-telur.jpg',
     },
     {
       videoId: '7632918291463458069',
@@ -613,7 +614,7 @@ export function getSabubaSlides({
       title: 'Spot Sarapan Pagi Sidoarjo',
       quote: 'Wonton kuah & dim sum siomay-nya beneran nagih! Pas banget buat menu sarapan.',
       tag: 'VIRAL REVIEW #5',
-      image: 'https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800',
+      image: '/assets/menu/wonton-kuah.jpg',
     },
     {
       videoId: '7632959962536283413',
@@ -622,7 +623,7 @@ export function getSabubaSlides({
       title: 'Antrean Sarapan Rame',
       quote: 'Antrean pagi rame banget! Inovasi sarapan 3 roda yang super praktis & lezat.',
       tag: 'VIRAL REVIEW #6',
-      image: 'https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800',
+      image: '/assets/menu/dimsum-siomay.jpg',
     }
   ];
 
@@ -637,8 +638,8 @@ export function getSabubaSlides({
       id: 'slide-01-cover',
       title: 'SABUBA — Indonesia\'s Modern Breakfast & Comfort Food Brand',
       content: (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center">
-          <div className="lg:col-span-6 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 print:grid-cols-12 gap-8 h-full items-center">
+          <div className="lg:col-span-6 print:col-span-6 space-y-6">
             <div className="flex flex-wrap items-center gap-2">
               <DataBadge type="ACTUAL" text="PROPOSAL KEMITRAAN 2026" />
               <DataBadge type="ACTUAL" text="FORMAT UTAMA: SABUBA CLASSIC" />
@@ -681,9 +682,26 @@ export function getSabubaSlides({
             </div>
           </div>
 
-          {/* 3D Vertical Apple-Style Menu Photo Carousel */}
-          <div className="lg:col-span-6 relative flex flex-col items-center justify-center py-2">
-            <VerticalApple3DCarousel />
+          {/* Right Column: 3D Vertical Carousel on Web / Static Clean Card on Print */}
+          <div className="lg:col-span-6 print:col-span-6 relative flex flex-col items-center justify-center py-2">
+            {isPrint ? (
+              <div className="relative w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 bg-slate-900">
+                <img
+                  src="/assets/Konsep/sabuba-classic-poster.jpg"
+                  alt="Sabuba Classic Poster"
+                  className="w-full h-[470px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                  <span className="text-[11px] font-black uppercase text-amber-300 bg-red-800 px-3 py-1 rounded-full w-fit">
+                    FORMAT UTAMA KEMITRAAN
+                  </span>
+                  <h3 className="text-2xl font-black text-white mt-2">Sabuba Classic Motor 3-Roda</h3>
+                  <p className="text-xs text-slate-200 mt-1">Inovasi Sarapan Bubur Bakar Claypot Fleksibel &amp; Siap Jualan</p>
+                </div>
+              </div>
+            ) : (
+              <VerticalApple3DCarousel />
+            )}
           </div>
         </div>
       )
@@ -877,32 +895,32 @@ export function getSabubaSlides({
 
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-4">
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=15khQoPH2F0ia_gDjRNtEWjN3yjAc1LTm&sz=w800" alt="Bubur Ori Mix" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/bubur-ori-mix.jpg" alt="Bubur Ori Mix" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Bubur (Ori) Mix</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 19.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=1N9PYBAox07AKVBxRgWjtaHXc3fS7Kvsb&sz=w800" alt="Bubur Kuah Laksa" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/bubur-laksa.jpg" alt="Bubur Kuah Laksa" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Bubur Kuah Laksa</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 19.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=17QZFlxABkyCLmm27GfKNKut5Xbm4vXTB&sz=w800" alt="Bubur Kuah Semur" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/bubur-semur.jpg" alt="Bubur Kuah Semur" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Kuah Semur + Telur</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 18.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=1LLms9wP-r2XxSGJS5fhbq-OWf9s30na7&sz=w800" alt="Wonton Kuah" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/wonton-kuah.jpg" alt="Wonton Kuah" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Wonton Kuah Ayam</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 13.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=1nEAhDwYbP2d6O4I7TD8557BkjboXn8-f&sz=w800" alt="Dim Sum Siomay" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/dimsum-siomay.jpg" alt="Dim Sum Siomay" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Dim Sum Siomay (4pcs)</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 13.000</div>
             </div>
             <div className="p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-2">
-              <img src="https://drive.google.com/thumbnail?id=1mPkZsPOo0_r9Bh-wdzSRyKyBFnJi66pR&sz=w800" alt="Kopi Nusantara" className="w-full h-28 object-cover rounded-xl" />
+              <img src="/assets/menu/kopi-nusantara.jpg" alt="Kopi Nusantara" className="w-full h-28 object-cover rounded-xl" />
               <div className="font-black text-xs text-slate-900">Kopi Hitam Nusantara</div>
               <div className="text-xs text-red-800 font-extrabold">Rp 8.000</div>
             </div>
@@ -1721,14 +1739,31 @@ export function getSabubaSlides({
       id: 'slide-19-closing',
       title: 'CLOSING — FROM ONE BOWL TO A NATIONAL BRAND',
       content: (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full items-center max-w-6xl mx-auto">
-          {/* Left Column: 3D Vertical Apple-Style Menu Photo Carousel */}
-          <div className="lg:col-span-5 relative flex flex-col items-center justify-center py-2">
-            <VerticalApple3DCarousel />
+        <div className="grid grid-cols-1 lg:grid-cols-12 print:grid-cols-12 gap-8 h-full items-center max-w-6xl mx-auto">
+          {/* Left Column: 3D Carousel on Web / Static Dish Showcase on Print */}
+          <div className="lg:col-span-5 print:col-span-5 relative flex flex-col items-center justify-center py-2">
+            {isPrint ? (
+              <div className="relative w-full max-w-md rounded-3xl overflow-hidden shadow-xl border-4 border-slate-100 bg-slate-900">
+                <img
+                  src="/assets/sabuba-claypot-menu-hero.jpg"
+                  alt="Sabuba Claypot Menu"
+                  className="w-full h-[420px] object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent flex flex-col justify-end p-6 text-white">
+                  <span className="text-[11px] font-black uppercase text-amber-300 bg-red-800 px-3 py-1 rounded-full w-fit">
+                    SIGNATURE CLAYPOT
+                  </span>
+                  <h3 className="text-2xl font-black text-white mt-1.5">Bubur Bakar Claypot Sabuba</h3>
+                  <p className="text-xs text-slate-200">Aroma Gurih Bakaran Nikmat Tiap Pagi</p>
+                </div>
+              </div>
+            ) : (
+              <VerticalApple3DCarousel />
+            )}
           </div>
 
           {/* Right Column: Text & CTA */}
-          <div className="lg:col-span-7 space-y-4 text-left">
+          <div className="lg:col-span-7 print:col-span-7 space-y-4 text-left">
             <DataBadge type="ACTUAL" text="PESAN UTAMA BRAND" />
 
             <h1 className="text-3xl sm:text-5xl font-black text-slate-900 leading-tight tracking-tight">
@@ -1782,10 +1817,10 @@ export function getSabubaSlides({
 // Pitch Deck Print View (Renders All 19 Slides in 16:9 Landscape Pages)
 // ----------------------------------------------------
 export function PitchDeckPrintView() {
-  const slides = getSabubaSlides({ activeScenarioIdx: 1 });
+  const slides = getSabubaSlides({ activeScenarioIdx: 1, isPrint: true });
 
   return (
-    <div className="bg-slate-900 min-h-screen py-10 print:py-0 print:bg-white flex flex-col items-center gap-10 print:gap-0">
+    <div id="proposal-print-container" className="bg-slate-900 min-h-screen py-10 print:py-0 print:bg-white flex flex-col items-center gap-10 print:gap-0">
       <style>{`
         @page {
           size: 1920px 1080px;
@@ -1799,13 +1834,64 @@ export function PitchDeckPrintView() {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
+          #proposal-print-container {
+            visibility: visible !important;
+            width: 1920px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: white !important;
+          }
+          #proposal-print-container * {
+            visibility: visible !important;
+          }
           .slide-print-card {
             width: 1920px !important;
             height: 1080px !important;
+            max-height: 1080px !important;
+            min-height: 1080px !important;
             page-break-after: always !important;
             break-after: page !important;
+            page-break-inside: avoid !important;
+            break-inside: avoid !important;
             border: none !important;
             box-shadow: none !important;
+            overflow: hidden !important;
+            box-sizing: border-box !important;
+          }
+          .slide-print-card .grid-cols-1.lg\:grid-cols-12 {
+            display: grid !important;
+            grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+          }
+          .slide-print-card .lg\:col-span-5 {
+            grid-column: span 5 / span 5 !important;
+          }
+          .slide-print-card .lg\:col-span-6 {
+            grid-column: span 6 / span 6 !important;
+          }
+          .slide-print-card .lg\:col-span-7 {
+            grid-column: span 7 / span 7 !important;
+          }
+          .slide-print-card .grid-cols-1.md\:grid-cols-3 {
+            display: grid !important;
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+          .slide-print-card .grid-cols-1.md\:grid-cols-4 {
+            display: grid !important;
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+          }
+          .slide-print-card .grid-cols-2.md\:grid-cols-6 {
+            display: grid !important;
+            grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+          }
+          .slide-print-card .grid-cols-1.sm\:grid-cols-2 {
+            display: grid !important;
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+          .slide-print-card .hidden.md\:grid {
+            display: grid !important;
+          }
+          .slide-print-card .flex.md\:hidden {
+            display: none !important;
           }
         }
       `}</style>
@@ -1814,8 +1900,6 @@ export function PitchDeckPrintView() {
           key={s.id}
           className="slide-print-card w-[1920px] h-[1080px] bg-white text-slate-900 relative overflow-hidden flex flex-col justify-between p-16 shadow-2xl border border-slate-200 shrink-0"
         >
-          <BackgroundWave />
-
           {/* Top Slide Header */}
           <div className="flex items-center justify-between z-20 pb-4 border-b border-slate-200 mb-6 shrink-0">
             <div className="flex items-center gap-4">

@@ -83,7 +83,9 @@ body {
 
   /* Make proposal print container and its contents visible */
   #proposal-print-container,
-  #proposal-print-container * {
+  #proposal-print-container *,
+  .slide-print-card,
+  .slide-print-card * {
     visibility: visible !important;
   }
 
