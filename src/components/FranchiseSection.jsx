@@ -11,10 +11,10 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
   ];
 
   const streetFoodFeatures = [
-    'Investasi Terjangkau Rp 100.000.000 (Sabuba Classic)',
+    'Investasi Terjangkau Rp 125.000.000 (Sabuba Classic)',
     '100% Bebas Repot Operasional (Mitra Pasif)',
     'Transparansi Penjualan Online Real-Time 24/7',
-    'Est. Balik Modal Cepat (~5.3 - 7.2 Bulan)',
+    'Est. Balik Modal Cepat (~4.6 - 9.3 Bulan)',
   ];
 
   return (
@@ -39,13 +39,13 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
           </h2>
 
           <p className="text-red-100/90 text-xs sm:text-sm mt-3 leading-relaxed">
-            Bergabunglah menjadi mitra owner <strong className="text-amber-300 font-extrabold">Sabuba Classic</strong>. Investasi Rp 100 Juta, nikmati passive income pembagian hasil 50% bersih tanpa repot operasional, dan pantau penjualan harian Anda via online real-time.
+            Bergabunglah menjadi mitra owner <strong className="text-amber-300 font-extrabold">Sabuba Classic</strong>. Investasi Rp 125 Juta, nikmati passive income pembagian hasil 50% bersih tanpa repot operasional, dan pantau penjualan harian Anda via online real-time.
           </p>
 
           {/* Model Status Bar */}
           <div className="mt-6 flex flex-wrap justify-center items-center gap-2.5">
             <span className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Sabuba Classic (Rp 100 Jt) - DI BUKA SEKARANG
+              <CheckCircle2 className="w-3.5 h-3.5" /> Sabuba Classic (Rp 125 Jt) - DI BUKA SEKARANG
             </span>
             <span className="px-3 py-1.5 rounded-full bg-white/10 text-red-200 font-bold text-xs border border-white/20">
               Sabuba Container - COMING SOON
@@ -131,7 +131,7 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
                     Sabuba Classic
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-amber-400 text-red-950 font-extrabold text-[11px] uppercase flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> Rp 100.000.000
+                    <MapPin className="w-3 h-3" /> Rp 125.000.000
                   </span>
                 </div>
                 <h3 className="font-black text-xl text-white">Konsep Street Food Motor Custom</h3>

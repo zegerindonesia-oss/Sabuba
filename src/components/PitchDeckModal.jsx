@@ -468,7 +468,7 @@ export function getSabubaSlides({
       totalOpsAmount: 4500000,
       ebitdaNetProfitStore: 13500000,
       mitraShare50: 6750000,
-      paybackMonths: 14.8
+      paybackMonths: 18.5
     },
     {
       name: 'Sedang (100 Pack)',
@@ -487,7 +487,7 @@ export function getSabubaSlides({
       totalOpsAmount: 9000000,
       ebitdaNetProfitStore: 27000000,
       mitraShare50: 13500000,
-      paybackMonths: 7.4
+      paybackMonths: 9.3
     },
     {
       name: 'Ramai (150 Pack)',
@@ -506,7 +506,7 @@ export function getSabubaSlides({
       totalOpsAmount: 13500000,
       ebitdaNetProfitStore: 40500000,
       mitraShare50: 20250000,
-      paybackMonths: 4.9
+      paybackMonths: 6.2
     },
     {
       name: 'Ramai Sekali (200 Pack)',
@@ -525,7 +525,7 @@ export function getSabubaSlides({
       totalOpsAmount: 18000000,
       ebitdaNetProfitStore: 54000000,
       mitraShare50: 27000000,
-      paybackMonths: 3.7
+      paybackMonths: 4.6
     }
   ];
 
@@ -660,13 +660,13 @@ export function getSabubaSlides({
 
             <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-950 font-bold text-sm flex items-center gap-3">
               <Flame className="w-5 h-5 text-red-700 shrink-0" />
-              <span>POSITIONING: <em>"The motor is the entry point, NOT the destination."</em></span>
+              <span>POSITIONING: <em>"Tempat Paling Favorit untuk Sarapan Pagi &amp; Pilihan Utama Keluarga Indonesia"</em></span>
             </div>
 
             <div className="grid grid-cols-3 gap-3 pt-2">
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">CAPEX Usaha</div>
-                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">Rp 100 Jt</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">Rp 125 Jt</div>
                 <DataBadge type="ACTUAL" text="Sabuba Classic" />
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
@@ -1011,7 +1011,7 @@ export function getSabubaSlides({
             <ul className="space-y-3 text-sm text-slate-700 font-medium">
               <li className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
-                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 100 Juta lengkap dengan kitchen setup &amp; sistem POS.</span>
+                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 125 Juta lengkap dengan kitchen setup &amp; sistem POS.</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
@@ -1352,7 +1352,7 @@ export function getSabubaSlides({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <DataBadge type="ASSUMPTION" text="SIMULASI KEUANGAN SABUBA CLASSIC" />
-              <DataBadge type="ASSUMPTION" text="CAPEX RP 100M | HPP 40% | OPEX ~15%" />
+              <DataBadge type="ASSUMPTION" text="CAPEX RP 125M | HPP 40% | OPEX ~15%" />
             </div>
             <span className="text-xs font-bold text-red-800">Unit: PACK</span>
           </div>
@@ -1591,7 +1591,7 @@ export function getSabubaSlides({
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
               <span className="text-xs font-bold text-red-800 uppercase">Modal Awal CAPEX</span>
-              <h4 className="text-2xl font-black text-slate-900">Rp 100.000.000</h4>
+              <h4 className="text-2xl font-black text-slate-900">Rp 125.000.000</h4>
               <p className="text-xs text-slate-500">Unit Sabuba Classic, peralatan kitchen lengkap, branding, &amp; sistem POS.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
