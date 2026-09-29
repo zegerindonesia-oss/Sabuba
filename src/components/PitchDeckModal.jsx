@@ -450,6 +450,7 @@ export function getSabubaSlides({
 } = {}) {
 
   // Full Feasibility Study Data (Feasibility Study - Pack Terminology)
+  // Biaya Kemitraan: Rp 75.000.000 | COGS: 45% | Bagi Hasil: 70% Brand Holder, 30% Mitra
   const feasibilityScenarios = [
     {
       name: 'Rendah (50 Pack)',
@@ -459,16 +460,17 @@ export function getSabubaSlides({
       salesDay: 1000000,
       salesMonth: 30000000,
       salesYear: 360000000,
-      hppPercent: 40,
-      hppAmount: 12000000,
-      grossProfitAmount: 18000000,
+      hppPercent: 45,
+      hppAmount: 13500000,
+      grossProfitAmount: 16500000,
       opsKaryawan: 3000000,
       opsRumahTangga: 750000,
       opsListrikAirFuel: 750000,
       totalOpsAmount: 4500000,
-      ebitdaNetProfitStore: 13500000,
-      mitraShare50: 6750000,
-      paybackMonths: 18.5
+      ebitdaNetProfitStore: 12000000,
+      brandHolderShare70: 8400000,
+      mitraShare30: 3600000,
+      paybackMonths: 20.8
     },
     {
       name: 'Sedang (100 Pack)',
@@ -478,16 +480,17 @@ export function getSabubaSlides({
       salesDay: 2000000,
       salesMonth: 60000000,
       salesYear: 720000000,
-      hppPercent: 40,
-      hppAmount: 24000000,
-      grossProfitAmount: 36000000,
+      hppPercent: 45,
+      hppAmount: 27000000,
+      grossProfitAmount: 33000000,
       opsKaryawan: 6000000,
       opsRumahTangga: 1500000,
       opsListrikAirFuel: 1500000,
       totalOpsAmount: 9000000,
-      ebitdaNetProfitStore: 27000000,
-      mitraShare50: 13500000,
-      paybackMonths: 9.3
+      ebitdaNetProfitStore: 24000000,
+      brandHolderShare70: 16800000,
+      mitraShare30: 7200000,
+      paybackMonths: 10.4
     },
     {
       name: 'Ramai (150 Pack)',
@@ -497,16 +500,17 @@ export function getSabubaSlides({
       salesDay: 3000000,
       salesMonth: 90000000,
       salesYear: 1080000000,
-      hppPercent: 40,
-      hppAmount: 36000000,
-      grossProfitAmount: 54000000,
+      hppPercent: 45,
+      hppAmount: 40500000,
+      grossProfitAmount: 49500000,
       opsKaryawan: 9000000,
       opsRumahTangga: 2250000,
       opsListrikAirFuel: 2250000,
       totalOpsAmount: 13500000,
-      ebitdaNetProfitStore: 40500000,
-      mitraShare50: 20250000,
-      paybackMonths: 6.2
+      ebitdaNetProfitStore: 36000000,
+      brandHolderShare70: 25200000,
+      mitraShare30: 10800000,
+      paybackMonths: 6.9
     },
     {
       name: 'Ramai Sekali (200 Pack)',
@@ -516,16 +520,17 @@ export function getSabubaSlides({
       salesDay: 4000000,
       salesMonth: 120000000,
       salesYear: 1440000000,
-      hppPercent: 40,
-      hppAmount: 48000000,
-      grossProfitAmount: 72000000,
+      hppPercent: 45,
+      hppAmount: 54000000,
+      grossProfitAmount: 66000000,
       opsKaryawan: 12000000,
       opsRumahTangga: 3000000,
       opsListrikAirFuel: 3000000,
       totalOpsAmount: 18000000,
-      ebitdaNetProfitStore: 54000000,
-      mitraShare50: 27000000,
-      paybackMonths: 4.6
+      ebitdaNetProfitStore: 48000000,
+      brandHolderShare70: 33600000,
+      mitraShare30: 14400000,
+      paybackMonths: 5.2
     }
   ];
 
@@ -665,14 +670,14 @@ export function getSabubaSlides({
 
             <div className="grid grid-cols-3 gap-3 pt-2">
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
-                <div className="text-[11px] font-bold text-slate-500 uppercase">CAPEX Usaha</div>
-                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">Rp 125 Jt</div>
+                <div className="text-[11px] font-bold text-slate-500 uppercase">Biaya Kemitraan</div>
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">Rp 75 Jt</div>
                 <DataBadge type="ACTUAL" text="Sabuba Classic" />
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">Bagi Hasil</div>
-                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">50% : 50%</div>
-                <DataBadge type="ACTUAL" text="Mitra Pasif" />
+                <div className="text-xl sm:text-2xl font-black text-slate-900 mt-1">70% : 30%</div>
+                <DataBadge type="ACTUAL" text="70% HQ : 30% Mitra" />
               </div>
               <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-md">
                 <div className="text-[11px] font-bold text-slate-500 uppercase">Operasional</div>
@@ -1011,7 +1016,7 @@ export function getSabubaSlides({
             <ul className="space-y-3 text-sm text-slate-700 font-medium">
               <li className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
-                <span><strong className="text-slate-900">Capex Jauh Lebih Ringan:</strong> Hanya Rp 125 Juta lengkap dengan kitchen setup &amp; sistem POS.</span>
+                <span><strong className="text-slate-900">Biaya Kemitraan Terjangkau:</strong> Hanya Rp 75 Juta lengkap dengan kitchen setup &amp; sistem POS.</span>
               </li>
               <li className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-red-800 shrink-0 mt-0.5" />
@@ -1352,7 +1357,7 @@ export function getSabubaSlides({
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <DataBadge type="ASSUMPTION" text="SIMULASI KEUANGAN SABUBA CLASSIC" />
-              <DataBadge type="ASSUMPTION" text="CAPEX RP 125M | HPP 40% | OPEX ~15%" />
+              <DataBadge type="ASSUMPTION" text="BIAYA KEMITRAAN RP 75JT | HPP 45% | OPEX ~15%" />
             </div>
             <span className="text-xs font-bold text-red-800">Unit: PACK</span>
           </div>
@@ -1362,7 +1367,7 @@ export function getSabubaSlides({
               <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight">
                 Feasibility Study
               </h1>
-              <p className="text-xs sm:text-sm font-semibold text-slate-600">Simulasi Keuangan Sabuba Classic (Skema Bagi Hasil 50% : 50%)</p>
+              <p className="text-xs sm:text-sm font-semibold text-slate-600">Simulasi Keuangan Sabuba Classic (Skema Bagi Hasil 70% Brand Holder : 30% Mitra)</p>
             </div>
             
             {/* Scenario Tabs */}
@@ -1411,14 +1416,14 @@ export function getSabubaSlides({
                       <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.salesYear)}</td>
                     </tr>
                     <tr>
-                      <td className="py-2 px-3 text-slate-600">HPP / COGS (Bahan Baku Utama 40%)</td>
-                      <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.salesDay * 0.4)}</td>
+                      <td className="py-2 px-3 text-slate-600">HPP / COGS (Bahan Baku Utama 45%)</td>
+                      <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.salesDay * 0.45)}</td>
                       <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.hppAmount)}</td>
                       <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(sc.hppAmount * 12)}</td>
                     </tr>
                     <tr className="font-bold text-slate-900 bg-red-50/40">
-                      <td className="py-2 px-3">Laba Kotor (Gross Profit 60%)</td>
-                      <td className="py-2 px-3 text-right">{formatRupiah(sc.salesDay * 0.6)}</td>
+                      <td className="py-2 px-3">Laba Kotor (Gross Profit 55%)</td>
+                      <td className="py-2 px-3 text-right">{formatRupiah(sc.salesDay * 0.55)}</td>
                       <td className="py-2 px-3 text-right">{formatRupiah(sc.grossProfitAmount)}</td>
                       <td className="py-2 px-3 text-right">{formatRupiah(sc.grossProfitAmount * 12)}</td>
                     </tr>
@@ -1447,16 +1452,28 @@ export function getSabubaSlides({
                       <td className="py-2 px-3 text-right font-bold">{formatRupiah(sc.totalOpsAmount * 12)}</td>
                     </tr>
                     <tr className="bg-red-900 text-white font-black">
-                      <td className="py-2.5 px-3">EBITDA Store Net Profit (45%)</td>
+                      <td className="py-2.5 px-3">EBITDA Store Net Profit (40%)</td>
                       <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore / 30)}</td>
                       <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore)}</td>
                       <td className="py-2.5 px-3 text-right">{formatRupiah(sc.ebitdaNetProfitStore * 12)}</td>
                     </tr>
+                    <tr className="bg-slate-100 text-slate-800 font-extrabold">
+                      <td className="py-2 px-3">Bagi Hasil Brand Holder (70%)</td>
+                      <td className="py-2 px-3 text-right">{formatRupiah(sc.brandHolderShare70 / 30)}</td>
+                      <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.brandHolderShare70)} / bln</td>
+                      <td className="py-2 px-3 text-right font-black">{formatRupiah(sc.brandHolderShare70 * 12)} / thn</td>
+                    </tr>
                     <tr className="bg-amber-500/20 text-amber-950 font-black">
-                      <td className="py-2.5 px-3">Bagi Hasil Mitra Pasif (50% Shared Profit)</td>
-                      <td className="py-2.5 px-3 text-right">{formatRupiah(sc.mitraShare50 / 30)}</td>
-                      <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm">{formatRupiah(sc.mitraShare50)} / bln</td>
-                      <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm">{formatRupiah(sc.mitraShare50 * 12)} / thn</td>
+                      <td className="py-2.5 px-3">Bagi Hasil Mitra Pasif (30%)</td>
+                      <td className="py-2.5 px-3 text-right">{formatRupiah(sc.mitraShare30 / 30)}</td>
+                      <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm">{formatRupiah(sc.mitraShare30)} / bln</td>
+                      <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm">{formatRupiah(sc.mitraShare30 * 12)} / thn</td>
+                    </tr>
+                    <tr className="bg-emerald-50 text-emerald-950 font-black border-t-2 border-emerald-200">
+                      <td className="py-2 px-3">Estimasi Balik Modal Mitra (Biaya Kemitraan Rp 75 Jt)</td>
+                      <td className="py-2 px-3 text-right text-emerald-700 font-bold">-</td>
+                      <td className="py-2 px-3 text-right text-emerald-800 font-black text-sm">~{sc.paybackMonths} Bulan</td>
+                      <td className="py-2 px-3 text-right text-emerald-800 font-bold">BEP Mitra</td>
                     </tr>
                   </tbody>
                 </table>
@@ -1590,14 +1607,14 @@ export function getSabubaSlides({
 
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
-              <span className="text-xs font-bold text-red-800 uppercase">Modal Awal CAPEX</span>
-              <h4 className="text-2xl font-black text-slate-900">Rp 125.000.000</h4>
+              <span className="text-xs font-bold text-red-800 uppercase">Biaya Kemitraan</span>
+              <h4 className="text-2xl font-black text-slate-900">Rp 75.000.000</h4>
               <p className="text-xs text-slate-500">Unit Sabuba Classic, peralatan kitchen lengkap, branding, &amp; sistem POS.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
               <span className="text-xs font-bold text-red-800 uppercase">Nisbah Bagi Hasil</span>
-              <h4 className="text-2xl font-black text-slate-900">50% : 50%</h4>
-              <p className="text-xs text-slate-500">Pembagian laba bersih toko antara Mitra Pasif &amp; Pengelola HQ.</p>
+              <h4 className="text-2xl font-black text-slate-900">70% : 30%</h4>
+              <p className="text-xs text-slate-500">70% Brand Holder (Operasional &amp; Manajemen) : 30% Mitra Pasif.</p>
             </div>
             <div className="p-5 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-2">
               <span className="text-xs font-bold text-red-800 uppercase">Manajemen Operasional</span>

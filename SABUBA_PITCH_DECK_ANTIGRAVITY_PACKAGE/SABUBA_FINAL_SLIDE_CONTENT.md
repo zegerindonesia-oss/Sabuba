@@ -122,7 +122,7 @@ Kenapa mulai dari motor?
 
 **The motor is the entry point — not the destination.**
 
-Proposal saat ini menyebut CAPEX Rp125 juta dan operasional HQ 100%; tampilkan sebagai skema kemitraan saat ini.
+Proposal saat ini menyebut Biaya Kemitraan Rp75 juta dan operasional HQ 100%; tampilkan sebagai skema kemitraan saat ini.
 
 ---
 
@@ -257,8 +257,8 @@ Angka tersebut harus diberi konteks sumber/periode dan diverifikasi sebelum dipa
 ## A business system, not just a business package.
 
 Current Sabuba Classic:
-- CAPEX / Partnership Fee: Rp125.000.000
-Profit Sharing: 50% : 50%
+- Biaya Kemitraan: Rp75.000.000
+Profit Sharing: 70% Brand Holder : 30% Mitra
 Operations: HQ-managed
 Model: Passive Partner
 

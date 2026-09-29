@@ -5,16 +5,16 @@ import { ArrowRight, TrendingUp, Users, DollarSign, ShieldCheck, Bike, Sparkles,
 export default function FranchiseSection({ onOpenPitchDeck }) {
   const benefits = [
     { title: 'Mitra Pasif 100%', desc: 'Tanpa perlu pusing operasional, rekrutmen karyawan & belanja bahan. Semua dikelola 100% oleh HQ Sabuba.', icon: Users },
-    { title: 'Bagi Hasil 50% : 50%', desc: 'Pembagian 50% Net Profit untuk Mitra dari hasil penjualan harian outlet.', icon: DollarSign },
+    { title: 'Bagi Hasil 70% : 30%', desc: 'Pembagian 30% Net Profit untuk Mitra & 70% Brand Holder yang mengelola 100% operasional.', icon: DollarSign },
     { title: 'POS Cloud & AI Analytics', desc: 'Penjualan terpantau real-time 24/7 dari smartphone investor lengkap dengan laporan AI.', icon: Cpu },
-    { title: 'Efisiensi Tanpa Sewa Ruko', desc: 'Motor tiga roda custom hemat overhead, BEP super cepat dalam ~5 Bulan!', icon: TrendingUp },
+    { title: 'Efisiensi Tanpa Sewa Ruko', desc: 'Motor tiga roda custom hemat overhead, est. balik modal cepat mulai ~5 Bulan!', icon: TrendingUp },
   ];
 
   const streetFoodFeatures = [
-    'Investasi Terjangkau Rp 125.000.000 (Sabuba Classic)',
+    'Biaya Kemitraan Terjangkau Rp 75.000.000 (Sabuba Classic)',
     '100% Bebas Repot Operasional (Mitra Pasif)',
     'Transparansi Penjualan Online Real-Time 24/7',
-    'Est. Balik Modal Cepat (~4.6 - 9.3 Bulan)',
+    'Est. Balik Modal Cepat (~5.2 - 10.4 Bulan)',
   ];
 
   return (
@@ -35,17 +35,17 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-4 leading-tight">
-            Kemitraan Mitra Pasif & Bagi Hasil 50% - 50%
+            Kemitraan Mitra Pasif & Bagi Hasil 70% Brand Holder : 30% Mitra
           </h2>
 
           <p className="text-red-100/90 text-xs sm:text-sm mt-3 leading-relaxed">
-            Bergabunglah menjadi mitra owner <strong className="text-amber-300 font-extrabold">Sabuba Classic</strong>. Investasi Rp 125 Juta, nikmati passive income pembagian hasil 50% bersih tanpa repot operasional, dan pantau penjualan harian Anda via online real-time.
+            Bergabunglah menjadi mitra owner <strong className="text-amber-300 font-extrabold">Sabuba Classic</strong>. Biaya kemitraan Rp 75 Juta saja, nikmati passive income pembagian hasil 30% bersih untuk Mitra tanpa repot operasional (70% Brand Holder), dan pantau penjualan harian Anda via online real-time.
           </p>
 
           {/* Model Status Bar */}
           <div className="mt-6 flex flex-wrap justify-center items-center gap-2.5">
             <span className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-slate-950 font-extrabold text-xs flex items-center gap-1.5 shadow-md">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Sabuba Classic (Rp 125 Jt) - DI BUKA SEKARANG
+              <CheckCircle2 className="w-3.5 h-3.5" /> Sabuba Classic (Rp 75 Jt) - DI BUKA SEKARANG
             </span>
             <span className="px-3 py-1.5 rounded-full bg-white/10 text-red-200 font-bold text-xs border border-white/20">
               Sabuba Container - COMING SOON
@@ -131,7 +131,7 @@ export default function FranchiseSection({ onOpenPitchDeck }) {
                     Sabuba Classic
                   </span>
                   <span className="px-2.5 py-1 rounded-full bg-amber-400 text-red-950 font-extrabold text-[11px] uppercase flex items-center gap-1">
-                    <MapPin className="w-3 h-3" /> Rp 125.000.000
+                    <MapPin className="w-3 h-3" /> Rp 75.000.000
                   </span>
                 </div>
                 <h3 className="font-black text-xl text-white">Konsep Street Food Motor Custom</h3>
