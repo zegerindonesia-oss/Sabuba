@@ -534,42 +534,42 @@ export function getSabubaSlides({
     }
   ];
 
-  // Outlet Jl. A Yani Historical P&L Data (3 Months: Mei, Juni, Agustus 2026)
+  // Outlet Jl. A Yani Historical P&L Data (3 Months: Mei, Juni, Agustus 2026) - COGS 45%, Gross Profit 55%
   const pnlHistoricalData = [
     {
       month: 'Mei 2026',
       sales: 71680000,
-      hpp: 28672000,
-      grossProfit: 43008000,
+      hpp: 32256000,
+      grossProfit: 39424000,
       opsKaryawan: 3000000,
       opsUtilitas: 1384500,
       totalOpex: 4384500,
-      netProfit: 38623500,
-      marginPercent: 53.9,
+      netProfit: 35039500,
+      marginPercent: 48.9,
       isTop: false
     },
     {
       month: 'Juni 2026',
       sales: 66792000,
-      hpp: 26716800,
-      grossProfit: 40075200,
+      hpp: 30056400,
+      grossProfit: 36735600,
       opsKaryawan: 2500000,
       opsUtilitas: 958200,
       totalOpex: 3458200,
-      netProfit: 36617000,
-      marginPercent: 54.8,
+      netProfit: 33277400,
+      marginPercent: 49.8,
       isTop: false
     },
     {
       month: 'Agustus 2026 (PUNCAK OMSET)',
       sales: 80108009,
-      hpp: 32043204,
-      grossProfit: 48064805,
+      hpp: 36048604,
+      grossProfit: 44059405,
       opsKaryawan: 4500000,
       opsUtilitas: 3387296,
       totalOpex: 7887296,
-      netProfit: 40177509,
-      marginPercent: 50.1,
+      netProfit: 36172109,
+      marginPercent: 45.2,
       isTop: true
     }
   ];
@@ -1534,16 +1534,16 @@ export function getSabubaSlides({
                   <td className="py-2.5 px-3 text-right text-red-900 font-black text-base bg-red-50/80">{formatRupiah(80108009)}</td>
                 </tr>
                 <tr>
-                  <td className="py-2 px-3 text-slate-600">HPP / COGS (Bahan Baku Utama ~40%)</td>
-                  <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(28672000)}</td>
-                  <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(26716800)}</td>
-                  <td className="py-2 px-3 text-right text-slate-700 bg-red-50/30">{formatRupiah(32043204)}</td>
+                  <td className="py-2 px-3 text-slate-600">HPP / COGS (Bahan Baku Utama 45%)</td>
+                  <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(32256000)}</td>
+                  <td className="py-2 px-3 text-right text-slate-600">{formatRupiah(30056400)}</td>
+                  <td className="py-2 px-3 text-right text-slate-700 bg-red-50/30">{formatRupiah(36048604)}</td>
                 </tr>
                 <tr className="font-bold text-slate-900 bg-slate-100/60">
-                  <td className="py-2 px-3">Gross Profit (Laba Kotor ~60%)</td>
-                  <td className="py-2 px-3 text-right">{formatRupiah(43008000)}</td>
-                  <td className="py-2 px-3 text-right">{formatRupiah(40075200)}</td>
-                  <td className="py-2 px-3 text-right font-black bg-red-50/50">{formatRupiah(48064805)}</td>
+                  <td className="py-2 px-3">Gross Profit (Laba Kotor 55%)</td>
+                  <td className="py-2 px-3 text-right">{formatRupiah(39424000)}</td>
+                  <td className="py-2 px-3 text-right">{formatRupiah(36735600)}</td>
+                  <td className="py-2 px-3 text-right font-black bg-red-50/50">{formatRupiah(44059405)}</td>
                 </tr>
                 <tr>
                   <td className="py-1.5 px-3 text-slate-500 pl-6">• Gaji Karyawan Operasional</td>
@@ -1565,15 +1565,15 @@ export function getSabubaSlides({
                 </tr>
                 <tr className="bg-red-900 text-white font-black">
                   <td className="py-3 px-3 text-sm">EBITDA Store Net Profit Real</td>
-                  <td className="py-3 px-3 text-right text-sm">{formatRupiah(38623500)}</td>
-                  <td className="py-3 px-3 text-right text-sm">{formatRupiah(36617000)}</td>
-                  <td className="py-3 px-3 text-right text-base text-amber-300 font-black bg-red-950">{formatRupiah(40177509)}</td>
+                  <td className="py-3 px-3 text-right text-sm">{formatRupiah(35039500)}</td>
+                  <td className="py-3 px-3 text-right text-sm">{formatRupiah(33277400)}</td>
+                  <td className="py-3 px-3 text-right text-base text-amber-300 font-black bg-red-950">{formatRupiah(36172109)}</td>
                 </tr>
                 <tr className="bg-amber-500/20 text-amber-950 font-black">
                   <td className="py-2.5 px-3">Margin Persentase Laba Bersih Store</td>
-                  <td className="py-2.5 px-3 text-right">53.9%</td>
-                  <td className="py-2.5 px-3 text-right">54.8%</td>
-                  <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm bg-amber-500/30">50.1% Net Margin</td>
+                  <td className="py-2.5 px-3 text-right">48.9%</td>
+                  <td className="py-2.5 px-3 text-right">49.8%</td>
+                  <td className="py-2.5 px-3 text-right text-red-900 font-black text-sm bg-amber-500/30">45.2% Net Margin</td>
                 </tr>
               </tbody>
             </table>

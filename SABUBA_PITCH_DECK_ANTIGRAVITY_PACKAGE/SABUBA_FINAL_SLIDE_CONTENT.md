@@ -246,9 +246,9 @@ Semua angka yang belum tervalidasi diberi label ASSUMPTION.
 
 Proposal saat ini menampilkan contoh outlet Jl. A Yani Sidoarjo:
 Net Sales Rp80.108.009
-COGS 40%
-OPEX 15%
-Store Net Profit 45%
+COGS 45%
+OPEX ~9.8%
+Store Net Profit 45.2%
 Angka tersebut harus diberi konteks sumber/periode dan diverifikasi sebelum dipakai sebagai proyeksi.
 
 ---
